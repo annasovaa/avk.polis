@@ -363,13 +363,33 @@
                 <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm flex items-center gap-4">
                     <div class="w-16 h-16 rounded-2xl bg-brand-dark text-brand-yellow flex items-center justify-center text-3xl shadow-sm font-extrabold" id="profile-avatar">👨‍🎓</div>
                     <div>
-                        <h3 class="font-extrabold text-brand-dark text-base">Иван Иванов</h3>
+                        <h3 class="font-extrabold text-brand-dark text-base" id="profile-name-text">Иван Иванов</h3>
                         <p class="text-xs text-brand-muted font-bold" id="profile-lvl-text">Уровень 1: Стажёр-новичок</p>
                         <div class="flex items-center gap-1.5 mt-1.5">
                             <span class="text-[10px] text-brand-muted">Опыт (XP):</span>
                             <span class="text-xs font-extrabold text-brand-dark" id="profile-xp-text">0 / 500 XP</span>
                         </div>
                     </div>
+                </div>
+
+                <!-- Настройки профиля -->
+                <div class="bg-white rounded-xl p-4 border border-slate-100 shadow-sm space-y-3.5">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-brand-muted flex items-center gap-1.5">
+                        <i data-lucide="user-cog" class="w-4 h-4 text-brand-dark"></i> Настройки кабинета
+                    </h4>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-[9px] font-bold uppercase tracking-wider text-brand-muted mb-1">Имя</label>
+                            <input type="text" id="input-first-name" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs font-semibold focus:outline-none focus:border-brand-yellow focus:ring-1 focus:ring-brand-yellow" placeholder="Иван">
+                        </div>
+                        <div>
+                            <label class="block text-[9px] font-bold uppercase tracking-wider text-brand-muted mb-1">Фамилия</label>
+                            <input type="text" id="input-last-name" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs font-semibold focus:outline-none focus:border-brand-yellow focus:ring-1 focus:ring-brand-yellow" placeholder="Иванов">
+                        </div>
+                    </div>
+                    <button onclick="saveProfile()" class="w-full bg-brand-dark hover:bg-brand-slate text-brand-yellow text-xs font-bold py-2.5 rounded-xl transition duration-200 shadow-sm">
+                        Сохранить изменения
+                    </button>
                 </div>
 
                 <!-- Награды -->
@@ -405,36 +425,6 @@
                             <span class="text-2xl mb-1.5">🏆</span>
                             <span class="text-[11px] font-extrabold text-brand-dark leading-tight">Отличник</span>
                             <span class="text-[9px] text-brand-muted mt-0.5">Тест сдан на 100%</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Рейтинговая таблица -->
-                <div class="bg-white rounded-xl p-4 border border-slate-100 shadow-sm">
-                    <h4 class="text-xs font-bold uppercase tracking-wider text-brand-muted mb-3 flex items-center gap-1.5">
-                        <i data-lucide="trending-up" class="w-4 h-4 text-brand-dark"></i> Рейтинг новичков AVK.POLIS
-                    </h4>
-                    <div class="space-y-2.5">
-                        <div class="flex justify-between items-center text-xs p-1">
-                            <div class="flex items-center gap-2">
-                                <span class="font-bold text-brand-yellow bg-brand-dark px-1.5 py-0.5 rounded text-[10px] w-4 text-center">1</span>
-                                <span class="font-semibold text-brand-text">Алексей Смирнов</span>
-                            </div>
-                            <span class="font-extrabold text-brand-dark">820 XP</span>
-                        </div>
-                        <div class="flex justify-between items-center text-xs p-1">
-                            <div class="flex items-center gap-2">
-                                <span class="font-bold text-brand-dark bg-slate-100 px-1.5 py-0.5 rounded text-[10px] w-4 text-center">2</span>
-                                <span class="font-semibold text-brand-text">Ольга Петрова</span>
-                            </div>
-                            <span class="font-extrabold text-brand-dark">540 XP</span>
-                        </div>
-                        <div class="flex justify-between items-center text-xs p-1 bg-yellow-400/10 rounded-lg px-2 py-1.5 border border-brand-yellow/30">
-                            <div class="flex items-center gap-2">
-                                <span class="font-bold text-brand-dark bg-brand-yellow px-1.5 py-0.5 rounded text-[10px] w-4 text-center">3</span>
-                                <span class="font-bold text-brand-dark">Ты (Агент)</span>
-                            </div>
-                            <span class="font-extrabold text-brand-dark" id="leaderboard-my-xp">0 XP</span>
                         </div>
                     </div>
                 </div>
@@ -485,6 +475,8 @@
         const state = {
             xp: 0,
             level: 1,
+            firstName: 'Иван',
+            lastName: 'Иванов',
             // 15 уроков (по 3 на блок)
             readLessons: {
                 'm1-l1': false, 'm1-l2': false, 'm1-l3': false,
@@ -507,6 +499,9 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
+            // Подгружаем дефолтные значения в инпуты
+            document.getElementById('input-first-name').value = state.firstName;
+            document.getElementById('input-last-name').value = state.lastName;
             updateUI();
         });
 
@@ -565,8 +560,28 @@
             updateUI();
         }
 
+        // Обновление настроек профиля
+        function saveProfile() {
+            const fName = document.getElementById('input-first-name').value.trim();
+            const lName = document.getElementById('input-last-name').value.trim();
+
+            if (!fName) {
+                showToast('❌ Поле "Имя" обязательно для заполнения', 'error');
+                return;
+            }
+
+            state.firstName = fName;
+            state.lastName = lName;
+            
+            updateUI();
+            showToast('✅ Изменения профиля успешно сохранены!');
+        }
+
         // Подсчет прогресса и разблокировки модулей
         function updateUI() {
+            // Имя в кабинете
+            document.getElementById('profile-name-text').innerText = `${state.firstName} ${state.lastName}`;
+
             const m1Read = ['m1-l1', 'm1-l2', 'm1-l3'].filter(id => state.readLessons[id]).length;
             const m2Read = ['m2-l1', 'm2-l2', 'm2-l3'].filter(id => state.readLessons[id]).length;
             const m3Read = ['m3-l1', 'm3-l2', 'm3-l3'].filter(id => state.readLessons[id]).length;
