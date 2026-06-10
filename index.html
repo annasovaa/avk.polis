@@ -80,14 +80,13 @@
         <main class="flex-1 overflow-y-auto px-5 py-4 bg-brand-light no-scrollbar pb-24">
 
             <!-- ================= ЭКРАН 1: КУРСЫ (ГЛАВНАЯ) ================= -->
-            <section id="screen-courses" class="screen space-y-5">
+            <section id="screen-courses" class="screen space-y-5 active">
                 <!-- Блок приветствия с прогрессом -->
                 <div class="bg-gradient-to-br from-brand-dark via-brand-slate to-black rounded-2xl p-5 text-white shadow-xl relative overflow-hidden">
                     <div class="absolute right-0 bottom-0 opacity-5 transform translate-x-4 translate-y-4">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="award" aria-hidden="true" class="lucide lucide-award w-40 h-40"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"></path><circle cx="12" cy="8" r="6"></circle></svg>
                     </div>
-                    <span class="text-[10px] font-bold uppercase tracking-wider bg-brand-yellow text-brand-dark px-2.5 py-1 rounded-full">Прогресс обучения</span>
-                    <h2 class="text-xl font-bold mt-3 mb-1"><br></h2>
+                    <span class="text-[10px] font-bold uppercase tracking-wider bg-brand-yellow text-brand-dark px-2.5 py-1 rounded-full">Прогресс обучения</span><h2 class="text-xl font-bold mt-3 mb-1">На пути к успеху!</h2>
                     <p class="text-slate-300 text-xs mb-4">Твой общий прогресс обучения составляет <span id="overall-progress-text" class="text-brand-yellow font-bold">0%</span></p>
                     <div class="w-full bg-white/10 rounded-full h-2 overflow-hidden">
                         <div id="overall-progress-bar" class="bg-brand-yellow h-full rounded-full transition-all duration-500" style="width: 0%"></div>
@@ -222,7 +221,7 @@
             </section>
 
             <!-- ================= ПРОСМОТР КОНКРЕТНОГО УРОКА ================= -->
-            <section id="screen-lesson-reader" class="screen space-y-4 active">
+            <section id="screen-lesson-reader" class="screen space-y-4">
                 <button onclick="goBackToModuleViewer()" class="flex items-center gap-1.5 text-xs font-bold text-brand-dark bg-slate-100 px-4 py-2 rounded-xl hover:bg-slate-200 transition">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-left" aria-hidden="true" class="lucide lucide-arrow-left w-3.5 h-3.5"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg> К списку тем
                 </button>
