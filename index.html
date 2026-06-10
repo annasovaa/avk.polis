@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AVK.POLIS — Обучение новичков</title>
+    <title>AVK.POLIS — Академия страхования</title>
     <!-- Tailwind CSS для стильного дизайна -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Иконки Lucide для интерфейса -->
@@ -15,10 +15,10 @@
                     colors: {
                         brand: {
                             yellow: '#FACC15', // Насыщенный желтый
-                            yellowLight: '#FEF08A', // Светло-желтый для нежных фонов
-                            dark: '#111827', // Глубокий черный / угольный
+                            yellowLight: '#FEF08A', // Светло-желтый
+                            dark: '#111827', // Глубокий черный
                             slate: '#1F2937', // Темно-серый
-                            light: '#F9FAFB', // Премиальный белый/серый фон
+                            light: '#F9FAFB', // Премиальный серый/белый фон
                             border: '#E5E7EB',
                             text: '#111827',
                             muted: '#6B7280'
@@ -42,7 +42,7 @@
             display: block;
             opacity: 1;
         }
-        /* Скрытие полосы прокрутки для эстетичного вида */
+        /* Скрытие полосы прокрутки */
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
@@ -54,7 +54,7 @@
 </head>
 <body class="bg-slate-100 min-h-screen flex justify-center items-center font-sans antialiased selection:bg-yellow-200">
 
-    <!-- Основной контейнер-телефон (центрируется на ПК, на мобильных во весь экран) -->
+    <!-- Основной контейнер-телефон -->
     <div class="w-full max-w-md bg-white min-h-screen md:min-h-[850px] md:h-[850px] md:rounded-3xl md:shadow-2xl md:border md:border-slate-200/80 flex flex-col relative overflow-hidden">
         
         <!-- Шапка приложения -->
@@ -64,7 +64,7 @@
                     <span class="p-1 bg-brand-dark rounded-lg text-brand-yellow shadow-sm"><i data-lucide="shield" class="w-4 h-4"></i></span>
                     <h1 class="font-extrabold text-xl text-brand-dark tracking-wider">AVK.POLIS</h1>
                 </div>
-                <p class="text-[11px] font-semibold text-brand-muted mt-0.5" id="header-subtitle">Твой старт в страховании</p>
+                <p class="text-[11px] font-semibold text-brand-muted mt-0.5" id="header-subtitle">Мини-курс по заработку на страховании</p>
             </div>
             
             <!-- Индикатор уровня ученика -->
@@ -89,63 +89,97 @@
                     </div>
                     <span class="text-[10px] font-bold uppercase tracking-wider bg-brand-yellow text-brand-dark px-2.5 py-1 rounded-full">Прогресс обучения</span>
                     <h2 class="text-xl font-bold mt-3 mb-1">С возвращением!</h2>
-                    <p class="text-slate-300 text-xs mb-4">Твой общий прогресс обучения составляет <span id="overall-progress-text" class="text-brand-yellow font-bold">33%</span></p>
+                    <p class="text-slate-300 text-xs mb-4">Твой общий прогресс обучения составляет <span id="overall-progress-text" class="text-brand-yellow font-bold">0%</span></p>
                     <div class="w-full bg-white/10 rounded-full h-2 overflow-hidden">
-                        <div id="overall-progress-bar" class="bg-brand-yellow h-full rounded-full transition-all duration-500" style="width: 33%"></div>
+                        <div id="overall-progress-bar" class="bg-brand-yellow h-full rounded-full transition-all duration-500" style="width: 0%"></div>
                     </div>
                 </div>
 
                 <!-- Список модулей -->
-                <div>
-                    <h3 class="text-xs font-bold text-brand-muted uppercase tracking-wider mb-3">Учебные модули</h3>
-                    <div class="space-y-3.5">
-                        <!-- Карточка 1 -->
-                        <div onclick="openModule('module-1')" class="bg-white rounded-xl p-4 border border-slate-100 shadow-sm hover:border-brand-yellow transition duration-200 cursor-pointer group">
+                <div class="space-y-4">
+                    <h3 class="text-xs font-bold text-brand-muted uppercase tracking-wider">Блоки Обучения</h3>
+                    <div class="space-y-3.5" id="modules-list">
+                        
+                        <!-- Блок 1 -->
+                        <div id="mod-card-1" onclick="viewModule('module-1')" class="bg-white rounded-xl p-4 border border-slate-100 shadow-sm hover:border-brand-yellow transition duration-200 cursor-pointer group">
                             <div class="flex justify-between items-start mb-2">
                                 <div class="p-2 bg-yellow-400/10 rounded-xl group-hover:bg-brand-yellow transition">
-                                    <i data-lucide="book-open" class="w-5 h-5 text-brand-dark"></i>
+                                    <i data-lucide="play" class="w-5 h-5 text-brand-dark"></i>
                                 </div>
-                                <span class="text-[10px] font-bold uppercase tracking-wider text-brand-yellow bg-brand-dark px-2.5 py-1 rounded-md">Пройдено</span>
+                                <span id="mod-badge-1" class="text-[10px] font-bold uppercase tracking-wider text-brand-dark bg-brand-yellow px-2.5 py-1 rounded-md">Доступен</span>
                             </div>
-                            <h4 class="font-bold text-brand-dark group-hover:text-brand-dark transition">Модуль 1: Азбука страховщика</h4>
-                            <p class="text-xs text-brand-muted mt-1 leading-relaxed">Базовая терминология: франшиза, бенефициар, страховая премия и лимиты.</p>
+                            <h4 class="font-bold text-brand-dark group-hover:text-brand-dark transition">1. Начало работы</h4>
+                            <p class="text-xs text-brand-muted mt-1 leading-relaxed">Самозанятость, ИП, выбор агрегаторов и план запуска первой сделки с нуля.</p>
                             <div class="mt-3 flex items-center justify-between text-[11px] text-brand-muted">
-                                <span>3 урока • Тест пройден</span>
-                                <span class="font-extrabold text-brand-dark">100%</span>
+                                <span>3 урока • Базовый тест</span>
+                                <span id="mod-progress-text-1" class="font-extrabold text-brand-dark">0%</span>
                             </div>
                         </div>
 
-                        <!-- Карточка 2 -->
-                        <div onclick="openModule('module-2')" class="bg-white rounded-xl p-4 border border-slate-100 shadow-sm hover:border-brand-yellow transition duration-200 cursor-pointer group">
+                        <!-- Блок 2 -->
+                        <div id="mod-card-2" onclick="viewModule('module-2')" class="bg-white rounded-xl p-4 border border-slate-100 shadow-sm transition duration-200 cursor-pointer group opacity-60">
                             <div class="flex justify-between items-start mb-2">
-                                <div class="p-2 bg-yellow-400/10 rounded-xl group-hover:bg-brand-yellow transition">
-                                    <i data-lucide="car" class="w-5 h-5 text-brand-dark"></i>
+                                <div class="p-2 bg-slate-100 rounded-xl transition" id="mod-icon-wrapper-2">
+                                    <i data-lucide="home" class="w-5 h-5 text-brand-muted" id="mod-icon-2"></i>
                                 </div>
-                                <span id="mod-2-badge" class="text-[10px] font-bold uppercase tracking-wider text-brand-dark bg-brand-yellow px-2.5 py-1 rounded-md">В процессе</span>
+                                <span id="mod-badge-2" class="text-[10px] font-bold uppercase tracking-wider text-slate-500 bg-slate-100 px-2.5 py-1 rounded-md">Заперт</span>
                             </div>
-                            <h4 class="font-bold text-brand-dark group-hover:text-brand-dark transition">Модуль 2: Автострахование (ОСАГО и КАСКО)</h4>
-                            <p class="text-xs text-brand-muted mt-1 leading-relaxed">В чем принципиальная разница? Учимся подбирать и аргументировать выгоду КАСКО.</p>
+                            <h4 class="font-bold text-brand-dark">2. Страхование ипотеки</h4>
+                            <p class="text-xs text-brand-muted mt-1 leading-relaxed">Виды ипотечных страховок, почему ипотека — золотая жила и как экономить деньги клиентов.</p>
                             <div class="mt-3 flex items-center justify-between text-[11px] text-brand-muted">
-                                <span>4 урока • Доступен тест</span>
-                                <span id="mod-2-percent" class="font-extrabold text-brand-dark">0%</span>
+                                <span id="mod-lock-text-2">Пройдите Блок 1</span>
+                                <span id="mod-progress-text-2" class="font-extrabold text-brand-dark">0%</span>
                             </div>
                         </div>
 
-                        <!-- Карточка 3 -->
-                        <div onclick="openModule('module-3')" class="bg-white rounded-xl p-4 border border-slate-100 shadow-sm hover:border-brand-yellow transition duration-200 cursor-pointer group opacity-60">
+                        <!-- Блок 3 -->
+                        <div id="mod-card-3" onclick="viewModule('module-3')" class="bg-white rounded-xl p-4 border border-slate-100 shadow-sm transition duration-200 cursor-pointer group opacity-60">
                             <div class="flex justify-between items-start mb-2">
-                                <div class="p-2 bg-slate-100 rounded-xl group-hover:bg-slate-200 transition">
-                                    <i data-lucide="lock" class="w-5 h-5 text-brand-muted"></i>
+                                <div class="p-2 bg-slate-100 rounded-xl transition" id="mod-icon-wrapper-3">
+                                    <i data-lucide="car" class="w-5 h-5 text-brand-muted" id="mod-icon-3"></i>
                                 </div>
-                                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 bg-slate-100 px-2.5 py-1 rounded-md">Заблокирован</span>
+                                <span id="mod-badge-3" class="text-[10px] font-bold uppercase tracking-wider text-slate-500 bg-slate-100 px-2.5 py-1 rounded-md">Заперт</span>
                             </div>
-                            <h4 class="font-bold text-brand-dark">Модуль 3: Работа с возражениями</h4>
-                            <p class="text-xs text-brand-muted mt-1 leading-relaxed">Как реагировать на «Дорого!», «Мне это не нужно» и «Я подумаю».</p>
+                            <h4 class="font-bold text-brand-dark">3. ОСАГО</h4>
+                            <p class="text-xs text-brand-muted mt-1 leading-relaxed">Законы и лимиты автогражданки, расчет коэффициента КБМ и Е-ОСАГО онлайн.</p>
                             <div class="mt-3 flex items-center justify-between text-[11px] text-brand-muted">
-                                <span>Требуется пройти Модуль 2</span>
-                                <i data-lucide="lock" class="w-3.5 h-3.5 text-slate-400"></i>
+                                <span id="mod-lock-text-3">Пройдите Блок 2</span>
+                                <span id="mod-progress-text-3" class="font-extrabold text-brand-dark">0%</span>
                             </div>
                         </div>
+
+                        <!-- Блок 4 -->
+                        <div id="mod-card-4" onclick="viewModule('module-4')" class="bg-white rounded-xl p-4 border border-slate-100 shadow-sm transition duration-200 cursor-pointer group opacity-60">
+                            <div class="flex justify-between items-start mb-2">
+                                <div class="p-2 bg-slate-100 rounded-xl transition" id="mod-icon-wrapper-4">
+                                    <i data-lucide="shield-alert" class="w-5 h-5 text-brand-muted" id="mod-icon-4"></i>
+                                </div>
+                                <span id="mod-badge-4" class="text-[10px] font-bold uppercase tracking-wider text-slate-500 bg-slate-100 px-2.5 py-1 rounded-md">Заперт</span>
+                            </div>
+                            <h4 class="font-bold text-brand-dark">4. Основы страхования</h4>
+                            <p class="text-xs text-brand-muted mt-1 leading-relaxed">Термины: страховая сумма, франшиза, премия и роли участников сделки.</p>
+                            <div class="mt-3 flex items-center justify-between text-[11px] text-brand-muted">
+                                <span id="mod-lock-text-4">Пройдите Блок 3</span>
+                                <span id="mod-progress-text-4" class="font-extrabold text-brand-dark">0%</span>
+                            </div>
+                        </div>
+
+                        <!-- Блок 5 -->
+                        <div id="mod-card-5" onclick="viewModule('module-5')" class="bg-white rounded-xl p-4 border border-slate-100 shadow-sm transition duration-200 cursor-pointer group opacity-60">
+                            <div class="flex justify-between items-start mb-2">
+                                <div class="p-2 bg-slate-100 rounded-xl transition" id="mod-icon-wrapper-5">
+                                    <i data-lucide="trending-up" class="w-5 h-5 text-brand-muted" id="mod-icon-5"></i>
+                                </div>
+                                <span id="mod-badge-5" class="text-[10px] font-bold uppercase tracking-wider text-slate-500 bg-slate-100 px-2.5 py-1 rounded-md">Заперт</span>
+                            </div>
+                            <h4 class="font-bold text-brand-dark">5. Инструменты для работы</h4>
+                            <p class="text-xs text-brand-muted mt-1 leading-relaxed">Почему демпинг губит агентов, как давать скидки с умом и растить ценность услуг.</p>
+                            <div class="mt-3 flex items-center justify-between text-[11px] text-brand-muted">
+                                <span id="mod-lock-text-5">Пройдите Блок 4</span>
+                                <span id="mod-progress-text-5" class="font-extrabold text-brand-dark">0%</span>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </section>
@@ -157,132 +191,225 @@
                 </button>
 
                 <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm">
-                    <div id="module-content-area">
-                        <!-- Сюда динамически загружается контент через JS -->
+                    <h2 class="text-xl font-extrabold text-brand-dark mb-1" id="module-viewer-title">Модуль</h2>
+                    <p class="text-xs text-brand-muted mb-4" id="module-viewer-desc">Выберите тему для изучения</p>
+                    
+                    <div class="space-y-3" id="module-lessons-list">
+                        <!-- Динамический рендер уроков текущего модуля -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= ПРОСМОТР КОНКРЕТНОГО УРОКА ================= -->
+            <section id="screen-lesson-reader" class="screen space-y-4">
+                <button onclick="goBackToModuleViewer()" class="flex items-center gap-1.5 text-xs font-bold text-brand-dark bg-slate-100 px-4 py-2 rounded-xl hover:bg-slate-200 transition">
+                    <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> К списку тем
+                </button>
+
+                <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm">
+                    <div id="lesson-content-area" class="space-y-4">
+                        <!-- Динамический текст лекции -->
                     </div>
                 </div>
             </section>
 
             <!-- ================= ЭКРАН 2: СИМУЛЯТОР ДИАЛОГА ================= -->
             <section id="screen-simulator" class="screen space-y-4">
-                <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="p-1.5 bg-brand-dark text-brand-yellow rounded-lg"><i data-lucide="message-square" class="w-4 h-4"></i></span>
-                        <h3 class="font-bold text-brand-dark">Тренажер возражений AVK.POLIS</h3>
+                <!-- Селектор сценариев -->
+                <div id="sim-selector" class="space-y-4">
+                    <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="p-1.5 bg-brand-dark text-brand-yellow rounded-lg"><i data-lucide="message-square" class="w-4 h-4"></i></span>
+                            <h3 class="font-bold text-brand-dark">Тренажер возражений AVK.POLIS</h3>
+                        </div>
+                        <p class="text-xs text-brand-muted leading-relaxed">
+                            Отработайте реальные возражения и научитесь продавать ценность страхового полиса без демпинга и скидок из своей комиссии.
+                        </p>
                     </div>
-                    <p class="text-xs text-brand-muted leading-relaxed">
-                        Практикуй общение с виртуальным клиентом. Твоя задача — закрыть сделку, выбрав правильные речевые модули и не вызвав негатива.
-                    </p>
-                </div>
 
-                <!-- Текущий диалог симулятора -->
-                <div id="sim-container" class="bg-white rounded-2xl border border-slate-100 shadow-md p-4 min-h-[300px] flex flex-col justify-between">
-                    <!-- Окно чата -->
-                    <div class="space-y-4 flex-1 overflow-y-auto mb-4" id="sim-chat-history">
-                        <!-- Сообщение от клиента -->
-                        <div class="flex items-start gap-2.5">
-                            <div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center font-bold text-sm text-brand-dark shrink-0">👨‍💼</div>
-                            <div class="bg-slate-100 p-3 rounded-2xl rounded-tl-none max-w-[85%] text-xs text-brand-text leading-relaxed">
-                                <span class="font-bold block text-[10px] text-brand-muted mb-0.5">Клиент: Михаил (34 года)</span>
-                                Слушайте, автосалон насчитал мне КАСКО за 80 000 рублей! Это же грабеж. ОСАГО за 8 тысяч вполне достаточно, зачем мне переплачивать в 10 раз?
+                    <div class="space-y-3">
+                        <!-- Сценарий 1 -->
+                        <div onclick="startSimulator('sim-1')" class="bg-white p-4 rounded-xl border border-slate-100 hover:border-brand-yellow cursor-pointer shadow-sm flex justify-between items-center transition">
+                            <div class="space-y-1">
+                                <h4 class="text-xs font-bold text-brand-dark">Кейс 1: Зачем мне страховать жизнь?</h4>
+                                <p class="text-[11px] text-brand-muted">Убедите Михаила (34 года) застраховать жизнь по ипотеке.</p>
                             </div>
+                            <span class="text-xs font-bold text-brand-dark bg-brand-yellow px-2 py-1 rounded-md">Запуск</span>
+                        </div>
+
+                        <!-- Сценарий 2 -->
+                        <div onclick="startSimulator('sim-2')" class="bg-white p-4 rounded-xl border border-slate-100 hover:border-brand-yellow cursor-pointer shadow-sm flex justify-between items-center transition">
+                            <div class="space-y-1">
+                                <h4 class="text-xs font-bold text-brand-dark">Кейс 2: ОСАГО достаточно, КАСКО не нужно</h4>
+                                <p class="text-[11px] text-brand-muted">Разбор рисков для новой машины Елены (28 лет).</p>
+                            </div>
+                            <span class="text-xs font-bold text-brand-dark bg-brand-yellow px-2 py-1 rounded-md">Запуск</span>
+                        </div>
+
+                        <!-- Сценарий 3 -->
+                        <div onclick="startSimulator('sim-3')" class="bg-white p-4 rounded-xl border border-slate-100 hover:border-brand-yellow cursor-pointer shadow-sm flex justify-between items-center transition">
+                            <div class="space-y-1">
+                                <h4 class="text-xs font-bold text-brand-dark">Кейс 3: «Поделитесь комиссией!»</h4>
+                                <p class="text-[11px] text-brand-muted">Красивый отказ на демпинг со стороны Сергея (42 года).</p>
+                            </div>
+                            <span class="text-xs font-bold text-brand-dark bg-brand-yellow px-2 py-1 rounded-md">Запуск</span>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Очки симуляции -->
-                    <div class="flex justify-between items-center bg-brand-dark px-3 py-2 rounded-xl mb-3 border border-slate-800">
-                        <span class="text-[11px] font-bold text-slate-300">Очки доверия:</span>
-                        <span id="sim-score" class="text-xs font-extrabold text-brand-yellow">50 / 100</span>
-                    </div>
+                <!-- Чат симулятора -->
+                <div id="sim-active-container" class="hidden space-y-4">
+                    <button onclick="exitSimulator()" class="flex items-center gap-1 text-xs font-bold text-brand-muted hover:text-brand-dark bg-white px-3 py-1.5 rounded-xl border border-slate-200">
+                        <i data-lucide="x" class="w-3.5 h-3.5"></i> Закончить тренировку
+                    </button>
 
-                    <!-- Варианты ответов -->
-                    <div class="space-y-2" id="sim-options">
-                        <button onclick="chooseSimOption(1)" class="w-full text-left p-3.5 border border-slate-100 hover:border-brand-yellow hover:bg-brand-yellow/10 rounded-xl text-xs text-brand-text transition duration-150 font-medium leading-relaxed">
-                            👉 <span class="font-bold text-brand-dark">Вариант А:</span> «Михаил, вы не понимаете рисков. Если вашу машину угонят или поцарапают во дворе — ОСАГО вам ничем не поможет, будете платить сами!»
-                        </button>
-                        <button onclick="chooseSimOption(2)" class="w-full text-left p-3.5 border border-slate-100 hover:border-brand-yellow hover:bg-brand-yellow/10 rounded-xl text-xs text-brand-text transition duration-150 font-medium leading-relaxed">
-                            👉 <span class="font-bold text-brand-dark">Вариант Б:</span> «Понимаю ваше возмущение суммой. Но давайте разберем: ОСАГО страхует вашу ответственность перед другими. А КАСКО защищает именно ваши 2 миллиона, вложенные в авто, от угона и повреждений.»
-                        </button>
-                        <button onclick="chooseSimOption(3)" class="w-full text-left p-3.5 border border-slate-100 hover:border-brand-yellow hover:bg-brand-yellow/10 rounded-xl text-xs text-brand-text transition duration-150 font-medium leading-relaxed">
-                            👉 <span class="font-bold text-brand-dark">Вариант В:</span> «Да, КАСКО действительно дорогое. Но это правила банка при автокредите, тут ничего не поделаешь, придется оформлять.»
-                        </button>
+                    <div id="sim-chat-box" class="bg-white rounded-2xl border border-slate-100 shadow-md p-4 min-h-[300px] flex flex-col justify-between">
+                        <!-- Окно чата -->
+                        <div class="space-y-4 flex-1 overflow-y-auto mb-4" id="sim-chat-history">
+                            <!-- JS -->
+                        </div>
+
+                        <!-- Очки доверия -->
+                        <div class="flex justify-between items-center bg-brand-dark px-3 py-2 rounded-xl mb-3 border border-slate-800">
+                            <span class="text-[11px] font-bold text-slate-300">Доверие клиента:</span>
+                            <span id="sim-score" class="text-xs font-extrabold text-brand-yellow">50 / 100</span>
+                        </div>
+
+                        <!-- Варианты ответов -->
+                        <div class="space-y-2" id="sim-options">
+                            <!-- JS -->
+                        </div>
                     </div>
                 </div>
             </section>
 
             <!-- ================= ЭКРАН 3: ТЕСТИРОВАНИЕ ================= -->
             <section id="screen-tests" class="screen space-y-4">
-                <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm">
-                    <div class="flex items-center gap-2 mb-2">
-                        <span class="p-1.5 bg-brand-dark text-brand-yellow rounded-lg"><i data-lucide="check-square" class="w-4 h-4"></i></span>
-                        <h3 class="font-bold text-brand-dark">Экзаменационный центр</h3>
+                <!-- Селектор тестов -->
+                <div id="quiz-selector" class="space-y-4">
+                    <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="p-1.5 bg-brand-dark text-brand-yellow rounded-lg"><i data-lucide="check-square" class="w-4 h-4"></i></span>
+                            <h3 class="font-bold text-brand-dark">Экзаменационный центр</h3>
+                        </div>
+                        <p class="text-xs text-brand-muted leading-relaxed">
+                            Сдавайте тесты по каждому блоку для закрепления полученных навыков и продвижения по рейтингу AVK.POLIS.
+                        </p>
                     </div>
-                    <p class="text-xs text-brand-muted leading-relaxed">
-                        Пройди тест для подтверждения квалификации. При успешном прохождении ты откроешь доступ к новым модулям и повысишь свой рейтинг в AVK.POLIS.
-                    </p>
+
+                    <div class="space-y-3">
+                        <!-- Тест 1 -->
+                        <div id="quiz-card-1" onclick="startQuiz('test-1')" class="bg-white p-4 rounded-xl border border-slate-100 hover:border-brand-yellow cursor-pointer shadow-sm flex justify-between items-center transition">
+                            <div class="space-y-1">
+                                <h4 class="text-xs font-bold text-brand-dark">Тест 1: Начало работы и налоги</h4>
+                                <p class="text-[11px] text-brand-muted" id="quiz-status-text-1">Доступен • 3 вопроса</p>
+                            </div>
+                            <span class="text-xs font-bold text-brand-dark bg-brand-yellow px-2.5 py-1 rounded-md">Начать</span>
+                        </div>
+
+                        <!-- Тест 2 -->
+                        <div id="quiz-card-2" onclick="startQuiz('test-2')" class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex justify-between items-center transition opacity-60">
+                            <div class="space-y-1">
+                                <h4 class="text-xs font-bold text-brand-dark">Тест 2: Страхование ипотеки</h4>
+                                <p class="text-[11px] text-brand-muted" id="quiz-status-text-2">Заперт (пройдите Блок 2)</p>
+                            </div>
+                            <span class="text-xs font-bold text-slate-400 bg-slate-100 px-2.5 py-1 rounded-md" id="quiz-btn-2">Заперто</span>
+                        </div>
+
+                        <!-- Тест 3 -->
+                        <div id="quiz-card-3" onclick="startQuiz('test-3')" class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex justify-between items-center transition opacity-60">
+                            <div class="space-y-1">
+                                <h4 class="text-xs font-bold text-brand-dark">Тест 3: Специфика ОСАГО</h4>
+                                <p class="text-[11px] text-brand-muted" id="quiz-status-text-3">Заперт (пройдите Блок 3)</p>
+                            </div>
+                            <span class="text-xs font-bold text-slate-400 bg-slate-100 px-2.5 py-1 rounded-md" id="quiz-btn-3">Заперто</span>
+                        </div>
+
+                        <!-- Тест 4 -->
+                        <div id="quiz-card-4" onclick="startQuiz('test-4')" class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex justify-between items-center transition opacity-60">
+                            <div class="space-y-1">
+                                <h4 class="text-xs font-bold text-brand-dark">Тест 4: Базовая терминология</h4>
+                                <p class="text-[11px] text-brand-muted" id="quiz-status-text-4">Заперт (пройдите Блок 4)</p>
+                            </div>
+                            <span class="text-xs font-bold text-slate-400 bg-slate-100 px-2.5 py-1 rounded-md" id="quiz-btn-4">Заперто</span>
+                        </div>
+
+                        <!-- Тест 5 -->
+                        <div id="quiz-card-5" onclick="startQuiz('test-5')" class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex justify-between items-center transition opacity-60">
+                            <div class="space-y-1">
+                                <h4 class="text-xs font-bold text-brand-dark">Тест 5: Демпинг и продажи</h4>
+                                <p class="text-[11px] text-brand-muted" id="quiz-status-text-5">Заперт (пройдите Блок 5)</p>
+                            </div>
+                            <span class="text-xs font-bold text-slate-400 bg-slate-100 px-2.5 py-1 rounded-md" id="quiz-btn-5">Заперто</span>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Основной контейнер теста -->
-                <div id="quiz-container" class="bg-white rounded-2xl border border-slate-100 shadow-md p-5">
-                    <!-- Заголовок / Прогресс теста -->
-                    <div class="flex justify-between items-center text-xs text-brand-muted mb-3 font-semibold">
-                        <span id="quiz-progress-text">Вопрос 1 из 3</span>
-                        <span id="quiz-timer" class="text-brand-dark font-bold">Тест по теме: ОСАГО</span>
-                    </div>
+                <!-- Контейнер активного теста -->
+                <div id="quiz-active-container" class="hidden space-y-4">
+                    <button onclick="exitQuiz()" class="flex items-center gap-1 text-xs font-bold text-brand-muted hover:text-brand-dark bg-white px-3 py-1.5 rounded-xl border border-slate-200">
+                        <i data-lucide="x" class="w-3.5 h-3.5"></i> Сбросить тест
+                    </button>
 
-                    <!-- Шкала прогресса -->
-                    <div class="w-full bg-slate-100 rounded-full h-1.5 mb-5 overflow-hidden">
-                        <div id="quiz-progress-bar" class="bg-brand-dark h-full transition-all duration-300" style="width: 33%"></div>
-                    </div>
-
-                    <!-- Вопрос -->
-                    <h4 id="quiz-question" class="font-bold text-brand-dark text-sm leading-relaxed mb-4">
-                        Какая выплата положена по ОСАГО, если виновник ДТП повредил только имущество (автомобиль) потерпевшего?
-                    </h4>
-
-                    <!-- Варианты ответов -->
-                    <div class="space-y-2.5" id="quiz-answers">
-                        <!-- Кнопки генерируются динамически -->
-                        <button class="w-full text-left p-3.5 rounded-xl border border-slate-200 text-xs font-semibold hover:bg-slate-50 transition">До 400 000 рублей</button>
-                        <button class="w-full text-left p-3.5 rounded-xl border border-slate-200 text-xs font-semibold hover:bg-slate-50 transition">До 500 000 рублей</button>
-                        <button class="w-full text-left p-3.5 rounded-xl border border-slate-200 text-xs font-semibold hover:bg-slate-50 transition">Выплата не ограничена</button>
+                    <div id="quiz-container" class="bg-white rounded-2xl border border-slate-100 shadow-md p-5">
+                        <!-- JS -->
                     </div>
                 </div>
             </section>
 
-            <!-- ================= ЭКРАН 4: ПРОФИЛЬ И СТАТИСТИКА ================= -->
+            <!-- ================= ЭКРАН 4: ПРОФИЛЬ И ДОСТИЖЕНИЯ ================= -->
             <section id="screen-progress" class="screen space-y-4">
                 <!-- Карточка профиля -->
                 <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm flex items-center gap-4">
-                    <div class="w-16 h-16 rounded-2xl bg-brand-dark flex items-center justify-center text-3xl shadow-sm">🚀</div>
+                    <div class="w-16 h-16 rounded-2xl bg-brand-dark text-brand-yellow flex items-center justify-center text-3xl shadow-sm font-extrabold" id="profile-avatar">👨‍🎓</div>
                     <div>
                         <h3 class="font-extrabold text-brand-dark text-base">Иван Иванов</h3>
                         <p class="text-xs text-brand-muted font-bold" id="profile-lvl-text">Уровень 1: Стажёр-новичок</p>
                         <div class="flex items-center gap-1.5 mt-1.5">
                             <span class="text-[10px] text-brand-muted">Опыт (XP):</span>
-                            <span class="text-xs font-extrabold text-brand-dark" id="profile-xp-text">150 / 500 XP</span>
+                            <span class="text-xs font-extrabold text-brand-dark" id="profile-xp-text">0 / 500 XP</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Достижения / Ачивки -->
+                <!-- Награды -->
                 <div>
-                    <h4 class="text-xs font-bold uppercase tracking-wider text-brand-muted mb-2.5">Мои Достижения</h4>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-brand-muted mb-2.5">Заработанные Награды</h4>
                     <div class="grid grid-cols-2 gap-3">
-                        <div class="bg-white p-3.5 rounded-xl border border-slate-100 shadow-sm flex flex-col items-center text-center">
+                        <div id="ach-1" class="bg-slate-50 p-3.5 rounded-xl border border-slate-100 flex flex-col items-center text-center grayscale opacity-60 transition duration-300">
                             <span class="text-2xl mb-1.5">🎓</span>
-                            <span class="text-xs font-extrabold text-brand-dark">Первый шаг</span>
-                            <span class="text-[10px] text-brand-muted mt-0.5">Пройден 1-й модуль</span>
+                            <span class="text-[11px] font-extrabold text-brand-dark leading-tight">Первый шаг</span>
+                            <span class="text-[9px] text-brand-muted mt-0.5">Сдан тест 1</span>
                         </div>
-                        <div id="badge-quiz-master" class="bg-slate-50 p-3.5 rounded-xl border border-slate-100 flex flex-col items-center text-center grayscale opacity-60 transition duration-300">
+                        <div id="ach-2" class="bg-slate-50 p-3.5 rounded-xl border border-slate-100 flex flex-col items-center text-center grayscale opacity-60 transition duration-300">
+                            <span class="text-2xl mb-1.5">🏠</span>
+                            <span class="text-[11px] font-extrabold text-brand-dark leading-tight">Ипотечник</span>
+                            <span class="text-[9px] text-brand-muted mt-0.5">Сдан тест 2</span>
+                        </div>
+                        <div id="ach-3" class="bg-slate-50 p-3.5 rounded-xl border border-slate-100 flex flex-col items-center text-center grayscale opacity-60 transition duration-300">
+                            <span class="text-2xl mb-1.5">🚗</span>
+                            <span class="text-[11px] font-extrabold text-brand-dark leading-tight">Автоэксперт</span>
+                            <span class="text-[9px] text-brand-muted mt-0.5">Сдан тест 3</span>
+                        </div>
+                        <div id="ach-4" class="bg-slate-50 p-3.5 rounded-xl border border-slate-100 flex flex-col items-center text-center grayscale opacity-60 transition duration-300">
+                            <span class="text-2xl mb-1.5">🛡️</span>
+                            <span class="text-[11px] font-extrabold text-brand-dark leading-tight">Профи-База</span>
+                            <span class="text-[9px] text-brand-muted mt-0.5">Сдан тест 4</span>
+                        </div>
+                        <div id="ach-5" class="bg-slate-50 p-3.5 rounded-xl border border-slate-100 flex flex-col items-center text-center grayscale opacity-60 transition duration-300">
+                            <span class="text-2xl mb-1.5">🚀</span>
+                            <span class="text-[11px] font-extrabold text-brand-dark leading-tight">Мастер продаж</span>
+                            <span class="text-[9px] text-brand-muted mt-0.5">Сдан тест 5</span>
+                        </div>
+                        <div id="ach-6" class="bg-slate-50 p-3.5 rounded-xl border border-slate-100 flex flex-col items-center text-center grayscale opacity-60 transition duration-300">
                             <span class="text-2xl mb-1.5">🏆</span>
-                            <span class="text-xs font-extrabold text-brand-dark">Отличник</span>
-                            <span class="text-[10px] text-brand-muted mt-0.5">Сдать тест на 100%</span>
+                            <span class="text-[11px] font-extrabold text-brand-dark leading-tight">Отличник</span>
+                            <span class="text-[9px] text-brand-muted mt-0.5">Тест сдан на 100%</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Таблица лидеров -->
+                <!-- Рейтинговая таблица -->
                 <div class="bg-white rounded-xl p-4 border border-slate-100 shadow-sm">
                     <h4 class="text-xs font-bold uppercase tracking-wider text-brand-muted mb-3 flex items-center gap-1.5">
                         <i data-lucide="trending-up" class="w-4 h-4 text-brand-dark"></i> Рейтинг новичков AVK.POLIS
@@ -305,9 +432,9 @@
                         <div class="flex justify-between items-center text-xs p-1 bg-yellow-400/10 rounded-lg px-2 py-1.5 border border-brand-yellow/30">
                             <div class="flex items-center gap-2">
                                 <span class="font-bold text-brand-dark bg-brand-yellow px-1.5 py-0.5 rounded text-[10px] w-4 text-center">3</span>
-                                <span class="font-extrabold text-brand-dark">Ты (Иван)</span>
+                                <span class="font-bold text-brand-dark">Ты (Агент)</span>
                             </div>
-                            <span class="font-extrabold text-brand-dark" id="leaderboard-my-xp">150 XP</span>
+                            <span class="font-extrabold text-brand-dark" id="leaderboard-my-xp">0 XP</span>
                         </div>
                     </div>
                 </div>
@@ -315,34 +442,34 @@
 
         </main>
 
-        <!-- Нижнее навигационное меню -->
+        <!-- Навигация -->
         <nav class="absolute bottom-0 left-0 right-0 bg-white border-t border-slate-200/80 p-2 pb-5 flex justify-around items-center shrink-0 z-40">
-            <!-- Кнопка КУРСЫ -->
-            <button onclick="switchTab('courses', this)" class="nav-btn flex flex-col items-center gap-1 text-brand-dark bg-brand-yellow font-bold shadow-sm transition duration-200 w-16 p-1.5 rounded-xl">
+            <!-- ОБУЧЕНИЕ -->
+            <button id="nav-btn-courses" onclick="switchTab('courses', this)" class="nav-btn flex flex-col items-center gap-1 text-brand-dark bg-brand-yellow font-bold shadow-sm transition duration-200 w-16 p-1.5 rounded-xl">
                 <div class="p-1 rounded-lg">
                     <i data-lucide="book-open" class="w-5 h-5"></i>
                 </div>
                 <span class="text-[9px] font-bold tracking-tight">Обучение</span>
             </button>
 
-            <!-- Кнопка СИМУЛЯТОР -->
-            <button onclick="switchTab('simulator', this)" class="nav-btn flex flex-col items-center gap-1 text-brand-muted hover:text-brand-dark transition duration-200 w-16 p-1.5 rounded-xl">
+            <!-- СИМУЛЯТОР -->
+            <button id="nav-btn-simulator" onclick="switchTab('simulator', this)" class="nav-btn flex flex-col items-center gap-1 text-brand-muted hover:text-brand-dark transition duration-200 w-16 p-1.5 rounded-xl">
                 <div class="p-1 rounded-lg">
                     <i data-lucide="message-square" class="w-5 h-5"></i>
                 </div>
                 <span class="text-[9px] font-bold tracking-tight">Симулятор</span>
             </button>
 
-            <!-- Кнопка ТЕСТЫ -->
-            <button onclick="switchTab('tests', this)" class="nav-btn flex flex-col items-center gap-1 text-brand-muted hover:text-brand-dark transition duration-200 w-16 p-1.5 rounded-xl">
+            <!-- ТЕСТЫ -->
+            <button id="nav-btn-tests" onclick="switchTab('tests', this)" class="nav-btn flex flex-col items-center gap-1 text-brand-muted hover:text-brand-dark transition duration-200 w-16 p-1.5 rounded-xl">
                 <div class="p-1 rounded-lg">
                     <i data-lucide="check-square" class="w-5 h-5"></i>
                 </div>
                 <span class="text-[9px] font-bold tracking-tight">Тесты</span>
             </button>
 
-            <!-- Кнопка ПРОФИЛЬ -->
-            <button onclick="switchTab('progress', this)" class="nav-btn flex flex-col items-center gap-1 text-brand-muted hover:text-brand-dark transition duration-200 w-16 p-1.5 rounded-xl">
+            <!-- ПРОГРЕСС -->
+            <button id="nav-btn-progress" onclick="switchTab('progress', this)" class="nav-btn flex flex-col items-center gap-1 text-brand-muted hover:text-brand-dark transition duration-200 w-16 p-1.5 rounded-xl">
                 <div class="p-1 rounded-lg">
                     <i data-lucide="user" class="w-5 h-5"></i>
                 </div>
@@ -352,29 +479,38 @@
 
     </div>
 
-    <!-- Логика работы приложения (JS) -->
+    <!-- Логика веб-приложения -->
     <script>
-        // Глобальное состояние приложения
+        // Состояние приложения
         const state = {
-            xp: 150,
+            xp: 0,
             level: 1,
-            mod2Completed: false,
-            mod2Percent: 0,
-            quizCompleted: false,
-            quizScore: 0,
+            // 15 уроков (по 3 на блок)
+            readLessons: {
+                'm1-l1': false, 'm1-l2': false, 'm1-l3': false,
+                'm2-l1': false, 'm2-l2': false, 'm2-l3': false,
+                'm3-l1': false, 'm3-l2': false, 'm3-l3': false,
+                'm4-l1': false, 'm4-l2': false, 'm4-l3': false,
+                'm5-l1': false, 'm5-l2': false, 'm5-l3': false
+            },
+            testResults: {
+                'test-1': null, 'test-2': null, 'test-3': null, 'test-4': null, 'test-5': null
+            },
+            activeQuizId: null,
+            quizQuestionIdx: 0,
+            quizCorrectAnswers: 0,
+            activeSimId: null,
+            simStep: 1,
             simScore: 50,
-            simStep: 1
+            currentModuleId: null
         };
 
-        // Запуск инициализации при загрузке страницы
         window.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
             updateUI();
-            initQuiz();
-            initSimulator();
         });
 
-        // Функция для вывода красивого уведомления (Toast) вместо alert
+        // Функция Toast-сообщений
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -390,265 +526,821 @@
             container.appendChild(toast);
             lucide.createIcons();
 
-            // Анимация появления
             setTimeout(() => {
                 toast.classList.remove('translate-y-2', 'opacity-0');
             }, 50);
 
-            // Автоудаление через 3.5 секунды
             setTimeout(() => {
                 toast.classList.add('translate-y-2', 'opacity-0');
                 setTimeout(() => toast.remove(), 300);
             }, 3500);
         }
 
-        // Вспомогательная функция переключения вкладок
+        // Переключение вкладок
         function switchTab(screenId, btnElement) {
-            // Скрываем все экраны
+            goBackToCourses();
+            exitQuiz();
+            exitSimulator();
+
             document.querySelectorAll('.screen').forEach(screen => {
                 screen.classList.remove('active');
             });
             
-            // Сбрасываем стили навигационных кнопок
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.className = "nav-btn flex flex-col items-center gap-1 text-brand-muted hover:text-brand-dark transition duration-200 w-16 p-1.5 rounded-xl";
             });
 
-            // Показываем целевой экран
             const targetScreen = document.getElementById(`screen-${screenId}`);
             targetScreen.classList.add('active');
 
-            // Подсвечиваем активную кнопку навигации с помощью желтой плашки и черного текста
             btnElement.className = "nav-btn flex flex-col items-center gap-1 text-brand-dark bg-brand-yellow font-bold shadow-sm transition duration-200 w-16 p-1.5 rounded-xl";
 
-            // Изменение заголовка подраздела
             const headerSubtitle = document.getElementById('header-subtitle');
-            if (screenId === 'courses') headerSubtitle.innerText = 'Твой старт в страховании';
+            if (screenId === 'courses') headerSubtitle.innerText = 'Мини-курс по заработку на страховании';
             if (screenId === 'simulator') headerSubtitle.innerText = 'Отработка реальных кейсов';
             if (screenId === 'tests') headerSubtitle.innerText = 'Оценка полученных знаний';
             if (screenId === 'progress') headerSubtitle.innerText = 'Твои личные достижения';
 
             lucide.createIcons();
+            updateUI();
         }
 
-        // Обновление всех данных на интерфейсе из State
+        // Подсчет прогресса и разблокировки модулей
         function updateUI() {
-            // Общий прогресс
-            const overallPercent = state.mod2Completed ? 100 : 33;
+            const m1Read = ['m1-l1', 'm1-l2', 'm1-l3'].filter(id => state.readLessons[id]).length;
+            const m2Read = ['m2-l1', 'm2-l2', 'm2-l3'].filter(id => state.readLessons[id]).length;
+            const m3Read = ['m3-l1', 'm3-l2', 'm3-l3'].filter(id => state.readLessons[id]).length;
+            const m4Read = ['m4-l1', 'm4-l2', 'm4-l3'].filter(id => state.readLessons[id]).length;
+            const m5Read = ['m5-l1', 'm5-l2', 'm5-l3'].filter(id => state.readLessons[id]).length;
+
+            const m1Percent = Math.round((m1Read / 3) * 100);
+            const m2Percent = Math.round((m2Read / 3) * 100);
+            const m3Percent = Math.round((m3Read / 3) * 100);
+            const m4Percent = Math.round((m4Read / 3) * 100);
+            const m5Percent = Math.round((m5Read / 3) * 100);
+
+            const isM1Complete = m1Percent === 100;
+            const isM2Complete = m2Percent === 100;
+            const isM3Complete = m3Percent === 100;
+            const isM4Complete = m4Percent === 100;
+
+            document.getElementById('mod-progress-text-1').innerText = `${m1Percent}%`;
+            document.getElementById('mod-progress-text-2').innerText = `${m2Percent}%`;
+            document.getElementById('mod-progress-text-3').innerText = `${m3Percent}%`;
+            document.getElementById('mod-progress-text-4').innerText = `${m4Percent}%`;
+            document.getElementById('mod-progress-text-5').innerText = `${m5Percent}%`;
+
+            // Модуль 2 разблокировка
+            const modCard2 = document.getElementById('mod-card-2');
+            const modBadge2 = document.getElementById('mod-badge-2');
+            const modLockText2 = document.getElementById('mod-lock-text-2');
+            if (isM1Complete) {
+                modCard2.classList.remove('opacity-60');
+                modBadge2.innerText = 'Доступен';
+                modBadge2.className = 'text-[10px] font-bold uppercase tracking-wider text-brand-dark bg-brand-yellow px-2.5 py-1 rounded-md';
+                modLockText2.innerText = '3 урока • Доступен тест';
+                document.getElementById('mod-icon-wrapper-2').className = 'p-2 bg-yellow-400/10 rounded-xl transition';
+                document.getElementById('mod-icon-2').classList.remove('text-brand-muted');
+                document.getElementById('mod-icon-2').classList.add('text-brand-dark');
+            }
+
+            // Модуль 3 разблокировка
+            const modCard3 = document.getElementById('mod-card-3');
+            const modBadge3 = document.getElementById('mod-badge-3');
+            const modLockText3 = document.getElementById('mod-lock-text-3');
+            if (isM2Complete && isM1Complete) {
+                modCard3.classList.remove('opacity-60');
+                modBadge3.innerText = 'Доступен';
+                modBadge3.className = 'text-[10px] font-bold uppercase tracking-wider text-brand-dark bg-brand-yellow px-2.5 py-1 rounded-md';
+                modLockText3.innerText = '3 урока • Доступен тест';
+                document.getElementById('mod-icon-wrapper-3').className = 'p-2 bg-yellow-400/10 rounded-xl transition';
+                document.getElementById('mod-icon-3').classList.remove('text-brand-muted');
+                document.getElementById('mod-icon-3').classList.add('text-brand-dark');
+            }
+
+            // Модуль 4 разблокировка
+            const modCard4 = document.getElementById('mod-card-4');
+            const modBadge4 = document.getElementById('mod-badge-4');
+            const modLockText4 = document.getElementById('mod-lock-text-4');
+            if (isM3Complete && isM2Complete) {
+                modCard4.classList.remove('opacity-60');
+                modBadge4.innerText = 'Доступен';
+                modBadge4.className = 'text-[10px] font-bold uppercase tracking-wider text-brand-dark bg-brand-yellow px-2.5 py-1 rounded-md';
+                modLockText4.innerText = '3 урока • Доступен тест';
+                document.getElementById('mod-icon-wrapper-4').className = 'p-2 bg-yellow-400/10 rounded-xl transition';
+                document.getElementById('mod-icon-4').classList.remove('text-brand-muted');
+                document.getElementById('mod-icon-4').classList.add('text-brand-dark');
+            }
+
+            // Модуль 5 разблокировка
+            const modCard5 = document.getElementById('mod-card-5');
+            const modBadge5 = document.getElementById('mod-badge-5');
+            const modLockText5 = document.getElementById('mod-lock-text-5');
+            if (isM4Complete && isM3Complete) {
+                modCard5.classList.remove('opacity-60');
+                modBadge5.innerText = 'Доступен';
+                modBadge5.className = 'text-[10px] font-bold uppercase tracking-wider text-brand-dark bg-brand-yellow px-2.5 py-1 rounded-md';
+                modLockText5.innerText = '3 урока • Доступен тест';
+                document.getElementById('mod-icon-wrapper-5').className = 'p-2 bg-yellow-400/10 rounded-xl transition';
+                document.getElementById('mod-icon-5').classList.remove('text-brand-muted');
+                document.getElementById('mod-icon-5').classList.add('text-brand-dark');
+            }
+
+            // Общий прогресс-бар
+            const totalRead = m1Read + m2Read + m3Read + m4Read + m5Read;
+            const overallPercent = Math.round((totalRead / 15) * 100);
             document.getElementById('overall-progress-text').innerText = `${overallPercent}%`;
             document.getElementById('overall-progress-bar').style.width = `${overallPercent}%`;
 
-            // Модуль 2
-            document.getElementById('mod-2-percent').innerText = `${state.mod2Percent}%`;
-            if (state.mod2Completed) {
-                const badge = document.getElementById('mod-2-badge');
-                badge.innerText = 'Пройдено';
-                badge.className = 'text-[10px] font-bold uppercase tracking-wider text-brand-yellow bg-brand-dark px-2.5 py-1 rounded-md';
-                
-                // Разблокируем модуль 3 (визуально)
-                const mod3 = document.querySelector('[onclick="openModule(\'module-3\')"]');
-                mod3.classList.remove('opacity-60');
-            }
-
-            // XP и LVL
+            // Уровни XP
             document.getElementById('profile-xp-text').innerText = `${state.xp} / 500 XP`;
             document.getElementById('leaderboard-my-xp').innerText = `${state.xp} XP`;
+
+            let newLvl = 1;
+            let lvlText = 'Уровень 1: Стажёр-новичок';
+            let avatar = '👨‍🎓';
+            if (state.xp >= 200) {
+                newLvl = 2;
+                lvlText = 'Уровень 2: Страховой Агент';
+                avatar = '💼';
+            }
+            if (state.xp >= 400) {
+                newLvl = 3;
+                lvlText = 'Уровень 3: Сертифицированный Профи';
+                avatar = '👑';
+            }
+
+            if (newLvl !== state.level) {
+                state.level = newLvl;
+                showToast(`🎉 Поздравляем! Твой уровень в AVK.POLIS повышен до Lvl ${state.level}!`);
+            }
+
+            document.getElementById('user-rank-badge').innerText = `Lvl ${state.level}`;
+            document.getElementById('profile-lvl-text').innerText = lvlText;
+            document.getElementById('profile-avatar').innerText = avatar;
+
+            // Блокировки тестов
+            const quizCard2 = document.getElementById('quiz-card-2');
+            const quizStatus2 = document.getElementById('quiz-status-text-2');
+            const quizBtn2 = document.getElementById('quiz-btn-2');
+            if (isM1Complete) {
+                quizCard2.classList.remove('opacity-60');
+                quizStatus2.innerText = state.testResults['test-2'] !== null ? `Сдан (${state.testResults['test-2']}/3)` : 'Доступен • 3 вопроса';
+                quizBtn2.innerText = 'Начать';
+                quizBtn2.className = 'text-xs font-bold text-brand-dark bg-brand-yellow px-2.5 py-1 rounded-md';
+            }
+
+            const quizCard3 = document.getElementById('quiz-card-3');
+            const quizStatus3 = document.getElementById('quiz-status-text-3');
+            const quizBtn3 = document.getElementById('quiz-btn-3');
+            if (isM2Complete) {
+                quizCard3.classList.remove('opacity-60');
+                quizStatus3.innerText = state.testResults['test-3'] !== null ? `Сдан (${state.testResults['test-3']}/3)` : 'Доступен • 3 вопроса';
+                quizBtn3.innerText = 'Начать';
+                quizBtn3.className = 'text-xs font-bold text-brand-dark bg-brand-yellow px-2.5 py-1 rounded-md';
+            }
+
+            const quizCard4 = document.getElementById('quiz-card-4');
+            const quizStatus4 = document.getElementById('quiz-status-text-4');
+            const quizBtn4 = document.getElementById('quiz-btn-4');
+            if (isM3Complete) {
+                quizCard4.classList.remove('opacity-60');
+                quizStatus4.innerText = state.testResults['test-4'] !== null ? `Сдан (${state.testResults['test-4']}/3)` : 'Доступен • 3 вопроса';
+                quizBtn4.innerText = 'Начать';
+                quizBtn4.className = 'text-xs font-bold text-brand-dark bg-brand-yellow px-2.5 py-1 rounded-md';
+            }
+
+            const quizCard5 = document.getElementById('quiz-card-5');
+            const quizStatus5 = document.getElementById('quiz-status-text-5');
+            const quizBtn5 = document.getElementById('quiz-btn-5');
+            if (isM4Complete) {
+                quizCard5.classList.remove('opacity-60');
+                quizStatus5.innerText = state.testResults['test-5'] !== null ? `Сдан (${state.testResults['test-5']}/3)` : 'Доступен • 3 вопроса';
+                quizBtn5.innerText = 'Начать';
+                quizBtn5.className = 'text-xs font-bold text-brand-dark bg-brand-yellow px-2.5 py-1 rounded-md';
+            }
+
+            // Статусы наград
+            if (state.testResults['test-1'] !== null) {
+                document.getElementById('quiz-status-text-1').innerText = `Сдан (${state.testResults['test-1']}/3)`;
+                document.getElementById('ach-1').classList.remove('grayscale', 'opacity-60');
+                document.getElementById('ach-1').classList.add('bg-white');
+            }
+            if (state.testResults['test-2'] !== null) {
+                document.getElementById('ach-2').classList.remove('grayscale', 'opacity-60');
+                document.getElementById('ach-2').classList.add('bg-white');
+            }
+            if (state.testResults['test-3'] !== null) {
+                document.getElementById('ach-3').classList.remove('grayscale', 'opacity-60');
+                document.getElementById('ach-3').classList.add('bg-white');
+            }
+            if (state.testResults['test-4'] !== null) {
+                document.getElementById('ach-4').classList.remove('grayscale', 'opacity-60');
+                document.getElementById('ach-4').classList.add('bg-white');
+            }
+            if (state.testResults['test-5'] !== null) {
+                document.getElementById('ach-5').classList.remove('grayscale', 'opacity-60');
+                document.getElementById('ach-5').classList.add('bg-white');
+            }
             
-            if (state.xp >= 300 && state.level === 1) {
-                state.level = 2;
-                document.getElementById('user-rank-badge').innerText = 'Агент (Lvl 2)';
-                document.getElementById('profile-lvl-text').innerText = 'Уровень 2: Сертифицированный Агент';
-                showToast('🎉 Уровень повышен до Агент (Lvl 2)! Твоя квалификация растёт.');
+            // Ачивка "Отличник"
+            const perfectScore = Object.values(state.testResults).some(score => score === 3);
+            if (perfectScore) {
+                document.getElementById('ach-6').classList.remove('grayscale', 'opacity-60');
+                document.getElementById('ach-6').classList.add('bg-white');
             }
         }
 
-        // Начисление XP
         function addXP(amount) {
             state.xp += amount;
             updateUI();
         }
 
-        // ================= ЛОГИКА ОТКРЫТИЯ УЧЕБНЫХ МОДУЛЕЙ =================
-        const modulesData = {
+        // ================= БАЗА ДАННЫХ КОНТЕНТА: 5 БЛОКОВ ОБУЧЕНИЯ =================
+        const modulesDatabase = {
             'module-1': {
-                title: '🌱 Модуль 1: Азбука страховщика',
-                content: `
-                    <div class="prose prose-slate max-w-none">
-                        <span class="text-xs font-bold text-brand-dark bg-brand-yellow px-2.5 py-1 rounded-md">ИЗУЧЕНО</span>
-                        <h3 class="text-lg font-bold text-brand-dark mt-3 mb-2">Глоссарий основных терминов</h3>
-                        <p class="text-xs text-brand-text leading-relaxed mb-4">
-                            Для успешной работы в AVK.POLIS необходимо правильно использовать профессиональную лексику. Давай разберем ключевые понятия:
-                        </p>
-                        <div class="space-y-3.5 text-xs text-brand-text">
-                            <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
-                                <strong class="text-brand-dark block mb-1">Франшиза</strong>
-                                Часть убытка, которую клиент при страховом случае оплачивает сам. Бывает условной и безусловной. Существенно снижает стоимость полиса.
+                title: '🌱 Блок 1: Начало работы',
+                desc: 'Все о юридических нюансах и старте',
+                lessons: [
+                    {
+                        id: 'm1-l1',
+                        title: 'Урок 1.1: Выбор налогового статуса',
+                        content: `
+                            <span class="text-xs font-bold text-brand-dark bg-brand-yellow px-2.5 py-1 rounded-md">НАЛОГИ</span>
+                            <h3 class="text-lg font-extrabold text-brand-dark mt-3 mb-2">Налоговые статусы страхового агента</h3>
+                            <p class="text-xs text-brand-text leading-relaxed mb-4">
+                                Правильный старт бизнеса страхового агента убережет вас от штрафов и максимизирует ваш доход. В РФ доступно 3 варианта работы:
+                            </p>
+                            <div class="space-y-3.5 text-xs text-brand-text mb-4">
+                                <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-100">
+                                    <strong class="text-brand-dark block mb-1">1. Самозанятость (НПД) — 4% с дохода</strong>
+                                    Простой и самый выгодный вариант. Вы получаете **наивысший процент КВ (комиссионного вознаграждения)**. Отчетность подается автоматически агрегатором напрямую в ФНС. Официальное приложение ФНС — **«Мой налог»**. 
+                                    <br><strong class="text-yellow-600">❗️ Важно:</strong> Многие агрегаторы выплачивают дополнительную премию для компенсации налога по самозанятости.
+                                </div>
+                                <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-100">
+                                    <strong class="text-brand-dark block mb-1">2. ИП на УСН — 6% с дохода</strong>
+                                    Подходит, если планируются крупные годовые обороты (свыше 2.4 млн руб). Выплачиваются высокие проценты КВ, но требуется вести отчетность самостоятельно.
+                                </div>
+                                <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-100">
+                                    <strong class="text-brand-dark block mb-1">3. Физическое лицо — НДФЛ 13%</strong>
+                                    Вычет налога происходит автоматически со стороны агрегатора, однако вы получите **минимальный процент КВ**. Невыгодный вариант для постоянной работы.
+                                </div>
                             </div>
-                            <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
-                                <strong class="text-brand-dark block mb-1">Выгодоприобретатель</strong>
-                                Тот, кто по договору страхования получит деньги в случае ЧП. Чаще всего сам застрахованный, но при автокредите им может быть банк-кредитор.
+                        `
+                    },
+                    {
+                        id: 'm1-l2',
+                        title: 'Урок 1.2: Платформы и Агрегаторы',
+                        content: `
+                            <span class="text-xs font-bold text-brand-dark bg-brand-yellow px-2.5 py-1 rounded-md">ИНФРАСТРУКТУРА</span>
+                            <h3 class="text-lg font-extrabold text-brand-dark mt-3 mb-2">С кем сотрудничать?</h3>
+                            <p class="text-xs text-brand-text leading-relaxed mb-3">
+                                Раньше страховому агенту приходилось заключать договоры с каждым страховщиком отдельно. Сегодня есть **платформы-агрегаторы** (Pampadu, Сравни.ру и другие), которые объединяют более 15+ ведущих страховых компаний в едином окне.
+                            </p>
+                            <p class="text-xs text-brand-text leading-relaxed mb-4">
+                                Вы вводите данные один раз, получаете расчеты от всех СК, выбираете самую дешевую или надежную, а после оплаты полиса клиентом мгновенно получаете свое КВ на баланс.
+                            </p>
+                            <div class="p-3 bg-brand-dark text-white rounded-xl text-xs">
+                                💡 Выплаты КВ на платформах достигают 30-40% от стоимости полиса по ипотеке и до 15-25% по ОСАГО.
                             </div>
-                            <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
-                                <strong class="text-brand-dark block mb-1">Страховая премия</strong>
-                                Плата за страховку (цена полиса), которую клиент вносит страховой компании при оформлении договора.
+                        `
+                    },
+                    {
+                        id: 'm1-l3',
+                        title: 'Урок 1.3: Пошаговый план первой сделки',
+                        content: `
+                            <span class="text-xs font-bold text-brand-dark bg-brand-yellow px-2.5 py-1 rounded-md">ПРАКТИКА</span>
+                            <h3 class="text-lg font-extrabold text-brand-dark mt-3 mb-2">Первая продажа за 4 шага</h3>
+                            <p class="text-xs text-brand-text leading-relaxed mb-3">
+                                Чтобы сделать свой первый полис и почувствовать реальные деньги, не нужно арендовать офис:
+                            </p>
+                            <div class="space-y-2 text-xs text-brand-text mb-4">
+                                <p>1️⃣ <strong>Сбор данных:</strong> Соберите данные у знакомого или близкого, кому нужно продлить полис ОСАГО или ипотеки.</p>
+                                <p>2️⃣ <strong>Расчет:</strong> Зайдите в личный кабинет агрегатора и введите данные.</p>
+                                <p>3️⃣ <strong>Предложение:</strong> Покажите клиенту цены от разных СК. Экономия может составить до 50%!</p>
+                                <p>4️⃣ <strong>Ссылка на оплату:</strong> Отправьте официальную ссылку на оплату. Клиент платит напрямую СК, вы получаете КВ.</p>
                             </div>
-                        </div>
-                    </div>
-                `
+                        `
+                    }
+                ]
             },
             'module-2': {
-                title: '🚗 Модуль 2: Автострахование (ОСАГО и КАСКО)',
-                content: `
-                    <div class="prose prose-slate max-w-none">
-                        <span class="text-xs font-bold text-brand-dark bg-brand-yellow px-2.5 py-1 rounded-md">ИЗУЧЕНИЕ</span>
-                        <h3 class="text-lg font-bold text-brand-dark mt-3 mb-2">Принципиальные отличия ОСАГО от КАСКО</h3>
-                        <p class="text-xs text-brand-text leading-relaxed mb-4">
-                            Главная ошибка новичков — путать эти два продукта. Запомни базовое различие:
-                        </p>
-                        <div class="space-y-3 mb-4 text-xs">
-                            <div class="p-3 bg-yellow-400/10 rounded-xl border border-brand-yellow">
-                                <strong class="text-brand-dark block mb-1">🚗 ОСАГО — Обязательное страхование</strong>
-                                Защищает <span class="font-bold text-brand-dark">чужие машины и здоровье</span>, если виноват ты. Твой автомобиль по ОСАГО ремонтировать никто не будет!
+                title: '🏠 Блок 2: Страхование ипотеки',
+                desc: 'Золотая жила для страхового агента',
+                lessons: [
+                    {
+                        id: 'm2-l1',
+                        title: 'Урок 2.1: Почему ипотека — золотая жила?',
+                        content: `
+                            <span class="text-xs font-bold text-brand-dark bg-brand-yellow px-2.5 py-1 rounded-md">БИЗНЕС</span>
+                            <h3 class="text-lg font-extrabold text-brand-dark mt-3 mb-2">Экономика ипотечного страхования</h3>
+                            <p class="text-xs text-brand-text leading-relaxed mb-3">
+                                Ипотечное страхование — самый высокодоходный сегмент для начинающего агента. И вот почему:
+                            </p>
+                            <ul class="list-disc list-inside text-xs text-brand-text space-y-1.5 mb-4">
+                                <li><strong>Высокие чеки:</strong> Средняя цена полиса варьируется от 5 000 до 45 000+ рублей.</li>
+                                <li><strong>Пожизненный пассивный доход:</strong> Ипотека выдается на 15-30 лет. Клиент обязан продлевать полис каждый год. Если вы сработаете качественно, клиент будет приносить вам КВ годами.</li>
+                                <li><strong>Огромное КВ:</strong> Агрегаторы платят до 35-50% от стоимости полиса в виде комиссии.</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 'm2-l2',
+                        title: 'Урок 2.2: Виды ипотечных страховок',
+                        content: `
+                            <span class="text-xs font-bold text-brand-dark bg-brand-yellow px-2.5 py-1 rounded-md">ПРОДУКТ</span>
+                            <h3 class="text-lg font-extrabold text-brand-dark mt-3 mb-2">Что требует банк от заемщика?</h3>
+                            <div class="space-y-3 text-xs text-brand-text mb-4">
+                                <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                                    <strong class="text-brand-dark block mb-1">Имущество (Конструктив)</strong>
+                                    Обязательное страхование коробки квартиры (стены, плиты, перекрытия) от разрушения, стихийных бедствий, взрывов. Без него банк не выдаст кредит.
+                                </div>
+                                <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                                    <strong class="text-brand-dark block mb-1">Жизнь и здоровье</strong>
+                                    Формально добровольное, но при отказе банк поднимает ставку по ипотечному кредиту на **1-2%**. Для заемщика переплата по процентам банку всегда в 3-4 раза выше, чем стоимость страхового полиса!
+                                </div>
+                                <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                                    <strong class="text-brand-dark block mb-1">Титульное страхование</strong>
+                                    Защита от риска потери права собственности. Требуется в основном при покупке вторичного жилья в первые 3 года сделки.
+                                </div>
                             </div>
-                            <div class="p-3 bg-slate-900 text-white rounded-xl border border-slate-800">
-                                <strong class="text-brand-yellow block mb-1">💎 КАСКО — Добровольное страхование</strong>
-                                Защищает <span class="font-bold text-brand-yellow">твой собственный автомобиль</span> от угона, стихийных бедствий и повреждений в ДТП, даже если виноват ты сам.
-                            </div>
-                        </div>
-                        <p class="text-xs text-brand-text leading-relaxed mb-4">
-                            Лимиты выплат по ОСАГО строго зафиксированы законом: до 400 000 рублей за повреждение имущества и до 500 000 рублей за причинение вреда жизни или здоровью.
-                        </p>
-                        <button onclick="markModule2AsRead()" class="w-full bg-brand-dark hover:bg-brand-slate text-brand-yellow text-xs font-bold py-3.5 px-4 rounded-xl shadow-lg transition duration-200">
-                            Понятно, завершить модуль (+50 XP)
-                        </button>
-                    </div>
-                `
+                        `
+                    },
+                    {
+                        id: 'm2-l3',
+                        title: 'Урок 2.3: Как экономить деньги клиентов',
+                        content: `
+                            <span class="text-xs font-bold text-brand-dark bg-brand-yellow px-2.5 py-1 rounded-md">СКИДКИ</span>
+                            <h3 class="text-lg font-extrabold text-brand-dark mt-3 mb-2">Борьба с банковскими навязываниями</h3>
+                            <p class="text-xs text-brand-text leading-relaxed mb-3">
+                                Банки навязывают собственные страховые полисы при выдаче ипотеки, пользуясь растерянностью клиентов. Цены в банках обычно **в 1.5 - 2 раза выше рыночных**.
+                            </p>
+                            <p class="text-xs text-brand-text leading-relaxed mb-4">
+                                Ваше главное оружие: предложить клиенту оформить тот же полис в аккредитованной страховой компании через агрегатор со скидкой до 50% от банковского предложения. Условия кредита при этом абсолютно не изменятся!
+                            </p>
+                        `
+                    }
+                ]
             },
             'module-3': {
-                title: '💼 Модуль 3: Работа с возражениями',
-                content: `
-                    <div class="prose prose-slate max-w-none">
-                        <span class="text-xs font-bold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-md">ЗАБЛОКИРОВАНО</span>
-                        <h3 class="text-lg font-bold text-brand-dark mt-3 mb-2">Психология общения с клиентами в AVK.POLIS</h3>
-                        <p class="text-xs text-brand-text leading-relaxed">
-                            Здесь будут представлены лучшие скрипты отработки возражения «Дорого» и авторские методики закрытия сделок в авто- и имущественном страховании.
-                        </p>
-                    </div>
-                `
+                title: '🚗 Блок 3: ОСАГО',
+                desc: 'Все тонкости автогражданской ответственности',
+                lessons: [
+                    {
+                        id: 'm3-l1',
+                        title: 'Урок 3.1: Суть ОСАГО и законы',
+                        content: `
+                            <span class="text-xs font-bold text-brand-dark bg-brand-yellow px-2.5 py-1 rounded-md">ОБЯЗАТЕЛЬНОЕ</span>
+                            <h3 class="text-lg font-extrabold text-brand-dark mt-3 mb-2">Гражданская ответственность на дороге</h3>
+                            <p class="text-xs text-brand-text leading-relaxed mb-3">
+                                ОСАГО — Обязательное страхование автогражданской ответственности. Данный полис не оплатит ремонт машины виновника, он покроет ущерб тем, кого виновник задел.
+                            </p>
+                            <div class="p-3 bg-yellow-400/10 border border-brand-yellow text-xs space-y-1 rounded-xl mb-4">
+                                <p class="font-bold text-brand-dark">Законодательные лимиты выплат:</p>
+                                <p>🔹 До <strong>400 000 рублей</strong> за ущерб чужому имуществу (машинам, заборам, столбам).</p>
+                                <p>🔹 До <strong>500 000 рублей</strong> за вред жизни и здоровью каждого пострадавшего.</p>
+                            </div>
+                        `
+                    },
+                    {
+                        id: 'm3-l2',
+                        title: 'Урок 3.2: КБМ и расчет стоимости',
+                        content: `
+                            <span class="text-xs font-bold text-brand-dark bg-brand-yellow px-2.5 py-1 rounded-md">ФОРМУЛА</span>
+                            <h3 class="text-lg font-extrabold text-brand-dark mt-3 mb-2">Как формируется тариф ОСАГО?</h3>
+                            <p class="text-xs text-brand-text leading-relaxed mb-3">
+                                Цена ОСАГО состоит из Базового Тарифа (ТБ) и системы коэффициентов (регион, мощность авто, возраст-стаж, количество водителей).
+                            </p>
+                            <p class="text-xs text-brand-text leading-relaxed mb-4">
+                                Ключевой коэффициент — **КБМ (Коэффициент Бонус-Малус)**. Это скидка за безаварийную езду. За каждый безаварийный год КБМ снижается (максимальная скидка — 54%, КБМ 0.46). В случае ДТП по вашей вине КБМ резко повышается (максимальный КБМ — 3.94). База КБМ едина для всех компаний и контролируется РСА.
+                            </p>
+                        `
+                    },
+                    {
+                        id: 'm3-l3',
+                        title: 'Урок 3.3: Какие документы нужны и Е-ОСАГО',
+                        content: `
+                            <span class="text-xs font-bold text-brand-dark bg-brand-yellow px-2.5 py-1 rounded-md">ОФОРМЛЕНИЕ</span>
+                            <h3 class="text-lg font-extrabold text-brand-dark mt-3 mb-2">Перечень документов</h3>
+                            <p class="text-xs text-brand-text leading-relaxed mb-4">
+                                Для точного расчета и выпуска полиса ОСАГО вам потребуются следующие документы (сканы или четкие фото):
+                            </p>
+                            <ul class="list-disc list-inside text-xs text-brand-text space-y-1 mb-4">
+                                <li>СТС или ПТС (данные автомобиля).</li>
+                                <li>Паспорт собственника автомобиля и паспорт страхователя (могут совпадать).</li>
+                                <li>Водительские удостоверения всех водителей, кто будет вписан в полис.</li>
+                            </ul>
+                        `
+                    }
+                ]
+            },
+            'module-4': {
+                title: '🛡️ Блок 4: Основы страхования',
+                desc: 'Профессиональная база терминов',
+                lessons: [
+                    {
+                        id: 'm4-l1',
+                        title: 'Урок 4.1: Словарь страхового агента',
+                        content: `
+                            <span class="text-xs font-bold text-brand-dark bg-brand-yellow px-2.5 py-1 rounded-md">ГЛОССАРИЙ</span>
+                            <h3 class="text-lg font-extrabold text-brand-dark mt-3 mb-2">Выучите термины назубок</h3>
+                            <div class="space-y-3.5 text-xs text-brand-text mb-4">
+                                <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                                    <strong class="text-brand-dark block mb-1">Страховая сумма</strong>
+                                    Предельный лимит выплаты денег страховой компанией при несчастном случае.
+                                </div>
+                                <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                                    <strong class="text-brand-dark block mb-1">Страховая премия</strong>
+                                    Официальная цена страхового полиса, которую платит клиент.
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        id: 'm4-l2',
+                        title: 'Урок 4.2: Роли участников договора',
+                        content: `
+                            <span class="text-xs font-bold text-brand-dark bg-brand-yellow px-2.5 py-1 rounded-md">РОЛИ</span>
+                            <h3 class="text-lg font-extrabold text-brand-dark mt-3 mb-2">Кто есть кто?</h3>
+                            <div class="space-y-2 text-xs text-brand-text mb-4">
+                                <p>🔹 <strong>Страховщик</strong> — страховая организация, имеющая лицензию.</p>
+                                <p>🔹 <strong>Страхователь</strong> — тот, кто подписывает договор и платит премию.</p>
+                                <p>🔹 <strong>Застрахованный</strong> — лицо, чье имущество или жизнь защищены.</p>
+                                <p>🔹 <strong>Выгодоприобретатель</strong> — лицо, получающее страховую выплату. В случае ипотеки первым выгодоприобретателем всегда является банк.</p>
+                            </div>
+                        `
+                    },
+                    {
+                        id: 'm4-l3',
+                        title: 'Урок 4.3: Франшиза: условная и безусловная',
+                        content: `
+                            <span class="text-xs font-bold text-brand-dark bg-brand-yellow px-2.5 py-1 rounded-md">ФРАНШИЗА</span>
+                            <h3 class="text-lg font-extrabold text-brand-dark mt-3 mb-2">Инструмент снижения цены полиса</h3>
+                            <p class="text-xs text-brand-text leading-relaxed mb-4">
+                                Франшиза — зафиксированная договором часть ущерба, которую клиент берет на себя при страховом случае. Безусловная франшиза всегда вычитается из суммы выплаты. Наличие франшизы помогает снизить цену КАСКО на 30-50%.
+                            </p>
+                        `
+                    }
+                ]
+            },
+            'module-5': {
+                title: '📈 Блок 5: Инструменты для работы',
+                desc: 'Техники долгосрочных продаж',
+                lessons: [
+                    {
+                        id: 'm5-l1',
+                        title: 'Урок 5.1: Вред демпинга и скидок',
+                        content: `
+                            <span class="text-xs font-bold text-brand-dark bg-brand-yellow px-2.5 py-1 rounded-md">АНАЛИЗ</span>
+                            <h3 class="text-lg font-extrabold text-brand-dark mt-3 mb-2">Почему демпинговать вредно?</h3>
+                            <p class="text-xs text-brand-text leading-relaxed mb-3">
+                                Отдавать часть своего КВ в виде скидки клиенту ради удержания — худшая привычка новичка.
+                            </p>
+                            <div class="space-y-2 text-xs text-brand-text mb-4">
+                                <p>❌ <strong>Краткосрочно:</strong> Кажется, что это дает быстрый объем продаж и клиенты любят вас.</p>
+                                <p>❌ <strong>Долгосрочно:</strong> Вы работаете за копейки, быстро выгораете, а клиенты привыкают к постоянной скидке и уйдут при любой попытке продать полис за полную стоимость.</p>
+                            </div>
+                        `
+                    },
+                    {
+                        id: 'm5-l2',
+                        title: 'Урок 5.2: Как давать скидки с умом',
+                        content: `
+                            <span class="text-xs font-bold text-brand-dark bg-brand-yellow px-2.5 py-1 rounded-md">ПРОДАЖИ</span>
+                            <h3 class="text-lg font-extrabold text-brand-dark mt-3 mb-2">Правила умных скидок</h3>
+                            <p class="text-xs text-brand-text leading-relaxed mb-3">
+                                Скидка должна даваться как исключение, а не как обычная норма:
+                            </p>
+                            <ul class="list-disc list-inside text-xs text-brand-text space-y-1.5 mb-4">
+                                <li><strong>По случаю:</strong> ко Дню рождения клиента или празднику.</li>
+                                <li><strong>За объём:</strong> оформление ипотеки и машины одновременно.</li>
+                                <li><strong>За рекомендацию:</strong> приведи друга — получи бонус на мобильный.</li>
+                            </ul>
+                        `
+                    },
+                    {
+                        id: 'm5-l3',
+                        title: 'Урок 5.3: Обзор полезных инструментов',
+                        content: `
+                            <span class="text-xs font-bold text-brand-dark bg-brand-yellow px-2.5 py-1 rounded-md">ИНСТРУМЕНТЫ</span>
+                            <h3 class="text-lg font-extrabold text-brand-dark mt-3 mb-2">Что должно быть у каждого агента?</h3>
+                            <p class="text-xs text-brand-text leading-relaxed mb-4">
+                                Пользуйтесь официальным приложением ФНС «Мой налог» для контроля доходов, заведите блокнот или CRM для учета продлений клиентов и всегда держите под рукой калькуляторы КБМ и агрегаторы страхования.
+                            </p>
+                        `
+                    }
+                ]
             }
         };
 
-        function openModule(moduleId) {
-            if (moduleId === 'module-3' && !state.mod2Completed) {
-                showToast('❌ Для доступа к Модулю 3 нужно завершить Модуль 2!', 'error');
-                return;
+        function viewModule(moduleId) {
+            // Проверка последовательности блокировки модулей
+            if (moduleId === 'module-2') {
+                const m1Read = ['m1-l1', 'm1-l2', 'm1-l3'].filter(id => state.readLessons[id]).length;
+                if (m1Read < 3) {
+                    showToast('❌ Блок 2 заблокирован! Сначала завершите все уроки Блока 1.', 'error');
+                    return;
+                }
+            }
+            if (moduleId === 'module-3') {
+                const m2Read = ['m2-l1', 'm2-l2', 'm2-l3'].filter(id => state.readLessons[id]).length;
+                if (m2Read < 3) {
+                    showToast('❌ Блок 3 заблокирован! Сначала завершите все уроки Блока 2.', 'error');
+                    return;
+                }
+            }
+            if (moduleId === 'module-4') {
+                const m3Read = ['m3-l1', 'm3-l2', 'm3-l3'].filter(id => state.readLessons[id]).length;
+                if (m3Read < 3) {
+                    showToast('❌ Блок 4 заблокирован! Сначала завершите все уроки Блока 3.', 'error');
+                    return;
+                }
+            }
+            if (moduleId === 'module-5') {
+                const m4Read = ['m4-l1', 'm4-l2', 'm4-l3'].filter(id => state.readLessons[id]).length;
+                if (m4Read < 3) {
+                    showToast('❌ Блок 5 заблокирован! Сначала завершите все уроки Блока 4.', 'error');
+                    return;
+                }
             }
 
-            const activeScreen = document.querySelector('.screen.active');
-            activeScreen.classList.remove('active');
+            state.currentModuleId = moduleId;
+            const moduleData = modulesDatabase[moduleId];
 
-            const viewer = document.getElementById('screen-module-viewer');
-            viewer.classList.add('active');
+            document.getElementById('screen-courses').classList.remove('active');
+            document.getElementById('screen-module-viewer').classList.add('active');
 
-            const data = modulesData[moduleId];
-            document.getElementById('module-content-area').innerHTML = `
-                <h2 class="text-xl font-extrabold text-brand-dark mb-4">${data.title}</h2>
-                <div class="space-y-4">${data.content}</div>
-            `;
+            document.getElementById('module-viewer-title').innerText = moduleData.title;
+            document.getElementById('module-viewer-desc').innerText = moduleData.desc;
+
+            const lessonsList = document.getElementById('module-lessons-list');
+            lessonsList.innerHTML = '';
+
+            moduleData.lessons.forEach(lesson => {
+                const isRead = state.readLessons[lesson.id];
+                const item = document.createElement('div');
+                item.className = `p-4 rounded-xl border ${isRead ? 'border-emerald-200 bg-emerald-50/20' : 'border-slate-100 bg-white hover:border-brand-yellow'} shadow-sm flex justify-between items-center cursor-pointer transition`;
+                item.onclick = () => readLesson(lesson.id);
+                item.innerHTML = `
+                    <div class="space-y-1">
+                        <h4 class="text-xs font-bold text-brand-dark">${lesson.title}</h4>
+                        <p class="text-[10px] text-brand-muted">${isRead ? 'Изучено' : 'Доступно'}</p>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        ${isRead 
+                            ? '<span class="text-emerald-600"><i data-lucide="check-circle-2" class="w-5 h-5"></i></span>' 
+                            : '<span class="text-slate-400"><i data-lucide="circle" class="w-5 h-5"></i></span>'}
+                    </div>
+                `;
+                lessonsList.appendChild(item);
+            });
+
             lucide.createIcons();
         }
 
         function goBackToCourses() {
             document.getElementById('screen-module-viewer').classList.remove('active');
+            document.getElementById('screen-lesson-reader').classList.remove('active');
             document.getElementById('screen-courses').classList.add('active');
+            updateUI();
         }
 
-        function markModule2AsRead() {
-            if (!state.mod2Completed) {
-                state.mod2Completed = true;
-                state.mod2Percent = 100;
-                addXP(50);
-                showToast('🚀 Модуль 2 успешно изучен! Переходи во вкладку Тесты.');
+        function readLesson(lessonId) {
+            const moduleData = modulesDatabase[state.currentModuleId];
+            const lesson = moduleData.lessons.find(l => l.id === lessonId);
+
+            document.getElementById('screen-module-viewer').classList.remove('active');
+            document.getElementById('screen-lesson-reader').classList.add('active');
+
+            const isRead = state.readLessons[lessonId];
+            const contentArea = document.getElementById('lesson-content-area');
+            contentArea.innerHTML = `
+                <h2 class="text-lg font-extrabold text-brand-dark mb-1">${lesson.title}</h2>
+                <div class="border-b border-slate-100 pb-3 mb-3"></div>
+                <div class="text-xs text-brand-text leading-relaxed">${lesson.content}</div>
+                <div class="pt-4 border-t border-slate-100 flex justify-end">
+                    <button onclick="markLessonAsRead('${lesson.id}')" class="w-full ${isRead ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-brand-dark hover:bg-brand-slate'} text-brand-yellow font-bold py-3.5 px-4 rounded-xl text-xs transition duration-200 shadow-md">
+                        ${isRead ? 'Пройдено ✓ (Назад)' : 'Завершить тему (+20 XP)'}
+                    </button>
+                </div>
+            `;
+            lucide.createIcons();
+        }
+
+        function goBackToModuleViewer() {
+            document.getElementById('screen-lesson-reader').classList.remove('active');
+            document.getElementById('screen-module-viewer').classList.add('active');
+            viewModule(state.currentModuleId);
+        }
+
+        function markLessonAsRead(lessonId) {
+            if (!state.readLessons[lessonId]) {
+                state.readLessons[lessonId] = true;
+                addXP(20);
+                showToast('📚 Тема успешно пройдена! +20 XP.');
             }
-            goBackToCourses();
+            goBackToModuleViewer();
         }
 
-
-        // ================= ЛОГИКА ТЕСТА (ИНТЕРАКТИВ) =================
-        const quizQuestions = [
-            {
-                q: 'Какая максимальная выплата по ОСАГО за вред, причиненный имуществу (автомобилю) одного потерпевшего?',
-                a: ['До 400 000 рублей', 'До 500 000 рублей', 'До 1 000 000 рублей'],
-                correct: 0
+        // ================= ЭКРАН ТЕСТИРОВАНИЯ: 5 ТЕСТОВ =================
+        const quizDatabase = {
+            'test-1': {
+                title: 'Тест 1: Начало работы и налоги',
+                questions: [
+                    {
+                        q: 'Какова налоговая ставка для самозанятого страхового агента при получении доходов от физлиц?',
+                        a: ['6%', '13%', '4%'],
+                        correct: 2
+                    },
+                    {
+                        q: 'Какое официальное приложение ФНС используется самозанятыми агентами?',
+                        a: ['«Мой налог»', '«Госуслуги»', '«Личный кабинет ИП»'],
+                        correct: 0
+                    },
+                    {
+                        q: 'В каком случае страховой агент получает максимальное комиссионное вознаграждение (КВ)?',
+                        a: ['Работая как обычное Физическое лицо', 'Работая как Самозанятый на НПД', 'Способ работы не влияет на КВ'],
+                        correct: 1
+                    }
+                ]
             },
-            {
-                q: 'Что из перечисленного покрывает полис КАСКО в отличие от полиса ОСАГО?',
-                a: ['Ущерб здоровью пешехода', 'Угон застрахованного автомобиля', 'Ответственность водителя перед другими участниками ДТП'],
-                correct: 1
+            'test-2': {
+                title: 'Тест 2: Страхование ипотеки',
+                questions: [
+                    {
+                        q: 'Какое страхование ипотеки является строго обязательным по закону РФ?',
+                        a: ['Страхование жизни', 'Имущественное страхование (Конструктив)', 'Титульное страхование'],
+                        correct: 1
+                    },
+                    {
+                        q: 'Почему заемщику невыгодно отказываться от страхования жизни, несмотря на его добровольность?',
+                        a: ['Банк повысит процентную ставку по кредиту на 1-2%, что приведет к переплате', 'Банк мгновенно заберет квартиру без суда', 'Без этого полиса нельзя переехать в квартиру'],
+                        correct: 0
+                    },
+                    {
+                        q: 'Какое комиссионное вознаграждение может получать агент за ипотечные договоры?',
+                        a: ['До 35-50% от стоимости полиса', 'Не более 5%', 'Ипотечные полисы оформляются бесплатно'],
+                        correct: 0
+                    }
+                ]
             },
-            {
-                q: 'Каким образом безусловная франшиза влияет на итоговую стоимость полиса КАСКО?',
-                a: ['Увеличивает стоимость', 'Никак не влияет', 'Уменьшает стоимость'],
-                correct: 2
+            'test-3': {
+                title: 'Тест 3: Специфика ОСАГО',
+                questions: [
+                    {
+                        q: 'Каков лимит выплат по ОСАГО за повреждение чужого имущества каждому потерпевшему?',
+                        a: ['До 100 000 рублей', 'До 500 000 рублей', 'До 400 000 рублей'],
+                        correct: 2
+                    },
+                    {
+                        q: 'Что определяет показатель КБМ в формуле ОСАГО?',
+                        a: ['Регион проживания водителя', 'Скидку или надбавку за безаварийную езду', 'Возраст и стаж водителя'],
+                        correct: 1
+                    },
+                    {
+                        q: 'Какие документы нужны для расчета и покупки ОСАГО?',
+                        a: ['СТС/ПТС, паспорта собственника/страхователя и права водителей', 'Только паспорт собственника автомобиля', 'Права водителя и ИНН компании'],
+                        correct: 0
+                    }
+                ]
+            },
+            'test-4': {
+                title: 'Тест 4: Базовая терминология',
+                questions: [
+                    {
+                        q: 'Кто в ипотечном страховании по закону выступает выгодоприобретателем первой очереди?',
+                        a: ['Сам заемщик', 'Банк-кредитор (в размере остатка долга)', 'Страховая компания'],
+                        correct: 1
+                    },
+                    {
+                        q: 'Что такое безусловная франшиза?',
+                        a: ['Сумма ущерба, которая всегда вычитается из страховой выплаты', 'Скидка на покупку следующего полиса', 'Обязательный сбор за расторжение договора'],
+                        correct: 0
+                    },
+                    {
+                        q: 'Что понимают под термином «Страховая премия»?',
+                        a: ['Выплату за ущерб', 'Сумму максимального лимита ответственности', 'Официальную цену полиса, оплаченную клиентом'],
+                        correct: 2
+                    }
+                ]
+            },
+            'test-5': {
+                title: 'Тест 5: Демпинг и продажи',
+                questions: [
+                    {
+                        q: 'Почему регулярный демпинг (скидки из своего КВ) опасен для агента?',
+                        a: ['Выгорание, нулевая прибыль и клиенты, требующие постоянных скидок', 'Страховые компании штрафуют за это на миллионы', 'Это запрещено Уголовным кодексом РФ'],
+                        correct: 0
+                    },
+                    {
+                        q: 'В каком случае предоставление скидки клиенту экономически оправдано?',
+                        a: ['При каждом расчете для любого нового клиента', 'За большой объем, рекомендацию нового друга или по особому случаю', 'Скидки вообще никогда нельзя давать'],
+                        correct: 1
+                    },
+                    {
+                        q: 'Какая стратегия удержания клиентов самая эффективная в долгосрочной перспективе?',
+                        a: ['Постоянный демпинг цен ниже конкурентов', 'Качественный экспертный сервис, поддержка при ДТП и напоминания о продлении', 'Игнорирование конкурентов и агрессивное навязывание'],
+                        correct: 1
+                    }
+                ]
             }
-        ];
+        };
 
-        let currentQuestionIdx = 0;
-        let correctAnswersCount = 0;
+        function startQuiz(quizId) {
+            const m1Read = ['m1-l1', 'm1-l2', 'm1-l3'].filter(id => state.readLessons[id]).length;
+            const m2Read = ['m2-l1', 'm2-l2', 'm2-l3'].filter(id => state.readLessons[id]).length;
+            const m3Read = ['m3-l1', 'm3-l2', 'm3-l3'].filter(id => state.readLessons[id]).length;
+            const m4Read = ['m4-l1', 'm4-l2', 'm4-l3'].filter(id => state.readLessons[id]).length;
 
-        function initQuiz() {
-            currentQuestionIdx = 0;
-            correctAnswersCount = 0;
-            showQuestion();
+            if (quizId === 'test-2' && m1Read < 3) {
+                showToast('❌ Тест заблокирован! Пройдите сначала все уроки Блока 1.', 'error');
+                return;
+            }
+            if (quizId === 'test-3' && m2Read < 3) {
+                showToast('❌ Тест заблокирован! Пройдите сначала все уроки Блока 2.', 'error');
+                return;
+            }
+            if (quizId === 'test-4' && m3Read < 3) {
+                showToast('❌ Тест заблокирован! Пройдите сначала все уроки Блока 3.', 'error');
+                return;
+            }
+            if (quizId === 'test-5' && m4Read < 3) {
+                showToast('❌ Тест заблокирован! Пройдите сначала все уроки Блока 4.', 'error');
+                return;
+            }
+
+            state.activeQuizId = quizId;
+            state.quizQuestionIdx = 0;
+            state.quizCorrectAnswers = 0;
+
+            document.getElementById('quiz-selector').classList.add('hidden');
+            document.getElementById('quiz-active-container').classList.remove('hidden');
+
+            showQuizQuestion();
         }
 
-        function showQuestion() {
-            const data = quizQuestions[currentQuestionIdx];
-            const total = quizQuestions.length;
+        function exitQuiz() {
+            state.activeQuizId = null;
+            document.getElementById('quiz-active-container').classList.add('hidden');
+            document.getElementById('quiz-selector').classList.remove('hidden');
+            updateUI();
+        }
 
-            // Прогресс бар и текст
-            document.getElementById('quiz-progress-text').innerText = `Вопрос ${currentQuestionIdx + 1} из ${total}`;
-            document.getElementById('quiz-progress-bar').style.width = `${((currentQuestionIdx + 1) / total) * 100}%`;
+        function showQuizQuestion() {
+            const quiz = quizDatabase[state.activeQuizId];
+            const currentQuestion = quiz.questions[state.quizQuestionIdx];
+            const totalQuestions = quiz.questions.length;
 
-            // Текст вопроса
-            document.getElementById('quiz-question').innerText = data.q;
+            const progressPercent = Math.round(((state.quizQuestionIdx + 1) / totalQuestions) * 100);
 
-            // Варианты ответов
-            const answersDiv = document.getElementById('quiz-answers');
-            answersDiv.innerHTML = '';
-            
-            data.a.forEach((ans, idx) => {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = `
+                <div class="flex justify-between items-center text-xs text-brand-muted mb-3 font-semibold">
+                    <span>Вопрос ${state.quizQuestionIdx + 1} из ${totalQuestions}</span>
+                    <span class="text-brand-dark font-bold">${quiz.title}</span>
+                </div>
+                <div class="w-full bg-slate-100 rounded-full h-1.5 mb-5 overflow-hidden">
+                    <div class="bg-brand-dark h-full transition-all duration-300" style="width: ${progressPercent}%"></div>
+                </div>
+                <h4 class="font-bold text-brand-dark text-sm leading-relaxed mb-4">
+                    ${currentQuestion.q}
+                </h4>
+                <div class="space-y-2.5" id="quiz-options-box">
+                    <!-- Опции -->
+                </div>
+            `;
+
+            const optionsBox = document.getElementById('quiz-options-box');
+            currentQuestion.a.forEach((ans, idx) => {
                 const btn = document.createElement('button');
                 btn.className = "w-full text-left p-3.5 rounded-xl border border-slate-200 text-xs font-semibold hover:bg-yellow-400/10 hover:border-brand-yellow transition duration-150 active:scale-98";
                 btn.innerText = ans;
-                btn.onclick = () => selectAnswer(idx, btn);
-                answersDiv.appendChild(btn);
+                btn.onclick = () => selectQuizAnswer(idx, btn);
+                optionsBox.appendChild(btn);
             });
         }
 
-        function selectAnswer(selectedIdx, buttonElement) {
-            const currentQuestion = quizQuestions[currentQuestionIdx];
-            const buttons = document.getElementById('quiz-answers').querySelectorAll('button');
-            
-            // Отключаем кнопки после выбора ответа
+        function selectQuizAnswer(selectedIdx, btnElement) {
+            const quiz = quizDatabase[state.activeQuizId];
+            const currentQuestion = quiz.questions[state.quizQuestionIdx];
+            const buttons = document.getElementById('quiz-options-box').querySelectorAll('button');
+
             buttons.forEach(btn => btn.disabled = true);
 
             if (selectedIdx === currentQuestion.correct) {
-                buttonElement.className = "w-full text-left p-3.5 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-800 text-xs font-bold";
-                correctAnswersCount++;
-                showToast('🎉 Правильный ответ!');
+                btnElement.className = "w-full text-left p-3.5 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-800 text-xs font-bold";
+                state.quizCorrectAnswers++;
+                showToast('🎉 Правильно!');
             } else {
-                buttonElement.className = "w-full text-left p-3.5 rounded-xl border-2 border-rose-500 bg-rose-50 text-rose-800 text-xs font-bold";
-                // Подсвечиваем правильный
+                btnElement.className = "w-full text-left p-3.5 rounded-xl border-2 border-rose-500 bg-rose-50 text-rose-800 text-xs font-bold";
                 buttons[currentQuestion.correct].className = "w-full text-left p-3.5 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-800 text-xs font-bold";
-                showToast('❌ Неверно', 'error');
+                showToast('❌ Ошибка', 'error');
             }
 
-            // Переход к следующему вопросу с задержкой
             setTimeout(() => {
-                currentQuestionIdx++;
-                if (currentQuestionIdx < quizQuestions.length) {
-                    showQuestion();
+                state.quizQuestionIdx++;
+                if (state.quizQuestionIdx < quiz.questions.length) {
+                    showQuizQuestion();
                 } else {
                     finishQuiz();
                 }
@@ -656,167 +1348,275 @@
         }
 
         function finishQuiz() {
-            const quizDiv = document.getElementById('quiz-container');
-            const total = quizQuestions.length;
-            const finalScore = Math.round((correctAnswersCount / total) * 100);
+            const container = document.getElementById('quiz-container');
+            const total = quizDatabase[state.activeQuizId].questions.length;
+            const finalPercent = Math.round((state.quizCorrectAnswers / total) * 100);
 
-            let bonusXP = correctAnswersCount * 30;
-            addXP(bonusXP);
+            const earnedXP = state.quizCorrectAnswers * 30;
+            addXP(earnedXP);
 
-            let resultHTML = `
+            const prevScore = state.testResults[state.activeQuizId];
+            if (prevScore === null || state.quizCorrectAnswers > prevScore) {
+                state.testResults[state.activeQuizId] = state.quizCorrectAnswers;
+            }
+
+            let resultMessage = 'Нужно перечитать теорию! 📚';
+            let emoji = '🫣';
+            if (finalPercent === 100) {
+                resultMessage = 'Потрясающе! Абсолютный результат!';
+                emoji = '🏆🌟';
+            } else if (finalPercent >= 66) {
+                resultMessage = 'Тест успешно сдан!';
+                emoji = '👍';
+            }
+
+            container.innerHTML = `
                 <div class="text-center py-6">
-                    <span class="text-5xl">🏆</span>
-                    <h4 class="font-bold text-brand-dark text-lg mt-4 mb-2">Тест завершен!</h4>
-                    <p class="text-xs text-brand-muted mb-4">Твой результат: <span class="font-extrabold text-brand-dark">${correctAnswersCount} из ${total} правильных</span> (${finalScore}%)</p>
+                    <span class="text-5xl">${emoji}</span>
+                    <h4 class="font-extrabold text-brand-dark text-base mt-4 mb-2">${resultMessage}</h4>
+                    <p class="text-xs text-brand-muted mb-4">Правильных ответов: <span class="font-extrabold text-brand-dark">${state.quizCorrectAnswers} из ${total}</span> (${finalPercent}%)</p>
+                    <div class="text-xs font-semibold text-brand-muted mb-5">Опыт за попытку: <span class="text-emerald-600 font-extrabold">+${earnedXP} XP</span></div>
+                    <button onclick="exitQuiz()" class="w-full bg-brand-dark hover:bg-brand-slate text-brand-yellow font-bold py-3.5 rounded-xl text-xs transition duration-200">Вернуться в тесты</button>
+                </div>
             `;
+            updateUI();
+        }
 
-            if (finalScore === 100) {
-                resultHTML += `
-                    <div class="bg-yellow-400/10 text-brand-dark p-3.5 rounded-xl text-xs mb-5 font-semibold border border-brand-yellow">
-                        Идеальный результат! Достижение «Отличник» разблокировано!
+        // ================= СИМУЛЯТОР ДИАЛОГОВ (ОТРАБОТКА ВОЗРАЖЕНИЙ) =================
+        const simulatorDatabase = {
+            'sim-1': {
+                title: 'Кейс 1: КАСКО/Ипотека — зачем страховать жизнь?',
+                client: 'Михаил (34 года)',
+                startText: 'Зачем мне страховать жизнь при ипотеке? Банк просит за это 15 000 рублей! Я лучше откажусь и застрахую только стены за 4 тысячи.',
+                steps: {
+                    1: {
+                        options: [
+                            {
+                                text: "«Вы не имеете права отказываться. Банк просто заберет у вас квартиру и аннулирует сделку!»",
+                                points: -15,
+                                feedback: "Ложь и грубое давление. Клиент теряет доверие.",
+                                next: 2
+                            },
+                            {
+                                text: "«Если вы откажетесь, банк повысит вам ставку по кредиту на 1%. Давайте посчитаем: при долге 5 млн рублей, 1% — это дополнительные 50 000 рублей процентов в первый же год! Полис экономит вам 35 000 рублей чистыми, плюс защищает вашу семью от долгов в случае непредвиденных обстоятельств.»",
+                                points: 30,
+                                feedback: "Идеально! Четкий математический аргумент через язык выгоды клиента.",
+                                next: 2
+                            },
+                            {
+                                text: "«Ну да, это дорого. Но спорить с банком бесполезно, у них такие правила.»",
+                                points: 5,
+                                feedback: "Слабый агент. Не объяснили пользу продукта и согласились с негативом.",
+                                next: 2
+                            }
+                        ]
+                    },
+                    2: {
+                        clientText: "Ого, я не думал о повышении процентов по кредиту! Но ведь 15 000 рублей — всё равно крупная сумма. Можно ли как-то снизить стоимость?",
+                        options: [
+                            {
+                                text: "«Конечно! Банки продают полисы своих компаний по завышенным тарифам. Я рассчитаю вам этот полис в аккредитованной страховой компании через агрегатор AVK.POLIS. Это будет стоить около 9 000 рублей при тех же условиях банка!»",
+                                points: 25,
+                                feedback: "Блестяще! Показали реальное решение проблемы завышенной банковской стоимости.",
+                                next: 3
+                            },
+                            {
+                                text: "«К сожалению, торговаться с банком нельзя. Придется оплатить полную стоимость.»",
+                                points: -5,
+                                feedback: "Упущенная выгода. Вы могли забрать эту сделку себе.",
+                                next: 3
+                            }
+                        ]
+                    }
+                }
+            },
+            'sim-2': {
+                title: 'Кейс 2: ОСАГО достаточно, КАСКО не надо',
+                client: 'Елена (28 лет)',
+                startText: 'Зачем мне КАСКО? Я купила новую машину, езжу аккуратно только на работу. ОСАГО же покроет всё, если что-то случится, разве нет?',
+                steps: {
+                    1: {
+                        options: [
+                            {
+                                text: "«Елена, ОСАГО выплатит компенсацию только в том случае, если в вас врежутся и у виновника будет полис. Если виновник скроется, окажется без полиса или вы случайно заденете ограждение на парковке — ремонт будет за ваш счет.»",
+                                points: 25,
+                                feedback: "Отличный разбор реальной ситуации! Четко разделены зоны ответственности.",
+                                next: 2
+                            },
+                            {
+                                text: "«ОСАГО защищает только чужие машины. Вашу машину чинить никто не будет при ДТП по вашей вине. Подумайте об этом.»",
+                                points: 10,
+                                feedback: "Верно по сути, но звучит суховато. Не хватает ярких жизненных примеров.",
+                                next: 2
+                            },
+                            {
+                                text: "«Да ладно вам, все оформляют КАСКО на новые машины, это уже стандарт.»",
+                                points: -15,
+                                feedback: "Нарушение этики и обесценивание мнения клиента. Прямой путь к потере контакта.",
+                                next: 2
+                            }
+                        ]
+                    },
+                    2: {
+                        clientText: "Ой, я и не знала про такие тонкости. Но если виновник будет без полиса — неужели это частая ситуация? Неужели нет компромиссного варианта подешевле?",
+                        options: [
+                            {
+                                text: "«К сожалению, сейчас до 10-15% водителей ездят без полиса. Специально на этот случай у нас есть продукт Мини-КАСКО. Он стоит всего около 5 000 рублей, но полностью покроет ремонт вашей новой машины, если виновник ДТП окажется без страховки.»",
+                                points: 25,
+                                feedback: "Блестяще! Точечное предложение альтернативного компромиссного продукта под боль клиента.",
+                                next: 3
+                            },
+                            {
+                                text: "«Да, статистика пугающая. Поэтому лучше берите полное КАСКО за 60 тысяч и ни о чем не думайте!»",
+                                points: 5,
+                                feedback: "Слишком прямолинейно пытаетесь навязать дорогой продукт, игнорируя запрос на эконом-решение.",
+                                next: 3
+                            },
+                            {
+                                text: "«Никаких компромиссов тут нет, либо платите за полноценное КАСКО, либо рискуете всем.»",
+                                points: -10,
+                                feedback: "Грубый ультиматум, отталкивающий клиента.",
+                                next: 3
+                            }
+                        ]
+                    }
+                }
+            },
+            'sim-3': {
+                title: 'Кейс 3: Скидки и демпинг комиссии',
+                client: 'Сергей (42 года)',
+                startText: 'Ваш конкурент пообещал сделать мне скидку 1 000 рублей за счет своей комиссии при покупке полиса ОСАГО. Сделайте мне такую же скидку, и я оформлю у вас!',
+                steps: {
+                    1: {
+                        options: [
+                            {
+                                text: "«Я не даю скидки просто так из своей комиссии, потому что мой сервис включает полное ведение вашего дела при ДТП, напоминание о продлении и защиту ваших прав. Но я могу сделать вам приятный подарок, если вы оформите сразу страховку на квартиру!»",
+                                points: 25,
+                                feedback: "Супер! Отличная защита от демпинга с удержанием ценности своего сервиса и предложением кросс-продукта.",
+                                next: 2
+                            },
+                            {
+                                text: "«Хорошо, Сергей, я сделаю вам скидку в 1 100 рублей, только купите у меня.»",
+                                points: -20,
+                                feedback: "Ужасно! Вы сдемпинговали, отдали свой заработок и приучили клиента выкручивать вам руки при каждом продлении.",
+                                next: 2
+                            },
+                            {
+                                text: "«Тот агент просто мошенник, он продаст вам фальшивый полис!»",
+                                points: -10,
+                                feedback: "Обвинение конкурентов без доказательств портит вашу собственную репутацию.",
+                                next: 2
+                            }
+                        ]
+                    },
+                    2: {
+                        clientText: "Что ж, профессиональное ведение дела при ДТП действительно важно. Но неужели у вас нет никаких легальных программ лояльности?",
+                        options: [
+                            {
+                                text: "«Я могу предоставить вам скидку 10% на КАСКО или страхование имущества, а также начислить бонусы по акции 'Приведи друга'. Но на ОСАГО скидки запрещены регламентом компании.»",
+                                points: 25,
+                                feedback: "Умный ход! Увеличение объемов за счет кросс-продуктов и привлечения новых клиентов.",
+                                next: 3
+                            },
+                            {
+                                text: "«К сожалению, у нас вообще нет никаких программ лояльности.»",
+                                points: 5,
+                                feedback: "Нейтрально, но упущен шанс предложить другие продукты компании.",
+                                next: 3
+                            }
+                        ]
+                    }
+                }
+            }
+        };
+
+        function startSimulator(simId) {
+            state.activeSimId = simId;
+            state.simStep = 1;
+            state.simScore = 50;
+
+            document.getElementById('sim-selector').classList.add('hidden');
+            document.getElementById('sim-active-container').classList.remove('hidden');
+
+            renderSimDialogue();
+        }
+
+        function exitSimulator() {
+            state.activeSimId = null;
+            document.getElementById('sim-active-container').classList.add('hidden');
+            document.getElementById('sim-selector').classList.remove('hidden');
+            updateUI();
+        }
+
+        function renderSimDialogue() {
+            const scenario = simulatorDatabase[state.activeSimId];
+            const chatHistory = document.getElementById('sim-chat-history');
+            const optionsDiv = document.getElementById('sim-options');
+
+            document.getElementById('sim-score').innerText = `${state.simScore} / 100`;
+
+            if (state.simStep === 1) {
+                chatHistory.innerHTML = `
+                    <div class="flex items-start gap-2.5">
+                        <div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center font-bold text-sm text-brand-dark shrink-0">👨‍💼</div>
+                        <div class="bg-slate-100 p-3 rounded-2xl rounded-tl-none max-w-[85%] text-xs text-brand-text leading-relaxed">
+                            <span class="font-bold block text-[10px] text-brand-muted mb-0.5">Клиент: ${scenario.client}</span>
+                            ${scenario.startText}
+                        </div>
                     </div>
                 `;
-                // Открываем ачивку в профиле
-                document.getElementById('badge-quiz-master').classList.remove('grayscale', 'opacity-60');
-                document.getElementById('badge-quiz-master').classList.add('bg-white');
             }
 
-            resultHTML += `
-                    <div class="text-xs font-semibold text-brand-muted mb-5">Получено опыта: <span class="text-emerald-600 font-extrabold">+${bonusXP} XP</span></div>
-                    <button onclick="resetQuiz()" class="w-full bg-brand-dark hover:bg-brand-slate text-brand-yellow font-bold py-3.5 rounded-xl text-xs transition duration-200">Повторить тест</button>
-                </div>
-            `;
-            quizDiv.innerHTML = resultHTML;
-        }
-
-        function resetQuiz() {
-            // Восстанавливаем оригинальную верстку теста
-            document.getElementById('quiz-container').innerHTML = `
-                <div class="flex justify-between items-center text-xs text-brand-muted mb-3 font-semibold">
-                    <span id="quiz-progress-text">Вопрос 1 из 3</span>
-                    <span id="quiz-timer" class="text-brand-dark font-bold">Тест по теме: ОСАГО</span>
-                </div>
-                <div class="w-full bg-slate-100 rounded-full h-1.5 mb-5 overflow-hidden">
-                    <div id="quiz-progress-bar" class="bg-brand-dark h-full transition-all duration-300" style="width: 33%"></div>
-                </div>
-                <h4 id="quiz-question" class="font-bold text-brand-dark text-sm leading-relaxed mb-4"></h4>
-                <div class="space-y-2.5" id="quiz-answers"></div>
-            `;
-            initQuiz();
-        }
-
-
-        // ================= ЛОГИКА СИМУЛЯТОРА ДИАЛОГА =================
-        const simScenario = [
-            {
-                step: 1,
-                clientText: "Слушайте, автосалон насчитал мне КАСКО за 80 000 рублей! Это же грабеж. ОСАГО за 8 тысяч вполне достаточно, зачем мне переплачивать в 10 раз?",
-                options: [
-                    {
-                        text: "«Михаил, вы не понимаете рисков. Если вашу машину угонят — ОСАГО вам никак не поможет, будете платить сами!»",
-                        points: -15,
-                        feedback: "Слишком напористо. Клиент уходит в психологическую защиту.",
-                        next: 2
-                    },
-                    {
-                        text: "«Понимаю ваше возмущение суммой. Но КАСКО и ОСАГО защищают абсолютно разные вещи. ОСАГО — вашу ответственность за чужие авто, а КАСКО — ваши личные деньги, вложенные в покупку.»",
-                        points: 20,
-                        feedback: "Прекрасно! Присоединение к эмоции клиента («Понимаю ваше возмущение») + рациональные аргументы.",
-                        next: 2
-                    },
-                    {
-                        text: "«Согласен, КАСКО дороговато. Но банк обязывает заемщиков страховать залог, без этого кредит просто не одобрят.»",
-                        points: 5,
-                        feedback: "Нейтрально, но упускает выгоду. Вы ссылаетесь на принуждение банка, а не на реальную пользу полиса.",
-                        next: 2
-                    }
-                ]
-            },
-            {
-                step: 2,
-                clientText: "Ну допустим, КАСКО защищает мою машину. Но я аккуратный водитель с 10-летним стажем, у меня не бывает аварий. Зачем мне платить за чужую неосторожность?",
-                options: [
-                    {
-                        text: "«Как раз на такой случай и существует КАСКО! Даже если вы припаркуете авто во дворе, а ночью в него въедет неумелый водитель и скроется — ущерб компенсирует страховая, а не вы.»",
-                        points: 25,
-                        feedback: "Отличный аргумент! Обыгран сценарий, на который аккуратность водителя никак не влияет.",
-                        next: 3
-                    },
-                    {
-                        text: "«Стаж — не гарантия безопасности. На дорогах полно сумасшедших, в вас могут въехать в любой момент.»",
-                        points: -5,
-                        feedback: "Агрессивный фокус на негатив. Клиент может воспринять это как запугивание.",
-                        next: 3
-                    },
-                    {
-                        text: "«Для водителей со стажем у нас есть специальные тарифы. Я могу предложить вам франшизу, которая снизит стоимость полиса на 30-40%.»",
-                        points: 15,
-                        feedback: "Хороший практический ход с финансовым инструментом (франшизой) для снижения цены.",
-                        next: 3
-                    }
-                ]
-            }
-        ];
-
-        function initSimulator() {
-            state.simScore = 50;
-            state.simStep = 1;
-            renderSimStep();
-        }
-
-        function renderSimStep() {
-            const currentScenario = simScenario.find(s => s.step === state.simStep);
-            
-            if (!currentScenario) {
+            const stepData = scenario.steps[state.simStep];
+            if (!stepData) {
                 finishSimulation();
                 return;
             }
 
-            // Рендер сообщения от клиента
-            const chat = document.getElementById('sim-chat-history');
-            chat.innerHTML = `
-                <div class="flex items-start gap-2.5">
-                    <div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center font-bold text-sm text-brand-dark shrink-0">👨‍💼</div>
-                    <div class="bg-slate-100 p-3 rounded-2xl rounded-tl-none max-w-[85%] text-xs text-brand-text leading-relaxed">
-                        <span class="font-bold block text-[10px] text-brand-muted mb-0.5">Клиент: Михаил (34 года)</span>
-                        ${currentScenario.clientText}
-                    </div>
-                </div>
-            `;
-
-            // Рендер вариантов ответа
-            const optionsDiv = document.getElementById('sim-options');
             optionsDiv.innerHTML = '';
-
-            currentScenario.options.forEach((opt, idx) => {
+            stepData.options.forEach((opt, idx) => {
                 const btn = document.createElement('button');
                 btn.className = "w-full text-left p-3.5 border border-slate-100 hover:border-brand-yellow hover:bg-brand-yellow/10 rounded-xl text-xs text-brand-text transition duration-150 font-medium leading-relaxed active:scale-98";
-                btn.innerHTML = `👉 ${opt.text}`;
-                btn.onclick = () => selectSimOption(opt);
+                btn.innerHTML = `👉 <span class="font-bold">Вариант ${idx + 1}:</span> ${opt.text}`;
+                btn.onclick = () => chooseSimOption(opt);
                 optionsDiv.appendChild(btn);
             });
-
-            document.getElementById('sim-score').innerText = `${state.simScore} / 100`;
         }
 
-        function selectSimOption(option) {
-            // Применяем изменения по очкам
+        function chooseSimOption(option) {
             state.simScore = Math.max(0, Math.min(100, state.simScore + option.points));
-            
-            // Выводим обратную связь через красивое всплывающее уведомление
             const toastType = option.points > 0 ? 'success' : 'error';
+            
             showToast(`${option.feedback} (${option.points > 0 ? '+' : ''}${option.points} доверия)`, toastType);
 
-            // Переходим к следующему шагу
             state.simStep = option.next;
-            
-            setTimeout(() => {
-                renderSimStep();
-            }, 2000);
+
+            const scenario = simulatorDatabase[state.activeSimId];
+            const nextStepData = scenario.steps[state.simStep];
+            const chatHistory = document.getElementById('sim-chat-history');
+
+            if (nextStepData && nextStepData.clientText) {
+                setTimeout(() => {
+                    chatHistory.innerHTML += `
+                        <div class="flex items-start gap-2.5 mt-3 animate-fade-in">
+                            <div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center font-bold text-sm text-brand-dark shrink-0">👨‍💼</div>
+                            <div class="bg-slate-100 p-3 rounded-2xl rounded-tl-none max-w-[85%] text-xs text-brand-text leading-relaxed">
+                                <span class="font-bold block text-[10px] text-brand-muted mb-0.5">Клиент: ${scenario.client}</span>
+                                ${nextStepData.clientText}
+                            </div>
+                        </div>
+                    `;
+                    renderSimDialogue();
+                }, 1000);
+            } else {
+                setTimeout(() => {
+                    finishSimulation();
+                }, 1000);
+            }
         }
 
         function finishSimulation() {
-            const container = document.getElementById('sim-container');
+            const container = document.getElementById('sim-chat-box');
             const totalResult = state.simScore;
             
             let resultTitle = 'Сделка провалена! ❌';
@@ -824,7 +1624,7 @@
             let bonusXP = 0;
 
             if (totalResult >= 75) {
-                resultTitle = 'Сделка Закрыта! КАСКО оформлено! 🏆';
+                resultTitle = 'Сделка Закрыта! Полис оформлен! 🏆';
                 emoji = '🤝🔥';
                 bonusXP = 50;
                 addXP(bonusXP);
@@ -841,22 +1641,9 @@
                     <h4 class="font-bold text-brand-dark text-sm mt-4 mb-2">${resultTitle}</h4>
                     <p class="text-xs text-brand-muted mb-4">Уровень доверия клиента на выходе: <span class="font-bold text-brand-dark">${totalResult} из 100</span></p>
                     <div class="text-xs font-semibold text-brand-muted mb-5">Получено опыта: <span class="text-emerald-600 font-bold">+${bonusXP} XP</span></div>
-                    <button onclick="restartSimulation()" class="w-full bg-brand-dark text-brand-yellow font-bold py-3 rounded-xl text-xs hover:bg-brand-slate transition">Попробовать снова</button>
+                    <button onclick="exitSimulator()" class="w-full bg-brand-dark text-brand-yellow font-bold py-3 rounded-xl text-xs hover:bg-brand-slate transition">Вернуться к списку кейсов</button>
                 </div>
             `;
-        }
-
-        function restartSimulation() {
-            // Восстанавливаем разметку симулятора
-            document.getElementById('sim-container').innerHTML = `
-                <div class="space-y-4 flex-1 overflow-y-auto mb-4" id="sim-chat-history"></div>
-                <div class="flex justify-between items-center bg-slate-50 px-3 py-2 rounded-xl mb-3 border border-slate-100">
-                    <span class="text-[11px] font-semibold text-brand-muted">Очки доверия:</span>
-                    <span id="sim-score" class="text-xs font-bold text-indigo-600">50 / 100</span>
-                </div>
-                <div class="space-y-2" id="sim-options"></div>
-            `;
-            initSimulator();
         }
     </script>
 </body>
