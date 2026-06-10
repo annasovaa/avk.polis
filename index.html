@@ -293,7 +293,7 @@
                             <h3 class="font-bold text-brand-dark">Экзаменационный центр</h3>
                         </div>
                         <p class="text-xs text-brand-muted leading-relaxed">
-                            Сдавайте тесты по каждому блоку для закрепления полученных навыков и продвижения по рейтингу AVK.POLIS.
+                            Сдавайте тесты по каждому блоку для закрепления полученных навыков и повышения вашего уровня в AVK.POLIS.
                         </p>
                     </div>
 
@@ -500,14 +500,17 @@
         window.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
             // Подгружаем дефолтные значения в инпуты
-            document.getElementById('input-first-name').value = state.firstName;
-            document.getElementById('input-last-name').value = state.lastName;
+            const fNameInput = document.getElementById('input-first-name');
+            const lNameInput = document.getElementById('input-last-name');
+            if (fNameInput) fNameInput.value = state.firstName;
+            if (lNameInput) lNameInput.value = state.lastName;
             updateUI();
         });
 
         // Функция Toast-сообщений
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
+            if (!container) return;
             const toast = document.createElement('div');
             
             const bgClass = type === 'success' 
@@ -546,15 +549,19 @@
             });
 
             const targetScreen = document.getElementById(`screen-${screenId}`);
-            targetScreen.classList.add('active');
+            if (targetScreen) targetScreen.classList.add('active');
 
-            btnElement.className = "nav-btn flex flex-col items-center gap-1 text-brand-dark bg-brand-yellow font-bold shadow-sm transition duration-200 w-16 p-1.5 rounded-xl";
+            if (btnElement) {
+                btnElement.className = "nav-btn flex flex-col items-center gap-1 text-brand-dark bg-brand-yellow font-bold shadow-sm transition duration-200 w-16 p-1.5 rounded-xl";
+            }
 
             const headerSubtitle = document.getElementById('header-subtitle');
-            if (screenId === 'courses') headerSubtitle.innerText = 'Мини-курс по заработку на страховании';
-            if (screenId === 'simulator') headerSubtitle.innerText = 'Отработка реальных кейсов';
-            if (screenId === 'tests') headerSubtitle.innerText = 'Оценка полученных знаний';
-            if (screenId === 'progress') headerSubtitle.innerText = 'Твои личные достижения';
+            if (headerSubtitle) {
+                if (screenId === 'courses') headerSubtitle.innerText = 'Мини-курс по заработку на страховании';
+                if (screenId === 'simulator') headerSubtitle.innerText = 'Отработка реальных кейсов';
+                if (screenId === 'tests') headerSubtitle.innerText = 'Оценка полученных знаний';
+                if (screenId === 'progress') headerSubtitle.innerText = 'Твои личные достижения';
+            }
 
             lucide.createIcons();
             updateUI();
@@ -562,8 +569,10 @@
 
         // Обновление настроек профиля
         function saveProfile() {
-            const fName = document.getElementById('input-first-name').value.trim();
-            const lName = document.getElementById('input-last-name').value.trim();
+            const fNameInput = document.getElementById('input-first-name');
+            const lNameInput = document.getElementById('input-last-name');
+            const fName = fNameInput ? fNameInput.value.trim() : '';
+            const lName = lNameInput ? lNameInput.value.trim() : '';
 
             if (!fName) {
                 showToast('❌ Поле "Имя" обязательно для заполнения', 'error');
@@ -580,7 +589,10 @@
         // Подсчет прогресса и разблокировки модулей
         function updateUI() {
             // Имя в кабинете
-            document.getElementById('profile-name-text').innerText = `${state.firstName} ${state.lastName}`;
+            const profileName = document.getElementById('profile-name-text');
+            if (profileName) {
+                profileName.innerText = `${state.firstName} ${state.lastName}`;
+            }
 
             const m1Read = ['m1-l1', 'm1-l2', 'm1-l3'].filter(id => state.readLessons[id]).length;
             const m2Read = ['m2-l1', 'm2-l2', 'm2-l3'].filter(id => state.readLessons[id]).length;
@@ -599,77 +611,92 @@
             const isM3Complete = m3Percent === 100;
             const isM4Complete = m4Percent === 100;
 
-            document.getElementById('mod-progress-text-1').innerText = `${m1Percent}%`;
-            document.getElementById('mod-progress-text-2').innerText = `${m2Percent}%`;
-            document.getElementById('mod-progress-text-3').innerText = `${m3Percent}%`;
-            document.getElementById('mod-progress-text-4').innerText = `${m4Percent}%`;
-            document.getElementById('mod-progress-text-5').innerText = `${m5Percent}%`;
+            const p1 = document.getElementById('mod-progress-text-1'); if (p1) p1.innerText = `${m1Percent}%`;
+            const p2 = document.getElementById('mod-progress-text-2'); if (p2) p2.innerText = `${m2Percent}%`;
+            const p3 = document.getElementById('mod-progress-text-3'); if (p3) p3.innerText = `${m3Percent}%`;
+            const p4 = document.getElementById('mod-progress-text-4'); if (p4) p4.innerText = `${m4Percent}%`;
+            const p5 = document.getElementById('mod-progress-text-5'); if (p5) p5.innerText = `${m5Percent}%`;
 
             // Модуль 2 разблокировка
             const modCard2 = document.getElementById('mod-card-2');
             const modBadge2 = document.getElementById('mod-badge-2');
             const modLockText2 = document.getElementById('mod-lock-text-2');
-            if (isM1Complete) {
+            if (isM1Complete && modCard2 && modBadge2 && modLockText2) {
                 modCard2.classList.remove('opacity-60');
                 modBadge2.innerText = 'Доступен';
                 modBadge2.className = 'text-[10px] font-bold uppercase tracking-wider text-brand-dark bg-brand-yellow px-2.5 py-1 rounded-md';
                 modLockText2.innerText = '3 урока • Доступен тест';
-                document.getElementById('mod-icon-wrapper-2').className = 'p-2 bg-yellow-400/10 rounded-xl transition';
-                document.getElementById('mod-icon-2').classList.remove('text-brand-muted');
-                document.getElementById('mod-icon-2').classList.add('text-brand-dark');
+                const wrapper = document.getElementById('mod-icon-wrapper-2');
+                const icon = document.getElementById('mod-icon-2');
+                if (wrapper) wrapper.className = 'p-2 bg-yellow-400/10 rounded-xl transition';
+                if (icon) {
+                    icon.classList.remove('text-brand-muted');
+                    icon.classList.add('text-brand-dark');
+                }
             }
 
             // Модуль 3 разблокировка
             const modCard3 = document.getElementById('mod-card-3');
             const modBadge3 = document.getElementById('mod-badge-3');
             const modLockText3 = document.getElementById('mod-lock-text-3');
-            if (isM2Complete && isM1Complete) {
+            if (isM2Complete && isM1Complete && modCard3 && modBadge3 && modLockText3) {
                 modCard3.classList.remove('opacity-60');
                 modBadge3.innerText = 'Доступен';
                 modBadge3.className = 'text-[10px] font-bold uppercase tracking-wider text-brand-dark bg-brand-yellow px-2.5 py-1 rounded-md';
                 modLockText3.innerText = '3 урока • Доступен тест';
-                document.getElementById('mod-icon-wrapper-3').className = 'p-2 bg-yellow-400/10 rounded-xl transition';
-                document.getElementById('mod-icon-3').classList.remove('text-brand-muted');
-                document.getElementById('mod-icon-3').classList.add('text-brand-dark');
+                const wrapper = document.getElementById('mod-icon-wrapper-3');
+                const icon = document.getElementById('mod-icon-3');
+                if (wrapper) wrapper.className = 'p-2 bg-yellow-400/10 rounded-xl transition';
+                if (icon) {
+                    icon.classList.remove('text-brand-muted');
+                    icon.classList.add('text-brand-dark');
+                }
             }
 
             // Модуль 4 разблокировка
             const modCard4 = document.getElementById('mod-card-4');
             const modBadge4 = document.getElementById('mod-badge-4');
             const modLockText4 = document.getElementById('mod-lock-text-4');
-            if (isM3Complete && isM2Complete) {
+            if (isM3Complete && isM2Complete && modCard4 && modBadge4 && modLockText4) {
                 modCard4.classList.remove('opacity-60');
                 modBadge4.innerText = 'Доступен';
                 modBadge4.className = 'text-[10px] font-bold uppercase tracking-wider text-brand-dark bg-brand-yellow px-2.5 py-1 rounded-md';
                 modLockText4.innerText = '3 урока • Доступен тест';
-                document.getElementById('mod-icon-wrapper-4').className = 'p-2 bg-yellow-400/10 rounded-xl transition';
-                document.getElementById('mod-icon-4').classList.remove('text-brand-muted');
-                document.getElementById('mod-icon-4').classList.add('text-brand-dark');
+                const wrapper = document.getElementById('mod-icon-wrapper-4');
+                const icon = document.getElementById('mod-icon-4');
+                if (wrapper) wrapper.className = 'p-2 bg-yellow-400/10 rounded-xl transition';
+                if (icon) {
+                    icon.classList.remove('text-brand-muted');
+                    icon.classList.add('text-brand-dark');
+                }
             }
 
             // Модуль 5 разблокировка
             const modCard5 = document.getElementById('mod-card-5');
             const modBadge5 = document.getElementById('mod-badge-5');
             const modLockText5 = document.getElementById('mod-lock-text-5');
-            if (isM4Complete && isM3Complete) {
+            if (isM4Complete && isM3Complete && modCard5 && modBadge5 && modLockText5) {
                 modCard5.classList.remove('opacity-60');
                 modBadge5.innerText = 'Доступен';
                 modBadge5.className = 'text-[10px] font-bold uppercase tracking-wider text-brand-dark bg-brand-yellow px-2.5 py-1 rounded-md';
                 modLockText5.innerText = '3 урока • Доступен тест';
-                document.getElementById('mod-icon-wrapper-5').className = 'p-2 bg-yellow-400/10 rounded-xl transition';
-                document.getElementById('mod-icon-5').classList.remove('text-brand-muted');
-                document.getElementById('mod-icon-5').classList.add('text-brand-dark');
+                const wrapper = document.getElementById('mod-icon-wrapper-5');
+                const icon = document.getElementById('mod-icon-5');
+                if (wrapper) wrapper.className = 'p-2 bg-yellow-400/10 rounded-xl transition';
+                if (icon) {
+                    icon.classList.remove('text-brand-muted');
+                    icon.classList.add('text-brand-dark');
+                }
             }
 
             // Общий прогресс-бар
             const totalRead = m1Read + m2Read + m3Read + m4Read + m5Read;
             const overallPercent = Math.round((totalRead / 15) * 100);
-            document.getElementById('overall-progress-text').innerText = `${overallPercent}%`;
-            document.getElementById('overall-progress-bar').style.width = `${overallPercent}%`;
+            const opt = document.getElementById('overall-progress-text'); if (opt) opt.innerText = `${overallPercent}%`;
+            const opb = document.getElementById('overall-progress-bar'); if (opb) opb.style.width = `${overallPercent}%`;
 
             // Уровни XP
-            document.getElementById('profile-xp-text').innerText = `${state.xp} / 500 XP`;
-            document.getElementById('leaderboard-my-xp').innerText = `${state.xp} XP`;
+            const pxp = document.getElementById('profile-xp-text'); if (pxp) pxp.innerText = `${state.xp} / 500 XP`;
 
             let newLvl = 1;
             let lvlText = 'Уровень 1: Стажёр-новичок';
@@ -690,15 +717,15 @@
                 showToast(`🎉 Поздравляем! Твой уровень в AVK.POLIS повышен до Lvl ${state.level}!`);
             }
 
-            document.getElementById('user-rank-badge').innerText = `Lvl ${state.level}`;
-            document.getElementById('profile-lvl-text').innerText = lvlText;
-            document.getElementById('profile-avatar').innerText = avatar;
+            const urb = document.getElementById('user-rank-badge'); if (urb) urb.innerText = `Lvl ${state.level}`;
+            const plt = document.getElementById('profile-lvl-text'); if (plt) plt.innerText = lvlText;
+            const pa = document.getElementById('profile-avatar'); if (pa) pa.innerText = avatar;
 
             // Блокировки тестов
             const quizCard2 = document.getElementById('quiz-card-2');
             const quizStatus2 = document.getElementById('quiz-status-text-2');
             const quizBtn2 = document.getElementById('quiz-btn-2');
-            if (isM1Complete) {
+            if (isM1Complete && quizCard2 && quizStatus2 && quizBtn2) {
                 quizCard2.classList.remove('opacity-60');
                 quizStatus2.innerText = state.testResults['test-2'] !== null ? `Сдан (${state.testResults['test-2']}/3)` : 'Доступен • 3 вопроса';
                 quizBtn2.innerText = 'Начать';
@@ -708,7 +735,7 @@
             const quizCard3 = document.getElementById('quiz-card-3');
             const quizStatus3 = document.getElementById('quiz-status-text-3');
             const quizBtn3 = document.getElementById('quiz-btn-3');
-            if (isM2Complete) {
+            if (isM2Complete && quizCard3 && quizStatus3 && quizBtn3) {
                 quizCard3.classList.remove('opacity-60');
                 quizStatus3.innerText = state.testResults['test-3'] !== null ? `Сдан (${state.testResults['test-3']}/3)` : 'Доступен • 3 вопроса';
                 quizBtn3.innerText = 'Начать';
@@ -718,7 +745,7 @@
             const quizCard4 = document.getElementById('quiz-card-4');
             const quizStatus4 = document.getElementById('quiz-status-text-4');
             const quizBtn4 = document.getElementById('quiz-btn-4');
-            if (isM3Complete) {
+            if (isM3Complete && quizCard4 && quizStatus4 && quizBtn4) {
                 quizCard4.classList.remove('opacity-60');
                 quizStatus4.innerText = state.testResults['test-4'] !== null ? `Сдан (${state.testResults['test-4']}/3)` : 'Доступен • 3 вопроса';
                 quizBtn4.innerText = 'Начать';
@@ -728,7 +755,7 @@
             const quizCard5 = document.getElementById('quiz-card-5');
             const quizStatus5 = document.getElementById('quiz-status-text-5');
             const quizBtn5 = document.getElementById('quiz-btn-5');
-            if (isM4Complete) {
+            if (isM4Complete && quizCard5 && quizStatus5 && quizBtn5) {
                 quizCard5.classList.remove('opacity-60');
                 quizStatus5.innerText = state.testResults['test-5'] !== null ? `Сдан (${state.testResults['test-5']}/3)` : 'Доступен • 3 вопроса';
                 quizBtn5.innerText = 'Начать';
@@ -737,32 +764,26 @@
 
             // Статусы наград
             if (state.testResults['test-1'] !== null) {
-                document.getElementById('quiz-status-text-1').innerText = `Сдан (${state.testResults['test-1']}/3)`;
-                document.getElementById('ach-1').classList.remove('grayscale', 'opacity-60');
-                document.getElementById('ach-1').classList.add('bg-white');
+                const qst1 = document.getElementById('quiz-status-text-1'); if (qst1) qst1.innerText = `Сдан (${state.testResults['test-1']}/3)`;
+                const ach1 = document.getElementById('ach-1'); if (ach1) { ach1.classList.remove('grayscale', 'opacity-60'); ach1.classList.add('bg-white'); }
             }
             if (state.testResults['test-2'] !== null) {
-                document.getElementById('ach-2').classList.remove('grayscale', 'opacity-60');
-                document.getElementById('ach-2').classList.add('bg-white');
+                const ach2 = document.getElementById('ach-2'); if (ach2) { ach2.classList.remove('grayscale', 'opacity-60'); ach2.classList.add('bg-white'); }
             }
             if (state.testResults['test-3'] !== null) {
-                document.getElementById('ach-3').classList.remove('grayscale', 'opacity-60');
-                document.getElementById('ach-3').classList.add('bg-white');
+                const ach3 = document.getElementById('ach-3'); if (ach3) { ach3.classList.remove('grayscale', 'opacity-60'); ach3.classList.add('bg-white'); }
             }
             if (state.testResults['test-4'] !== null) {
-                document.getElementById('ach-4').classList.remove('grayscale', 'opacity-60');
-                document.getElementById('ach-4').classList.add('bg-white');
+                const ach4 = document.getElementById('ach-4'); if (ach4) { ach4.classList.remove('grayscale', 'opacity-60'); ach4.classList.add('bg-white'); }
             }
             if (state.testResults['test-5'] !== null) {
-                document.getElementById('ach-5').classList.remove('grayscale', 'opacity-60');
-                document.getElementById('ach-5').classList.add('bg-white');
+                const ach5 = document.getElementById('ach-5'); if (ach5) { ach5.classList.remove('grayscale', 'opacity-60'); ach5.classList.add('bg-white'); }
             }
             
             // Ачивка "Отличник"
             const perfectScore = Object.values(state.testResults).some(score => score === 3);
             if (perfectScore) {
-                document.getElementById('ach-6').classList.remove('grayscale', 'opacity-60');
-                document.getElementById('ach-6').classList.add('bg-white');
+                const ach6 = document.getElementById('ach-6'); if (ach6) { ach6.classList.remove('grayscale', 'opacity-60'); ach6.classList.add('bg-white'); }
             }
         }
 
@@ -807,7 +828,7 @@
                         id: 'm1-l2',
                         title: 'Урок 1.2: Платформы и Агрегаторы',
                         content: `
-                            <span class="text-xs font-bold text-brand-dark bg-brand-yellow px-2.5 py-1 rounded-md">ИНФРАСТРУКТУРА</span>
+                            <span class="text-xs font-bold text-brand-dark bg-brand-yellow px-2.5 py-1 rounded-md">ИНФРАСТРУКУРА</span>
                             <h3 class="text-lg font-extrabold text-brand-dark mt-3 mb-2">С кем сотрудничать?</h3>
                             <p class="text-xs text-brand-text leading-relaxed mb-3">
                                 Раньше страховому агенту приходилось заключать договоры с каждым страховщиком отдельно. Сегодня есть **платформы-агрегаторы** (Pampadu, Сравни.ру и другие), которые объединяют более 15+ ведущих страховых компаний в едином окне.
@@ -1082,41 +1103,47 @@
             state.currentModuleId = moduleId;
             const moduleData = modulesDatabase[moduleId];
 
-            document.getElementById('screen-courses').classList.remove('active');
-            document.getElementById('screen-module-viewer').classList.add('active');
+            const screenCourses = document.getElementById('screen-courses');
+            const screenModuleViewer = document.getElementById('screen-module-viewer');
+            if (screenCourses) screenCourses.classList.remove('active');
+            if (screenModuleViewer) screenModuleViewer.classList.add('active');
 
-            document.getElementById('module-viewer-title').innerText = moduleData.title;
-            document.getElementById('module-viewer-desc').innerText = moduleData.desc;
+            const titleElem = document.getElementById('module-viewer-title');
+            const descElem = document.getElementById('module-viewer-desc');
+            if (titleElem) titleElem.innerText = moduleData.title;
+            if (descElem) descElem.innerText = moduleData.desc;
 
             const lessonsList = document.getElementById('module-lessons-list');
-            lessonsList.innerHTML = '';
+            if (lessonsList) {
+                lessonsList.innerHTML = '';
 
-            moduleData.lessons.forEach(lesson => {
-                const isRead = state.readLessons[lesson.id];
-                const item = document.createElement('div');
-                item.className = `p-4 rounded-xl border ${isRead ? 'border-emerald-200 bg-emerald-50/20' : 'border-slate-100 bg-white hover:border-brand-yellow'} shadow-sm flex justify-between items-center cursor-pointer transition`;
-                item.onclick = () => readLesson(lesson.id);
-                item.innerHTML = `
-                    <div class="space-y-1">
-                        <h4 class="text-xs font-bold text-brand-dark">${lesson.title}</h4>
-                        <p class="text-[10px] text-brand-muted">${isRead ? 'Изучено' : 'Доступно'}</p>
-                    </div>
-                    <div class="flex items-center gap-1.5">
-                        ${isRead 
-                            ? '<span class="text-emerald-600"><i data-lucide="check-circle-2" class="w-5 h-5"></i></span>' 
-                            : '<span class="text-slate-400"><i data-lucide="circle" class="w-5 h-5"></i></span>'}
-                    </div>
-                `;
-                lessonsList.appendChild(item);
-            });
+                moduleData.lessons.forEach(lesson => {
+                    const isRead = state.readLessons[lesson.id];
+                    const item = document.createElement('div');
+                    item.className = `p-4 rounded-xl border ${isRead ? 'border-emerald-200 bg-emerald-50/20' : 'border-slate-100 bg-white hover:border-brand-yellow'} shadow-sm flex justify-between items-center cursor-pointer transition`;
+                    item.onclick = () => readLesson(lesson.id);
+                    item.innerHTML = `
+                        <div class="space-y-1">
+                            <h4 class="text-xs font-bold text-brand-dark">${lesson.title}</h4>
+                            <p class="text-[10px] text-brand-muted">${isRead ? 'Изучено' : 'Доступно'}</p>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            ${isRead 
+                                ? '<span class="text-emerald-600"><i data-lucide="check-circle-2" class="w-5 h-5"></i></span>' 
+                                : '<span class="text-slate-400"><i data-lucide="circle" class="w-5 h-5"></i></span>'}
+                        </div>
+                    `;
+                    lessonsList.appendChild(item);
+                });
+            }
 
             lucide.createIcons();
         }
 
         function goBackToCourses() {
-            document.getElementById('screen-module-viewer').classList.remove('active');
-            document.getElementById('screen-lesson-reader').classList.remove('active');
-            document.getElementById('screen-courses').classList.add('active');
+            const smv = document.getElementById('screen-module-viewer'); if (smv) smv.classList.remove('active');
+            const slr = document.getElementById('screen-lesson-reader'); if (slr) slr.classList.remove('active');
+            const sc = document.getElementById('screen-courses'); if (sc) sc.classList.add('active');
             updateUI();
         }
 
@@ -1124,27 +1151,29 @@
             const moduleData = modulesDatabase[state.currentModuleId];
             const lesson = moduleData.lessons.find(l => l.id === lessonId);
 
-            document.getElementById('screen-module-viewer').classList.remove('active');
-            document.getElementById('screen-lesson-reader').classList.add('active');
+            const smv = document.getElementById('screen-module-viewer'); if (smv) smv.classList.remove('active');
+            const slr = document.getElementById('screen-lesson-reader'); if (slr) slr.classList.add('active');
 
             const isRead = state.readLessons[lessonId];
             const contentArea = document.getElementById('lesson-content-area');
-            contentArea.innerHTML = `
-                <h2 class="text-lg font-extrabold text-brand-dark mb-1">${lesson.title}</h2>
-                <div class="border-b border-slate-100 pb-3 mb-3"></div>
-                <div class="text-xs text-brand-text leading-relaxed">${lesson.content}</div>
-                <div class="pt-4 border-t border-slate-100 flex justify-end">
-                    <button onclick="markLessonAsRead('${lesson.id}')" class="w-full ${isRead ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-brand-dark hover:bg-brand-slate'} text-brand-yellow font-bold py-3.5 px-4 rounded-xl text-xs transition duration-200 shadow-md">
-                        ${isRead ? 'Пройдено ✓ (Назад)' : 'Завершить тему (+20 XP)'}
-                    </button>
-                </div>
-            `;
+            if (contentArea) {
+                contentArea.innerHTML = `
+                    <h2 class="text-lg font-extrabold text-brand-dark mb-1">${lesson.title}</h2>
+                    <div class="border-b border-slate-100 pb-3 mb-3"></div>
+                    <div class="text-xs text-brand-text leading-relaxed">${lesson.content}</div>
+                    <div class="pt-4 border-t border-slate-100 flex justify-end">
+                        <button onclick="markLessonAsRead('${lesson.id}')" class="w-full ${isRead ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-brand-dark hover:bg-brand-slate'} text-brand-yellow font-bold py-3.5 px-4 rounded-xl text-xs transition duration-200 shadow-md">
+                            ${isRead ? 'Пройдено ✓ (Назад)' : 'Завершить тему (+20 XP)'}
+                        </button>
+                    </div>
+                `;
+            }
             lucide.createIcons();
         }
 
         function goBackToModuleViewer() {
-            document.getElementById('screen-lesson-reader').classList.remove('active');
-            document.getElementById('screen-module-viewer').classList.add('active');
+            const slr = document.getElementById('screen-lesson-reader'); if (slr) slr.classList.remove('active');
+            const smv = document.getElementById('screen-module-viewer'); if (smv) smv.classList.add('active');
             viewModule(state.currentModuleId);
         }
 
@@ -1288,16 +1317,16 @@
             state.quizQuestionIdx = 0;
             state.quizCorrectAnswers = 0;
 
-            document.getElementById('quiz-selector').classList.add('hidden');
-            document.getElementById('quiz-active-container').classList.remove('hidden');
+            const qs = document.getElementById('quiz-selector'); if (qs) qs.classList.add('hidden');
+            const qac = document.getElementById('quiz-active-container'); if (qac) qac.classList.remove('hidden');
 
             showQuizQuestion();
         }
 
         function exitQuiz() {
             state.activeQuizId = null;
-            document.getElementById('quiz-active-container').classList.add('hidden');
-            document.getElementById('quiz-selector').classList.remove('hidden');
+            const qac = document.getElementById('quiz-active-container'); if (qac) qac.classList.add('hidden');
+            const qs = document.getElementById('quiz-selector'); if (qs) qs.classList.remove('hidden');
             updateUI();
         }
 
@@ -1309,46 +1338,53 @@
             const progressPercent = Math.round(((state.quizQuestionIdx + 1) / totalQuestions) * 100);
 
             const container = document.getElementById('quiz-container');
-            container.innerHTML = `
-                <div class="flex justify-between items-center text-xs text-brand-muted mb-3 font-semibold">
-                    <span>Вопрос ${state.quizQuestionIdx + 1} из ${totalQuestions}</span>
-                    <span class="text-brand-dark font-bold">${quiz.title}</span>
-                </div>
-                <div class="w-full bg-slate-100 rounded-full h-1.5 mb-5 overflow-hidden">
-                    <div class="bg-brand-dark h-full transition-all duration-300" style="width: ${progressPercent}%"></div>
-                </div>
-                <h4 class="font-bold text-brand-dark text-sm leading-relaxed mb-4">
-                    ${currentQuestion.q}
-                </h4>
-                <div class="space-y-2.5" id="quiz-options-box">
-                    <!-- Опции -->
-                </div>
-            `;
+            if (container) {
+                container.innerHTML = `
+                    <div class="flex justify-between items-center text-xs text-brand-muted mb-3 font-semibold">
+                        <span>Вопрос ${state.quizQuestionIdx + 1} из ${totalQuestions}</span>
+                        <span class="text-brand-dark font-bold">${quiz.title}</span>
+                    </div>
+                    <div class="w-full bg-slate-100 rounded-full h-1.5 mb-5 overflow-hidden">
+                        <div class="bg-brand-dark h-full transition-all duration-300" style="width: ${progressPercent}%"></div>
+                    </div>
+                    <h4 class="font-bold text-brand-dark text-sm leading-relaxed mb-4">
+                        ${currentQuestion.q}
+                    </h4>
+                    <div class="space-y-2.5" id="quiz-options-box">
+                        <!-- Опции -->
+                    </div>
+                `;
+            }
 
             const optionsBox = document.getElementById('quiz-options-box');
-            currentQuestion.a.forEach((ans, idx) => {
-                const btn = document.createElement('button');
-                btn.className = "w-full text-left p-3.5 rounded-xl border border-slate-200 text-xs font-semibold hover:bg-yellow-400/10 hover:border-brand-yellow transition duration-150 active:scale-98";
-                btn.innerText = ans;
-                btn.onclick = () => selectQuizAnswer(idx, btn);
-                optionsBox.appendChild(btn);
-            });
+            if (optionsBox) {
+                currentQuestion.a.forEach((ans, idx) => {
+                    const btn = document.createElement('button');
+                    btn.className = "w-full text-left p-3.5 rounded-xl border border-slate-200 text-xs font-semibold hover:bg-yellow-400/10 hover:border-brand-yellow transition duration-150 active:scale-98";
+                    btn.innerText = ans;
+                    btn.onclick = () => selectQuizAnswer(idx, btn);
+                    optionsBox.appendChild(btn);
+                });
+            }
         }
 
         function selectQuizAnswer(selectedIdx, btnElement) {
             const quiz = quizDatabase[state.activeQuizId];
             const currentQuestion = quiz.questions[state.quizQuestionIdx];
-            const buttons = document.getElementById('quiz-options-box').querySelectorAll('button');
+            const optionsBox = document.getElementById('quiz-options-box');
+            const buttons = optionsBox ? optionsBox.querySelectorAll('button') : [];
 
             buttons.forEach(btn => btn.disabled = true);
 
             if (selectedIdx === currentQuestion.correct) {
-                btnElement.className = "w-full text-left p-3.5 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-800 text-xs font-bold";
+                if (btnElement) btnElement.className = "w-full text-left p-3.5 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-800 text-xs font-bold";
                 state.quizCorrectAnswers++;
                 showToast('🎉 Правильно!');
             } else {
-                btnElement.className = "w-full text-left p-3.5 rounded-xl border-2 border-rose-500 bg-rose-50 text-rose-800 text-xs font-bold";
-                buttons[currentQuestion.correct].className = "w-full text-left p-3.5 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-800 text-xs font-bold";
+                if (btnElement) btnElement.className = "w-full text-left p-3.5 rounded-xl border-2 border-rose-500 bg-rose-50 text-rose-800 text-xs font-bold";
+                if (buttons[currentQuestion.correct]) {
+                    buttons[currentQuestion.correct].className = "w-full text-left p-3.5 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-800 text-xs font-bold";
+                }
                 showToast('❌ Ошибка', 'error');
             }
 
@@ -1364,6 +1400,7 @@
 
         function finishQuiz() {
             const container = document.getElementById('quiz-container');
+            if (!container) return;
             const total = quizDatabase[state.activeQuizId].questions.length;
             const finalPercent = Math.round((state.quizCorrectAnswers / total) * 100);
 
@@ -1550,16 +1587,16 @@
             state.simStep = 1;
             state.simScore = 50;
 
-            document.getElementById('sim-selector').classList.add('hidden');
-            document.getElementById('sim-active-container').classList.remove('hidden');
+            const ss = document.getElementById('sim-selector'); if (ss) ss.classList.add('hidden');
+            const sac = document.getElementById('sim-active-container'); if (sac) sac.classList.remove('hidden');
 
             renderSimDialogue();
         }
 
         function exitSimulator() {
             state.activeSimId = null;
-            document.getElementById('sim-active-container').classList.add('hidden');
-            document.getElementById('sim-selector').classList.remove('hidden');
+            const sac = document.getElementById('sim-active-container'); if (sac) sac.classList.add('hidden');
+            const ss = document.getElementById('sim-selector'); if (ss) ss.classList.remove('hidden');
             updateUI();
         }
 
@@ -1568,9 +1605,10 @@
             const chatHistory = document.getElementById('sim-chat-history');
             const optionsDiv = document.getElementById('sim-options');
 
-            document.getElementById('sim-score').innerText = `${state.simScore} / 100`;
+            const scoreText = document.getElementById('sim-score');
+            if (scoreText) scoreText.innerText = `${state.simScore} / 100`;
 
-            if (state.simStep === 1) {
+            if (state.simStep === 1 && chatHistory) {
                 chatHistory.innerHTML = `
                     <div class="flex items-start gap-2.5">
                         <div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center font-bold text-sm text-brand-dark shrink-0">👨‍💼</div>
@@ -1588,14 +1626,16 @@
                 return;
             }
 
-            optionsDiv.innerHTML = '';
-            stepData.options.forEach((opt, idx) => {
-                const btn = document.createElement('button');
-                btn.className = "w-full text-left p-3.5 border border-slate-100 hover:border-brand-yellow hover:bg-brand-yellow/10 rounded-xl text-xs text-brand-text transition duration-150 font-medium leading-relaxed active:scale-98";
-                btn.innerHTML = `👉 <span class="font-bold">Вариант ${idx + 1}:</span> ${opt.text}`;
-                btn.onclick = () => chooseSimOption(opt);
-                optionsDiv.appendChild(btn);
-            });
+            if (optionsDiv) {
+                optionsDiv.innerHTML = '';
+                stepData.options.forEach((opt, idx) => {
+                    const btn = document.createElement('button');
+                    btn.className = "w-full text-left p-3.5 border border-slate-100 hover:border-brand-yellow hover:bg-brand-yellow/10 rounded-xl text-xs text-brand-text transition duration-150 font-medium leading-relaxed active:scale-98";
+                    btn.innerHTML = `👉 <span class="font-bold">Вариант ${idx + 1}:</span> ${opt.text}`;
+                    btn.onclick = () => chooseSimOption(opt);
+                    optionsDiv.appendChild(btn);
+                });
+            }
         }
 
         function chooseSimOption(option) {
@@ -1612,15 +1652,17 @@
 
             if (nextStepData && nextStepData.clientText) {
                 setTimeout(() => {
-                    chatHistory.innerHTML += `
-                        <div class="flex items-start gap-2.5 mt-3 animate-fade-in">
-                            <div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center font-bold text-sm text-brand-dark shrink-0">👨‍💼</div>
-                            <div class="bg-slate-100 p-3 rounded-2xl rounded-tl-none max-w-[85%] text-xs text-brand-text leading-relaxed">
-                                <span class="font-bold block text-[10px] text-brand-muted mb-0.5">Клиент: ${scenario.client}</span>
-                                ${nextStepData.clientText}
+                    if (chatHistory) {
+                        chatHistory.innerHTML += `
+                            <div class="flex items-start gap-2.5 mt-3 animate-fade-in">
+                                <div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center font-bold text-sm text-brand-dark shrink-0">👨‍💼</div>
+                                <div class="bg-slate-100 p-3 rounded-2xl rounded-tl-none max-w-[85%] text-xs text-brand-text leading-relaxed">
+                                    <span class="font-bold block text-[10px] text-brand-muted mb-0.5">Клиент: ${scenario.client}</span>
+                                    ${nextStepData.clientText}
+                                </div>
                             </div>
-                        </div>
-                    `;
+                        `;
+                    }
                     renderSimDialogue();
                 }, 1000);
             } else {
@@ -1632,6 +1674,7 @@
 
         function finishSimulation() {
             const container = document.getElementById('sim-chat-box');
+            if (!container) return;
             const totalResult = state.simScore;
             
             let resultTitle = 'Сделка провалена! ❌';
