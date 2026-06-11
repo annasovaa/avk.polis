@@ -1144,7 +1144,7 @@
             },
             'module-5': {
                 title: '📈 Блок 5: Трафик и продажи',
-                desc: 'Техники долгосрочного заработка',
+                desc: 'Техники долгосро заработка',
                 lessons: [
                     {
                         id: 'm5-l1',
@@ -1762,6 +1762,20 @@
             const ss = document.getElementById('sim-selector'); if (ss) ss.classList.add('hidden');
             const sac = document.getElementById('sim-active-container'); if (sac) sac.classList.remove('hidden');
 
+            // --- НОВЫЙ КОД: Восстановление базовой структуры чата для предотвращения зависания ---
+            const chatBox = document.getElementById('sim-chat-box');
+            if (chatBox) {
+                chatBox.innerHTML = `
+                    <div class="space-y-4 flex-1 overflow-y-auto mb-4" id="sim-chat-history"></div>
+                    <div class="flex justify-between items-center bg-brand-dark px-3 py-2 rounded-xl mb-3 border border-slate-800">
+                        <span class="text-[11px] font-bold text-slate-300">Доверие клиента:</span>
+                        <span id="sim-score" class="text-xs font-extrabold text-brand-yellow">50 / 100</span>
+                    </div>
+                    <div class="space-y-2" id="sim-options"></div>
+                `;
+            }
+            // -------------------------------------------------------------------------------------
+
             renderSimDialogue();
         }
 
@@ -1865,13 +1879,30 @@
                 addXP(bonusXP);
             }
 
+            // --- НОВЫЙ КОД: Логика генерации кнопок для финала ---
+            let nextSimId = null;
+            if (state.activeSimId === 'sim-1') nextSimId = 'sim-2';
+            else if (state.activeSimId === 'sim-2') nextSimId = 'sim-3';
+
+            let buttonsHtml = `<button onclick="startSimulator('${state.activeSimId}')" class="w-full bg-slate-100 hover:bg-slate-200 text-brand-dark font-bold py-3 rounded-xl text-xs transition border border-slate-200 shadow-sm">🔄 Пройти заново</button>`;
+            
+            if (nextSimId) {
+                buttonsHtml += `<button onclick="startSimulator('${nextSimId}')" class="w-full bg-brand-yellow hover:bg-yellow-500 text-brand-dark font-bold py-3 rounded-xl text-xs transition shadow-sm">➡️ Следующий кейс</button>`;
+            }
+            buttonsHtml += `<button onclick="exitSimulator()" class="w-full bg-brand-dark text-brand-yellow font-bold py-3 rounded-xl text-xs hover:bg-brand-slate transition shadow-sm">Вернуться к списку</button>`;
+            // -------------------------------------------------------
+
             container.innerHTML = `
-                <div class="text-center py-6">
-                    <span class="text-5xl">${emoji}</span>
-                    <h4 class="font-bold text-brand-dark text-sm mt-4 mb-2">${resultTitle}</h4>
-                    <p class="text-xs text-brand-muted mb-4">Уровень доверия клиента на выходе: <span class="font-bold text-brand-dark">${totalResult} из 100</span></p>
-                    <div class="text-xs font-semibold text-brand-muted mb-5">Получено опыта: <span class="text-emerald-600 font-bold">+${bonusXP} XP</span></div>
-                    <button onclick="exitSimulator()" class="w-full bg-brand-dark text-brand-yellow font-bold py-3 rounded-xl text-xs hover:bg-brand-slate transition">Вернуться к списку кейсов</button>
+                <div class="text-center py-6 flex flex-col h-full justify-between">
+                    <div>
+                        <span class="text-5xl block mb-2">${emoji}</span>
+                        <h4 class="font-bold text-brand-dark text-sm mt-2 mb-2">${resultTitle}</h4>
+                        <p class="text-xs text-brand-muted mb-4">Уровень доверия клиента на выходе: <span class="font-bold text-brand-dark">${totalResult} из 100</span></p>
+                        <div class="text-xs font-semibold text-brand-muted mb-5">Получено опыта: <span class="text-emerald-600 font-bold">+${bonusXP} XP</span></div>
+                    </div>
+                    <div class="space-y-2.5 flex flex-col mt-auto">
+                        ${buttonsHtml}
+                    </div>
                 </div>
             `;
         }
