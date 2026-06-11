@@ -858,9 +858,9 @@
                                     <li>Ознакомьтесь с инструментами агрегатора (калькуляторы, виджеты, баннеры).</li>
                                 </ol>
                             </div>
-                            <div class="mt-4 p-2.5 bg-brand-dark text-white text-center rounded-xl text-xs font-bold shadow-sm flex justify-center items-center gap-1.5">
-                                <i data-lucide="check-square" class="w-4 h-4 text-brand-yellow"></i> <span>Доступен Тест 1 (Перейдите во вкладку "Тесты")</span>
-                            </div>
+                            <button onclick="switchTab('tests', document.getElementById('nav-btn-tests')); setTimeout(() => startQuiz('test-1'), 50)" class="w-full mt-4 p-2.5 bg-brand-dark hover:bg-brand-slate text-white text-center rounded-xl text-xs font-bold shadow-sm flex justify-center items-center gap-1.5 transition">
+                                <i data-lucide="check-square" class="w-4 h-4 text-brand-yellow"></i> <span>Доступен Тест 1 (Перейти)</span>
+                            </button>
                         `
                     }
                 ]
@@ -952,9 +952,9 @@
                                 </ol>
                                 <p class="text-rose-600 mt-2">❗ ВАЖНО: Нельзя вносить некорректные данные — страховая откажет в выплате! При ошибке — пишите в техподдержку платформы.</p>
                             </div>
-                            <div class="mt-4 p-2.5 bg-brand-dark text-white text-center rounded-xl text-xs font-bold shadow-sm flex justify-center items-center gap-1.5">
+                            <button onclick="switchTab('tests', document.getElementById('nav-btn-tests')); setTimeout(() => startQuiz('test-2'), 50)" class="w-full mt-4 p-2.5 bg-brand-dark hover:bg-brand-slate text-white text-center rounded-xl text-xs font-bold shadow-sm flex justify-center items-center gap-1.5 transition">
                                 <i data-lucide="check-square" class="w-4 h-4 text-brand-yellow"></i> <span>Доступен Тест 2</span>
-                            </div>
+                            </button>
                         `
                     }
                 ]
@@ -1034,9 +1034,9 @@
                                 </ol>
                                 <p class="text-emerald-700 font-bold mt-2">❗️ Лайфхак: Закрепляйте приятное впечатление: «Буду ждать вас через год. Мне будет приятно, если оставите отзыв!»</p>
                             </div>
-                            <div class="mt-4 p-2.5 bg-brand-dark text-white text-center rounded-xl text-xs font-bold shadow-sm flex justify-center items-center gap-1.5">
+                            <button onclick="switchTab('tests', document.getElementById('nav-btn-tests')); setTimeout(() => startQuiz('test-3'), 50)" class="w-full mt-4 p-2.5 bg-brand-dark hover:bg-brand-slate text-white text-center rounded-xl text-xs font-bold shadow-sm flex justify-center items-center gap-1.5 transition">
                                 <i data-lucide="check-square" class="w-4 h-4 text-brand-yellow"></i> <span>Доступен Тест 3</span>
-                            </div>
+                            </button>
                         `
                     }
                 ]
@@ -1116,9 +1116,9 @@
                                     <li><strong>Buildin.AI / Notion:</strong> Хранение шаблонов, скриптов и баннеров.</li>
                                 </ul>
                             </div>
-                            <div class="mt-4 p-2.5 bg-brand-dark text-white text-center rounded-xl text-xs font-bold shadow-sm flex justify-center items-center gap-1.5">
+                            <button onclick="switchTab('tests', document.getElementById('nav-btn-tests')); setTimeout(() => startQuiz('test-4'), 50)" class="w-full mt-4 p-2.5 bg-brand-dark hover:bg-brand-slate text-white text-center rounded-xl text-xs font-bold shadow-sm flex justify-center items-center gap-1.5 transition">
                                 <i data-lucide="check-square" class="w-4 h-4 text-brand-yellow"></i> <span>Доступен Тест 4</span>
-                            </div>
+                            </button>
                         `
                     }
                 ]
@@ -1195,9 +1195,9 @@
                             <p class="text-xs text-brand-text font-bold bg-slate-100 p-3 rounded-xl border border-slate-200">
                                 Вывод: Демпинг — быстрый путь в никуда. Создавайте ценность: объясняйте клиенту сервис, экспертность и будьте на связи при ДТП!
                             </p>
-                            <div class="mt-4 p-2.5 bg-brand-dark text-white text-center rounded-xl text-xs font-bold shadow-sm flex justify-center items-center gap-1.5">
+                            <button onclick="switchTab('tests', document.getElementById('nav-btn-tests')); setTimeout(() => startQuiz('test-5'), 50)" class="w-full mt-4 p-2.5 bg-brand-dark hover:bg-brand-slate text-white text-center rounded-xl text-xs font-bold shadow-sm flex justify-center items-center gap-1.5 transition">
                                 <i data-lucide="check-square" class="w-4 h-4 text-brand-yellow"></i> <span>Доступен финальный Тест 5 🏆</span>
-                            </div>
+                            </button>
                         `
                     }
                 ]
@@ -1251,9 +1251,12 @@
             const lessonsList = document.getElementById('module-lessons-list');
             if (lessonsList) {
                 lessonsList.innerHTML = '';
+                let allRead = true;
 
                 moduleData.lessons.forEach(lesson => {
                     const isRead = state.readLessons[lesson.id];
+                    if (!isRead) allRead = false;
+                    
                     const item = document.createElement('div');
                     item.className = `p-4 rounded-xl border ${isRead ? 'border-emerald-200 bg-emerald-50/20' : 'border-slate-100 bg-white hover:border-brand-yellow'} shadow-sm flex justify-between items-center cursor-pointer transition`;
                     item.onclick = () => readLesson(lesson.id);
@@ -1270,6 +1273,22 @@
                     `;
                     lessonsList.appendChild(item);
                 });
+
+                if (allRead) {
+                    let nextModId = null;
+                    if (moduleId === 'module-1') nextModId = 'module-2';
+                    else if (moduleId === 'module-2') nextModId = 'module-3';
+                    else if (moduleId === 'module-3') nextModId = 'module-4';
+                    else if (moduleId === 'module-4') nextModId = 'module-5';
+
+                    if (nextModId) {
+                        const btn = document.createElement('button');
+                        btn.onclick = () => viewModule(nextModId);
+                        btn.className = "w-full mt-2 bg-brand-yellow hover:bg-yellow-500 text-brand-dark font-bold py-3.5 px-4 rounded-xl text-xs transition duration-200 shadow-md";
+                        btn.innerText = "Перейти к следующему блоку";
+                        lessonsList.appendChild(btn);
+                    }
+                }
             }
 
             lucide.createIcons();
