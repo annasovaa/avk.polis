@@ -322,7 +322,7 @@
                 <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm flex items-center gap-4">
                     <div class="w-16 h-16 rounded-2xl bg-brand-dark text-brand-yellow flex items-center justify-center text-3xl shadow-sm font-extrabold" id="profile-avatar">👨‍🎓</div>
                     <div>
-                        <h3 class="font-extrabold text-brand-dark text-base" id="profile-name-text">Иван Иванов</h3>
+                        <h3 class="font-extrabold text-brand-dark text-base" id="profile-name-text">Новый Стажёр</h3>
                         <p class="text-xs text-brand-muted font-bold" id="profile-lvl-text">Уровень 1: Стажёр-новичок</p>
                         <div class="flex items-center gap-1.5 mt-1.5">
                             <span class="text-[10px] text-brand-muted">Опыт (XP):</span>
@@ -338,11 +338,11 @@
                     <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label class="block text-[9px] font-bold uppercase tracking-wider text-brand-muted mb-1">Имя</label>
-                            <input type="text" id="input-first-name" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs font-semibold focus:outline-none focus:border-brand-yellow focus:ring-1 focus:ring-brand-yellow" placeholder="Иван">
+                            <input type="text" id="input-first-name" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs font-semibold focus:outline-none focus:border-brand-yellow focus:ring-1 focus:ring-brand-yellow" placeholder="Ваше имя">
                         </div>
                         <div>
                             <label class="block text-[9px] font-bold uppercase tracking-wider text-brand-muted mb-1">Фамилия</label>
-                            <input type="text" id="input-last-name" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs font-semibold focus:outline-none focus:border-brand-yellow focus:ring-1 focus:ring-brand-yellow" placeholder="Иванов">
+                            <input type="text" id="input-last-name" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs font-semibold focus:outline-none focus:border-brand-yellow focus:ring-1 focus:ring-brand-yellow" placeholder="Ваша фамилия">
                         </div>
                     </div>
                     <button onclick="saveProfile()" class="w-full bg-brand-dark hover:bg-brand-slate text-brand-yellow text-xs font-bold py-2.5 rounded-xl transition duration-200 shadow-sm">
@@ -426,8 +426,8 @@
         const state = {
             xp: 0,
             level: 1,
-            firstName: 'Иван',
-            lastName: 'Иванов',
+            firstName: '',
+            lastName: '',
             // 15 уроков (по 3 на блок)
             readLessons: {
                 'm1-l1': false, 'm1-l2': false, 'm1-l3': false,
@@ -450,11 +450,11 @@
 
         // --- НОВЫЙ КОД: Функции локального хранилища ---
         function saveStateToLocal() {
-            localStorage.setItem('avkPolisState', JSON.stringify(state));
+            localStorage.setItem('avkPolisState_clean', JSON.stringify(state));
         }
 
         function loadStateFromLocal() {
-            const savedState = localStorage.getItem('avkPolisState');
+            const savedState = localStorage.getItem('avkPolisState_clean');
             if (savedState) {
                 // Сливаем сохраненные данные с базовым state
                 Object.assign(state, JSON.parse(savedState));
@@ -465,7 +465,7 @@
         window.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
             
-            loadStateFromLocal(); // <-- НОВАЯ СТРОКА: Загружаем прогресс до обновления UI
+            loadStateFromLocal(); // Загружаем прогресс до обновления UI
             
             // Подгружаем дефолтные значения в инпуты
             const fNameInput = document.getElementById('input-first-name');
@@ -559,7 +559,8 @@
             // Имя в кабинете
             const profileName = document.getElementById('profile-name-text');
             if (profileName) {
-                profileName.innerText = `${state.firstName} ${state.lastName}`;
+                const fullName = `${state.firstName} ${state.lastName}`.trim();
+                profileName.innerText = fullName !== '' ? fullName : 'Новый Стажёр';
             }
 
             const m1Read = ['m1-l1', 'm1-l2', 'm1-l3'].filter(id => state.readLessons[id]).length;
@@ -754,7 +755,7 @@
                 const ach6 = document.getElementById('ach-6'); if (ach6) { ach6.classList.remove('grayscale', 'opacity-60'); ach6.classList.add('bg-white'); }
             }
 
-            saveStateToLocal(); // <-- НОВАЯ СТРОКА: Автосохранение при любых изменениях интерфейса
+            saveStateToLocal(); // Автосохранение при любых изменениях интерфейса
         }
 
         function addXP(amount) {
@@ -822,7 +823,7 @@
                                     <strong class="text-brand-dark block mb-2">Платформы для самозанятых, ИП и юрлиц (Высокое КВ):</strong>
                                     <ul class="space-y-2">
                                         <li><strong>1. <a href="https://polis812.ru/partners/?referral_id=100407#/signup" class="text-blue-600 underline" target="_blank">Polis812</a>:</strong> Хороша для Сбера и ВТБ. Комиссия агента до 62% ❗️ Идёт по нарастающей от количества заказов. Поддержка отвечает за 2 минуты.</li>
-                                        <li><strong>2. <a href="https://agents.inssmart.ru/signup?ref_id=cvpc19" class="text-blue-600 underline" target="_blank">Inssmart</a>:</strong> Подходит для всех banks. Самое большое количество предложений. Комиссия до 53%. Вывод средств сразу на баланс.</li>
+                                        <li><strong>2. <a href="https://agents.inssmart.ru/signup?ref_id=cvpc19" class="text-blue-600 underline" target="_blank">Inssmart</a>:</strong> Подходит для всех банков. Самое большое количество предложений. Комиссия до 53%. Вывод средств сразу на баланс.</li>
                                         <li><strong>3. <a href="https://r.sravni.ru/u1Rcw2O2" class="text-blue-600 underline" target="_blank">Sravni</a>:</strong> Известная платформа, вызывает доверие у клиентов. Отлично подходит для ОСАГО.</li>
                                     </ul>
                                 </div>
@@ -1223,537 +1224,6 @@
             }
         };
 
-        function viewModule(moduleId) {
-            // Проверка последовательности блокировки модулей
-            if (moduleId === 'module-2') {
-                const m1Read = ['m1-l1', 'm1-l2', 'm1-l3'].filter(id => state.readLessons[id]).length;
-                if (m1Read < 3) {
-                    showToast('❌ Блок 2 заблокирован! Сначала завершите все уроки Блока 1.', 'error');
-                    return;
-                }
-            }
-            if (moduleId === 'module-3') {
-                const m2Read = ['m2-l1', 'm2-l2', 'm2-l3'].filter(id => state.readLessons[id]).length;
-                if (m2Read < 3) {
-                    showToast('❌ Блок 3 заблокирован! Сначала завершите все уроки Блока 2.', 'error');
-                    return;
-                }
-            }
-            if (moduleId === 'module-4') {
-                const m3Read = ['m3-l1', 'm3-l2', 'm3-l3'].filter(id => state.readLessons[id]).length;
-                if (m3Read < 3) {
-                    showToast('❌ Блок 4 заблокирован! Сначала завершите все уроки Блока 3.', 'error');
-                    return;
-                }
-            }
-            if (moduleId === 'module-5') {
-                const m4Read = ['m4-l1', 'm4-l2', 'm4-l3'].filter(id => state.readLessons[id]).length;
-                if (m4Read < 3) {
-                    showToast('❌ Блок 5 заблокирован! Сначала завершите все уроки Блока 4.', 'error');
-                    return;
-                }
-            }
-
-            state.currentModuleId = moduleId;
-            const moduleData = modulesDatabase[moduleId];
-
-            const screenCourses = document.getElementById('screen-courses');
-            const screenModuleViewer = document.getElementById('screen-module-viewer');
-            if (screenCourses) screenCourses.classList.remove('active');
-            if (screenModuleViewer) screenModuleViewer.classList.add('active');
-
-            const titleElem = document.getElementById('module-viewer-title');
-            const descElem = document.getElementById('module-viewer-desc');
-            if (titleElem) titleElem.innerText = moduleData.title;
-            if (descElem) descElem.innerText = moduleData.desc;
-
-            const lessonsList = document.getElementById('module-lessons-list');
-            if (lessonsList) {
-                lessonsList.innerHTML = '';
-                let allRead = true;
-
-                moduleData.lessons.forEach(lesson => {
-                    const isRead = state.readLessons[lesson.id];
-                    if (!isRead) allRead = false;
-                    
-                    const item = document.createElement('div');
-                    item.className = `p-4 rounded-xl border ${isRead ? 'border-emerald-200 bg-emerald-50/20' : 'border-slate-100 bg-white hover:border-brand-yellow'} shadow-sm flex justify-between items-center cursor-pointer transition`;
-                    item.onclick = () => readLesson(lesson.id);
-                    item.innerHTML = `
-                        <div class="space-y-1">
-                            <h4 class="text-xs font-bold text-brand-dark">${lesson.title}</h4>
-                            <p class="text-[10px] text-brand-muted">${isRead ? 'Изучено' : 'Доступно'}</p>
-                        </div>
-                        <div class="flex items-center gap-1.5">
-                            ${isRead 
-                                ? '<span class="text-emerald-600"><i data-lucide="check-circle-2" class="w-5 h-5"></i></span>' 
-                                : '<span class="text-slate-400"><i data-lucide="circle" class="w-5 h-5"></i></span>'}
-                        </div>
-                    `;
-                    lessonsList.appendChild(item);
-                });
-
-                if (allRead) {
-                    let nextModId = null;
-                    if (moduleId === 'module-1') nextModId = 'module-2';
-                    else if (moduleId === 'module-2') nextModId = 'module-3';
-                    else if (moduleId === 'module-3') nextModId = 'module-4';
-                    else if (moduleId === 'module-4') nextModId = 'module-5';
-
-                    if (nextModId) {
-                        const btn = document.createElement('button');
-                        btn.onclick = () => viewModule(nextModId);
-                        btn.className = "w-full mt-2 bg-brand-yellow hover:bg-yellow-500 text-brand-dark font-bold py-3.5 px-4 rounded-xl text-xs transition duration-200 shadow-md";
-                        btn.innerText = "Перейти к следующему блоку";
-                        lessonsList.appendChild(btn);
-                    }
-                }
-            }
-
-            lucide.createIcons();
-        }
-
-        function goBackToCourses() {
-            const smv = document.getElementById('screen-module-viewer'); if (smv) smv.classList.remove('active');
-            const slr = document.getElementById('screen-lesson-reader'); if (slr) slr.classList.remove('active');
-            const sc = document.getElementById('screen-courses'); if (sc) sc.classList.add('active');
-            updateUI();
-        }
-
-        function readLesson(lessonId) {
-            const moduleData = modulesDatabase[state.currentModuleId];
-            const lesson = moduleData.lessons.find(l => l.id === lessonId);
-
-            const smv = document.getElementById('screen-module-viewer'); if (smv) smv.classList.remove('active');
-            const slr = document.getElementById('screen-lesson-reader'); if (slr) slr.classList.add('active');
-
-            const isRead = state.readLessons[lessonId];
-            const contentArea = document.getElementById('lesson-content-area');
-            if (contentArea) {
-                contentArea.innerHTML = `
-                    <h2 class="text-lg font-extrabold text-brand-dark mb-1">${lesson.title}</h2>
-                    <div class="border-b border-slate-100 pb-3 mb-3"></div>
-                    <div class="text-xs text-brand-text leading-relaxed">${lesson.content}</div>
-                    <div class="pt-4 border-t border-slate-100 flex justify-end">
-                        <button onclick="markLessonAsRead('${lesson.id}')" class="w-full ${isRead ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-brand-dark hover:bg-brand-slate'} text-brand-yellow font-bold py-3.5 px-4 rounded-xl text-xs transition duration-200 shadow-md">
-                            ${isRead ? 'Пройдено ✓ (Назад)' : 'Завершить тему (+20 XP)'}
-                        </button>
-                    </div>
-                `;
-            }
-            lucide.createIcons();
-        }
-
-        function goBackToModuleViewer() {
-            const slr = document.getElementById('screen-lesson-reader'); if (slr) slr.classList.remove('active');
-            const smv = document.getElementById('screen-module-viewer'); if (smv) smv.classList.add('active');
-            viewModule(state.currentModuleId);
-        }
-
-        function markLessonAsRead(lessonId) {
-            if (!state.readLessons[lessonId]) {
-                state.readLessons[lessonId] = true;
-                addXP(20);
-                showToast('📚 Тема успешно пройдена! +20 XP.');
-            }
-            goBackToModuleViewer();
-        }
-
-        // ================= ЭКРАН ТЕСТИРОВАНИЯ: 5 ТЕСТОВ =================
-        const quizDatabase = {
-            'test-1': {
-                title: 'Тест 1: Начало работы и налоги',
-                questions: [
-                    {
-                        q: 'Какова налоговая ставка для самозанятого страхового агента при получении доходов от физлиц?',
-                        a: ['6%', '13%', '4%'],
-                        correct: 2
-                    },
-                    {
-                        q: 'Какое официальное приложение ФНС используется самозанятыми агентами?',
-                        a: ['«Мой налог»', '«Госуслуги»', '«Личный кабинет ИП»'],
-                        correct: 0
-                    },
-                    {
-                        q: 'В каком случае страховой агент получает максимальное комиссионное вознаграждение (КВ)?',
-                        a: ['Работая как обычное Физическое лицо', 'Работая как Самозанятый на НПД', 'Способ работы не влияет на КВ'],
-                        correct: 1
-                    }
-                ]
-            },
-            'test-2': {
-                title: 'Тест 2: Страхование ипотеки',
-                questions: [
-                    {
-                        q: 'Какое страхование ипотеки является строго обязательным по закону РФ?',
-                        a: ['Страхование жизни', 'Имущественное страхование (Конструктив)', 'Титульное страхование'],
-                        correct: 1
-                    },
-                    {
-                        q: 'Почему заемщику невыгодно отказываться от страхования жизни, несмотря на его добровольность?',
-                        a: ['Банк повысит процентную ставку по кредиту на 1-2%, что приведет к переплате', 'Банк мгновенно заберет квартиру без суда', 'Без этого полиса нельзя переехать в квартиру'],
-                        correct: 0
-                    },
-                    {
-                        q: 'Какое комиссионное вознаграждение может получать агент за ипотечные договоры?',
-                        a: ['До 35-50% от стоимости полиса', 'Не более 5%', 'Ипотечные полисы оформляются бесплатно'],
-                        correct: 0
-                    }
-                ]
-            },
-            'test-3': {
-                title: 'Тест 3: Специфика ОСАГО',
-                questions: [
-                    {
-                        q: 'Каков лимит выплат по ОСАГО за повреждение чужого имущества каждому потерпевшему?',
-                        a: ['До 100 000 рублей', 'До 500 000 рублей', 'До 400 000 рублей'],
-                        correct: 2
-                    },
-                    {
-                        q: 'Что определяет показатель КБМ в формуле ОСАГО?',
-                        a: ['Регион проживания водителя', 'Скидку или надбавку за безаварийную езду', 'Возраст и стаж водителя'],
-                        correct: 1
-                    },
-                    {
-                        q: 'Какие документы нужны для расчета и покупки ОСАГО?',
-                        a: ['СТС/ПТС, паспорта собственника/страхователя и права водителей', 'Только паспорт собственника автомобиля', 'Права водителя и ИНН компании'],
-                        correct: 0
-                    }
-                ]
-            },
-            'test-4': {
-                title: 'Тест 4: Базовая терминология',
-                questions: [
-                    {
-                        q: 'Кто в ипотечном страховании по закону выступает выгодоприобретателем первой очереди?',
-                        a: ['Сам заемщик', 'Банк-кредитор (в размере остатка долга)', 'Страховая компания'],
-                        correct: 1
-                    },
-                    {
-                        q: 'Что такое безусловная франшиза?',
-                        a: ['Сумма ущерба, которая всегда вычитается из страховой выплаты', 'Скидка на покупку следующего полиса', 'Обязательный сбор за расторжение договора'],
-                        correct: 0
-                    },
-                    {
-                        q: 'Что понимают под термином «Страховая премия»?',
-                        a: ['Выплату за ущерб', 'Сумму максимального лимита ответственности', 'Официальную цену полиса, оплаченную клиентом'],
-                        correct: 2
-                    }
-                ]
-            },
-            'test-5': {
-                title: 'Тест 5: Демпинг и продажи',
-                questions: [
-                    {
-                        q: 'Почему регулярный демпинг (скидки из своего КВ) опасен для агента?',
-                        a: ['Выгорание, нулевая прибыль и клиенты, требующие постоянных скидок', 'Страховые компании штрафуют за это на миллионы', 'Это запрещено Уголовным кодексом РФ'],
-                        correct: 0
-                    },
-                    {
-                        q: 'В каком случае предоставление скидки клиенту экономически оправдано?',
-                        a: ['При каждом расчете для любого нового клиента', 'За большой объем, рекомендацию нового друга или по особому случаю', 'Скидки вообще никогда нельзя давать'],
-                        correct: 1
-                    },
-                    {
-                        q: 'Какая стратегия удержания клиентов самая эффективная в долгосрочной перспективе?',
-                        a: ['Постоянный демпинг цен ниже конкурентов', 'Качественный экспертный сервис, поддержка при ДТП и напоминания о продлении', 'Игнорирование конкурентов и агрессивное навязывание'],
-                        correct: 1
-                    }
-                ]
-            }
-        };
-
-        function startQuiz(quizId) {
-            const m1Read = ['m1-l1', 'm1-l2', 'm1-l3'].filter(id => state.readLessons[id]).length;
-            const m2Read = ['m2-l1', 'm2-l2', 'm2-l3'].filter(id => state.readLessons[id]).length;
-            const m3Read = ['m3-l1', 'm3-l2', 'm3-l3'].filter(id => state.readLessons[id]).length;
-            const m4Read = ['m4-l1', 'm4-l2', 'm4-l3'].filter(id => state.readLessons[id]).length;
-
-            if (quizId === 'test-2' && m1Read < 3) {
-                showToast('❌ Тест заблокирован! Пройдите сначала все уроки Блока 1.', 'error');
-                return;
-            }
-            if (quizId === 'test-3' && m2Read < 3) {
-                showToast('❌ Тест заблокирован! Пройдите сначала все уроки Блока 2.', 'error');
-                return;
-            }
-            if (quizId === 'test-4' && m3Read < 3) {
-                showToast('❌ Тест заблокирован! Пройдите сначала все уроки Блока 3.', 'error');
-                return;
-            }
-            if (quizId === 'test-5' && m4Read < 3) {
-                showToast('❌ Тест заблокирован! Пройдите сначала все уроки Блока 4.', 'error');
-                return;
-            }
-
-            state.activeQuizId = quizId;
-            state.quizQuestionIdx = 0;
-            state.quizCorrectAnswers = 0;
-
-            const qs = document.getElementById('quiz-selector'); if (qs) qs.classList.add('hidden');
-            const qac = document.getElementById('quiz-active-container'); if (qac) qac.classList.remove('hidden');
-
-            showQuizQuestion();
-        }
-
-        function exitQuiz() {
-            state.activeQuizId = null;
-            const qac = document.getElementById('quiz-active-container'); if (qac) qac.classList.add('hidden');
-            const qs = document.getElementById('quiz-selector'); if (qs) qs.classList.remove('hidden');
-            updateUI();
-        }
-
-        function showQuizQuestion() {
-            const quiz = quizDatabase[state.activeQuizId];
-            const currentQuestion = quiz.questions[state.quizQuestionIdx];
-            const totalQuestions = quiz.questions.length;
-
-            const progressPercent = Math.round(((state.quizQuestionIdx + 1) / totalQuestions) * 100);
-
-            const container = document.getElementById('quiz-container');
-            if (container) {
-                container.innerHTML = `
-                    <div class="flex justify-between items-center text-xs text-brand-muted mb-3 font-semibold">
-                        <span>Вопрос ${state.quizQuestionIdx + 1} из ${totalQuestions}</span>
-                        <span class="text-brand-dark font-bold">${quiz.title}</span>
-                    </div>
-                    <div class="w-full bg-slate-100 rounded-full h-1.5 mb-5 overflow-hidden">
-                        <div class="bg-brand-dark h-full transition-all duration-300" style="width: ${progressPercent}%"></div>
-                    </div>
-                    <h4 class="font-bold text-brand-dark text-sm leading-relaxed mb-4">
-                        ${currentQuestion.q}
-                    </h4>
-                    <div class="space-y-2.5" id="quiz-options-box">
-                        </div>
-                `;
-            }
-
-            const optionsBox = document.getElementById('quiz-options-box');
-            if (optionsBox) {
-                currentQuestion.a.forEach((ans, idx) => {
-                    const btn = document.createElement('button');
-                    btn.className = "w-full text-left p-3.5 rounded-xl border border-slate-200 text-xs font-semibold hover:bg-yellow-400/10 hover:border-brand-yellow transition duration-150 active:scale-98";
-                    btn.innerText = ans;
-                    btn.onclick = () => selectQuizAnswer(idx, btn);
-                    optionsBox.appendChild(btn);
-                });
-            }
-        }
-
-        function selectQuizAnswer(selectedIdx, btnElement) {
-            const quiz = quizDatabase[state.activeQuizId];
-            const currentQuestion = quiz.questions[state.quizQuestionIdx];
-            const optionsBox = document.getElementById('quiz-options-box');
-            const buttons = optionsBox ? optionsBox.querySelectorAll('button') : [];
-
-            buttons.forEach(btn => btn.disabled = true);
-
-            if (selectedIdx === currentQuestion.correct) {
-                if (btnElement) btnElement.className = "w-full text-left p-3.5 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-800 text-xs font-bold";
-                state.quizCorrectAnswers++;
-                showToast('🎉 Правильно!');
-            } else {
-                if (btnElement) btnElement.className = "w-full text-left p-3.5 rounded-xl border-2 border-rose-500 bg-rose-50 text-rose-800 text-xs font-bold";
-                if (buttons[currentQuestion.correct]) {
-                    buttons[currentQuestion.correct].className = "w-full text-left p-3.5 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-800 text-xs font-bold";
-                }
-                showToast('❌ Ошибка', 'error');
-            }
-
-            setTimeout(() => {
-                state.quizQuestionIdx++;
-                if (state.quizQuestionIdx < quiz.questions.length) {
-                    showQuizQuestion();
-                } else {
-                    finishQuiz();
-                }
-            }, 1800);
-        }
-
-        function finishQuiz() {
-            const container = document.getElementById('quiz-container');
-            if (!container) return;
-            const total = quizDatabase[state.activeQuizId].questions.length;
-            const finalPercent = Math.round((state.quizCorrectAnswers / total) * 100);
-
-            const earnedXP = state.quizCorrectAnswers * 30;
-            addXP(earnedXP);
-
-            const prevScore = state.testResults[state.activeQuizId];
-            if (prevScore === null || state.quizCorrectAnswers > prevScore) {
-                state.testResults[state.activeQuizId] = state.quizCorrectAnswers;
-            }
-
-            let resultMessage = 'Нужно перечитать теорию! 📚';
-            let emoji = '🫣';
-            if (finalPercent === 100) {
-                resultMessage = 'Потрясающе! Абсолютный результат!';
-                emoji = '🏆🌟';
-            } else if (finalPercent >= 66) {
-                resultMessage = 'Тест успешно сдан!';
-                emoji = '👍';
-            }
-
-            container.innerHTML = `
-                <div class="text-center py-6">
-                    <span class="text-5xl">${emoji}</span>
-                    <h4 class="font-extrabold text-brand-dark text-base mt-4 mb-2">${resultMessage}</h4>
-                    <p class="text-xs text-brand-muted mb-4">Правильных ответов: <span class="font-extrabold text-brand-dark">${state.quizCorrectAnswers} из ${total}</span> (${finalPercent}%)</p>
-                    <div class="text-xs font-semibold text-brand-muted mb-5">Опыт за попытку: <span class="text-emerald-600 font-extrabold">+${earnedXP} XP</span></div>
-                    <button onclick="exitQuiz()" class="w-full bg-brand-dark hover:bg-brand-slate text-brand-yellow font-bold py-3.5 rounded-xl text-xs transition duration-200">Вернуться в тесты</button>
-                </div>
-            `;
-            updateUI();
-        }
-
-        // ================= СИМУЛЯТОР ДИАЛОГОВ (ОТРАБОТКА ВОЗРАЖЕНИЙ) =================
-        const simulatorDatabase = {
-            'sim-1': {
-                title: 'Кейс 1: КАСКО/Ипотека — зачем страховать жизнь?',
-                client: 'Михаил (34 года)',
-                startText: 'Зачем мне страховать жизнь при ипотеке? Банк просит за это 15 000 рублей! Я лучше откажусь и застрахую только стены за 4 тысячи.',
-                steps: {
-                    1: {
-                        options: [
-                            {
-                                text: "«Вы не имеете права отказываться. Банк просто заберет у вас квартиру и аннулирует сделку!»",
-                                points: -15,
-                                feedback: "Ложь и грубое давление. Клиент теряет доверие.",
-                                next: 2
-                            },
-                            {
-                                text: "«Если вы откажетесь, банк повысит вам ставку по кредиту на 1%. Давайте посчитаем: при долге 5 млн рублей, 1% — это дополнительные 50 000 рублей процентов в первый же год! Полис экономит вам 35 000 рублей чистыми, плюс защищает вашу семью от долгов в случае непревидимых обстоятельств.»",
-                                points: 30,
-                                feedback: "Идеально! Четкий математический аргумент через язык выгоды клиента.",
-                                next: 2
-                            },
-                            {
-                                text: "«Ну да, это дорого. Но спорить с банком бесполезно, у них такие правила.»",
-                                points: 5,
-                                feedback: "Слабый агент. Не объяснили пользу продукта и согласились с негативом.",
-                                next: 2
-                            }
-                        ]
-                    },
-                    2: {
-                        clientText: "Ого, я не думал о повышении процентов по кредиту! Но ведь 15 000 рублей — всё равно крупная сумма. Можно ли как-то снизить стоимость?",
-                        options: [
-                            {
-                                text: "«Конечно! Банки продают полисы своих компаний по завышенным тарифам. Я рассчитаю вам этот полис в аккредитованной страховой компании через агрегатор AVK.POLIS. Это будет стоить около 9 000 рублей при тех же условиях банка!»",
-                                points: 25,
-                                feedback: "Блестяще! Показали реальное решение проблемы завышенной банковской стоимости.",
-                                next: 3
-                            },
-                            {
-                                text: "«К сожалению, торговаться с банком нельзя. Придется оплатить полную стоимость.»",
-                                points: -5,
-                                feedback: "Упущенная выгода. Вы могли забрать эту сделку себе.",
-                                next: 3
-                            }
-                        ]
-                    }
-                }
-            },
-            'sim-2': {
-                title: 'Кейс 2: ОСАГО достаточно, КАСКО не надо',
-                client: 'Елена (28 лет)',
-                startText: 'Зачем мне КАСКО? Я купила новую машину, езжу аккуратно только на работу. ОСАГО же покроет всё, если что-то случится, разве нет?',
-                steps: {
-                    1: {
-                        options: [
-                            {
-                                text: "«Елена, ОСАГО выплатит компенсацию только в том случае, если в вас врежутся и у виновника будет полис. Если виновник скроется, окажется без полиса или вы случайно заденете ограждение на парковке — ремонт будет за ваш счет.»",
-                                points: 25,
-                                feedback: "Отличный разбор реальной ситуации! Четко разделены зоны ответственности.",
-                                next: 2
-                            },
-                            {
-                                text: "«ОСАГО защищает только чужие машины. Вашу машину чинить никто не будет при ДТП по вашей вине. Подумайте об этом.»",
-                                points: 10,
-                                feedback: "Верно по сути, но звучит суховато. Не хватает ярких жизненных примеров.",
-                                next: 2
-                            },
-                            {
-                                text: "«Да ладно вам, все оформляют КАСКО на новые машины, это уже стандарт.»",
-                                points: -15,
-                                feedback: "Нарушение этики и обесценивание мнения клиента. Прямой путь к потере контакта.",
-                                next: 2
-                            }
-                        ]
-                    },
-                    2: {
-                        clientText: "Ой, я и не знала про такие тонкости. Но если виновник будет без полиса — неужели это частая ситуация? Неужели нет компромиссного варианта подешевле?",
-                        options: [
-                            {
-                                text: "«К сожалению, сейчас до 10-15% водителей ездят без полиса. Специально на этот случай у нас есть продукт Мини-КАСКО. Он стоит всего около 5 000 рублей, но полностью покроет ремонт вашей новой машины, если виновник ДТП окажется без страховки.»",
-                                points: 25,
-                                feedback: "Блестяще! Точечное предложение альтернативного компромиссного продукта под боль клиента.",
-                                next: 3
-                            },
-                            {
-                                text: "«Да, статистика пугающая. Поэтому лучше берите полное КАСКО за 60 тысяч и ни о чем не думайте!»",
-                                points: 5,
-                                feedback: "Слишком прямолинейно пытаетесь навязать дорогой продукт, игнорируя запрос на эконом-решение.",
-                                next: 3
-                            },
-                            {
-                                text: "«Никаких компромиссов тут нет, либо платите за полноценное КАСКО, либо рискуете всем.»",
-                                points: -10,
-                                feedback: "Грубый ультиматум, отталкивающий клиента.",
-                                next: 3
-                            }
-                        ]
-                    }
-                }
-            },
-            'sim-3': {
-                title: 'Кейс 3: Скидки и демпинг комиссии',
-                client: 'Сергей (42 года)',
-                startText: 'Ваш конкурент пообещал сделать мне скидку 1 000 рублей за счет своей комиссии при покупке полиса ОСАГО. Сделайте мне такую же скидку, и я оформлю у вас!',
-                steps: {
-                    1: {
-                        options: [
-                            {
-                                text: "«Я не даю скидки просто так из своей комиссии, потому что мой сервис включает полное ведение вашего дела при ДТП, напоминание о продлении и защиту ваших прав. Но я могу сделать вам приятный подарок, если вы оформите сразу страховку на квартиру!»",
-                                points: 25,
-                                feedback: "Супер! Отличная защита от демпинга с удержанием ценности своего сервиса и предложением кросс-продукта.",
-                                next: 2
-                            },
-                            {
-                                text: "«Хорошо, Сергей, я сделаю вам скидку в 1 100 рублей, только купите у меня.»",
-                                points: -20,
-                                feedback: "Ужасно! Вы сдемпинговали, отдали свой заработок и приучили клиента выкручивать вам руки при каждом продлении.",
-                                next: 2
-                            },
-                            {
-                                text: "«Тот агент просто мошенник, он продаст вам фальшивый полис!»",
-                                points: -10,
-                                feedback: "Обвинение конкурентов без доказательств портит вашу собственную репутацию.",
-                                next: 2
-                            }
-                        ]
-                    },
-                    2: {
-                        clientText: "Что ж, профессиональное ведение дела при ДТП действительно важно. Но неужели у вас нет никаких легальных программ лояльности?",
-                        options: [
-                            {
-                                text: "«Я могу предоставить вам скидку 10% на КАСКО или страхование имущества, а также начислить бонусы по акции 'Приведи друга'. Но на ОСАГО скидки запрещены регламентом компании.»",
-                                points: 25,
-                                feedback: "Умный ход! Увеличение объемов за счет кросс-продуктов и привлечения новых клиентов.",
-                                next: 3
-                            },
-                            {
-                                text: "«К сожалению, у нас вообще нет никаких программ лояльности.»",
-                                points: 5,
-                                feedback: "Нейтрально, но упущен шанс предложить другие продукты компании.",
-                                next: 3
-                            }
-                        ]
-                    }
-                }
-            }
-        };
-
         function startSimulator(simId) {
             state.activeSimId = simId;
             state.simStep = 1;
@@ -1866,31 +1336,37 @@
             let resultTitle = 'Сделка провалена! ❌';
             let emoji = '🤕';
             let bonusXP = 0;
+            let isSuccess = false; // Флаг успешного прохождения
 
             if (totalResult >= 75) {
                 resultTitle = 'Сделка Закрыта! Полис оформлен! 🏆';
                 emoji = '🤝🔥';
                 bonusXP = 50;
+                isSuccess = true;
                 addXP(bonusXP);
             } else if (totalResult >= 50) {
                 resultTitle = 'Клиент взял паузу на размышление ⏳';
                 emoji = '🤔';
                 bonusXP = 15;
+                isSuccess = true;
                 addXP(bonusXP);
             }
 
-            // --- НОВЫЙ КОД: Логика генерации кнопок для финала ---
+            // Вычисляем, есть ли следующий кейс
             let nextSimId = null;
             if (state.activeSimId === 'sim-1') nextSimId = 'sim-2';
             else if (state.activeSimId === 'sim-2') nextSimId = 'sim-3';
 
+            // Базовая кнопка (показывается всегда)
             let buttonsHtml = `<button onclick="startSimulator('${state.activeSimId}')" class="w-full bg-slate-100 hover:bg-slate-200 text-brand-dark font-bold py-3 rounded-xl text-xs transition border border-slate-200 shadow-sm">🔄 Пройти заново</button>`;
             
-            if (nextSimId) {
+            // Кнопка "Следующий кейс" (появляется ТОЛЬКО если есть следующий уровень И текущий сдан успешно)
+            if (nextSimId && isSuccess) {
                 buttonsHtml += `<button onclick="startSimulator('${nextSimId}')" class="w-full bg-brand-yellow hover:bg-yellow-500 text-brand-dark font-bold py-3 rounded-xl text-xs transition shadow-sm">➡️ Следующий кейс</button>`;
             }
-            buttonsHtml += `<button onclick="exitSimulator()" class="w-full bg-brand-dark text-brand-yellow font-bold py-3 rounded-xl text-xs hover:bg-brand-slate transition shadow-sm">Вернуться к списку</button>`;
-            // -------------------------------------------------------
+            
+            // Кнопка выхода (показывается всегда)
+            buttonsHtml += `<button onclick="exitSimulator()" class="w-full bg-brand-dark text-brand-yellow font-bold py-3 rounded-xl text-xs hover:bg-brand-slate transition shadow-sm">Вернуться к списку кейсов</button>`;
 
             container.innerHTML = `
                 <div class="text-center py-6 flex flex-col h-full justify-between">
