@@ -1879,15 +1879,27 @@
                 addXP(bonusXP);
             }
 
+            // Вычисление следующего шага
+            const currentNum = parseInt(state.activeSimId.split('-')[1]);
+            const nextSimId = currentNum < 3 ? `sim-${currentNum + 1}` : null;
+
             container.innerHTML = `
                 <div class="text-center py-6">
                     <span class="text-5xl">${emoji}</span>
                     <h4 class="font-bold text-brand-dark text-sm mt-4 mb-2">${resultTitle}</h4>
-                    <p class="text-xs text-brand-muted mb-4">Уровень доверия клиента на выходе: <span class="font-bold text-brand-dark">${totalResult} из 100</span></p>
-                    <div class="text-xs font-semibold text-brand-muted mb-5">Получено опыта: <span class="text-emerald-600 font-bold">+${bonusXP} XP</span></div>
-                    <button onclick="exitSimulator()" class="w-full bg-brand-dark text-brand-yellow font-bold py-3 rounded-xl text-xs hover:bg-brand-slate transition">Вернуться к списку кейсов</button>
+                    <p class="text-xs text-brand-muted mb-4">Уровень доверия: <span class="font-bold text-brand-dark">${totalResult} из 100</span></p>
+                    <div class="text-xs font-semibold text-brand-muted mb-6">Получено опыта: <span class="text-emerald-600 font-bold">+${bonusXP} XP</span></div>
+                    
+                    <div class="space-y-2">
+                        <button onclick="startSimulator('${state.activeSimId}')" class="w-full bg-slate-100 text-brand-dark font-bold py-3 rounded-xl text-xs hover:bg-slate-200 transition">🔄 Пройти заново</button>
+                        ${nextSimId 
+                            ? `<button onclick="startSimulator('${nextSimId}')" class="w-full bg-brand-dark text-brand-yellow font-bold py-3 rounded-xl text-xs hover:bg-brand-slate transition">➡️ Следующий кейс</button>`
+                            : `<button onclick="exitSimulator()" class="w-full bg-brand-dark text-brand-yellow font-bold py-3 rounded-xl text-xs hover:bg-brand-slate transition">Вернуться в меню</button>`
+                        }
+                    </div>
                 </div>
             `;
+            updateUI();
         }
     </script>
 </body>
