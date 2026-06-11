@@ -448,8 +448,25 @@
             currentModuleId: null
         };
 
+        // --- НОВЫЙ КОД: Функции локального хранилища ---
+        function saveStateToLocal() {
+            localStorage.setItem('avkPolisState', JSON.stringify(state));
+        }
+
+        function loadStateFromLocal() {
+            const savedState = localStorage.getItem('avkPolisState');
+            if (savedState) {
+                // Сливаем сохраненные данные с базовым state
+                Object.assign(state, JSON.parse(savedState));
+            }
+        }
+        // -----------------------------------------------
+
         window.addEventListener('DOMContentLoaded', () => {
             lucide.createIcons();
+            
+            loadStateFromLocal(); // <-- НОВАЯ СТРОКА: Загружаем прогресс до обновления UI
+            
             // Подгружаем дефолтные значения в инпуты
             const fNameInput = document.getElementById('input-first-name');
             const lNameInput = document.getElementById('input-last-name');
@@ -736,6 +753,8 @@
             if (perfectScore) {
                 const ach6 = document.getElementById('ach-6'); if (ach6) { ach6.classList.remove('grayscale', 'opacity-60'); ach6.classList.add('bg-white'); }
             }
+
+            saveStateToLocal(); // <-- НОВАЯ СТРОКА: Автосохранение при любых изменениях интерфейса
         }
 
         function addXP(amount) {
@@ -803,7 +822,7 @@
                                     <strong class="text-brand-dark block mb-2">Платформы для самозанятых, ИП и юрлиц (Высокое КВ):</strong>
                                     <ul class="space-y-2">
                                         <li><strong>1. <a href="https://polis812.ru/partners/?referral_id=100407#/signup" class="text-blue-600 underline" target="_blank">Polis812</a>:</strong> Хороша для Сбера и ВТБ. Комиссия агента до 62% ❗️ Идёт по нарастающей от количества заказов. Поддержка отвечает за 2 минуты.</li>
-                                        <li><strong>2. <a href="https://agents.inssmart.ru/signup?ref_id=cvpc19" class="text-blue-600 underline" target="_blank">Inssmart</a>:</strong> Подходит для всех банков. Самое большое количество предложений. Комиссия до 53%. Вывод средств сразу на баланс.</li>
+                                        <li><strong>2. <a href="https://agents.inssmart.ru/signup?ref_id=cvpc19" class="text-blue-600 underline" target="_blank">Inssmart</a>:</strong> Подходит для всех banks. Самое большое количество предложений. Комиссия до 53%. Вывод средств сразу на баланс.</li>
                                         <li><strong>3. <a href="https://r.sravni.ru/u1Rcw2O2" class="text-blue-600 underline" target="_blank">Sravni</a>:</strong> Известная платформа, вызывает доверие у клиентов. Отлично подходит для ОСАГО.</li>
                                     </ul>
                                 </div>
